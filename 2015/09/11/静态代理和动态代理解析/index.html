@@ -1,0 +1,850 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,静态代理,动态代理" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Wu's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这是一篇很好的阐述静态代理和动态代理解析的文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态代理和动态代理解析">
+<meta property="og:url" content="http://yoursite.com/2015/09/11/静态代理和动态代理解析/index.html">
+<meta property="og:site_name" content="Mr.Wu's Blog">
+<meta property="og:description" content="这是一篇很好的阐述静态代理和动态代理解析的文章">
+<meta property="og:updated_time" content="2016-12-19T13:35:18.760Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="静态代理和动态代理解析">
+<meta name="twitter:description" content="这是一篇很好的阐述静态代理和动态代理解析的文章">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6365389664446055000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 静态代理和动态代理解析 | Mr.Wu's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mr.Wu's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">The closer you think you are,the less you will actually see.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                静态代理和动态代理解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-11T22:13:34+08:00" content="2015-09-11">
+              2015-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/代理/" itemprop="url" rel="index">
+                    <span itemprop="name">代理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/11/静态代理和动态代理解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/11/静态代理和动态代理解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>1.相关概念</p>
+</blockquote>
+<ul>
+<li>1.1 代理</li>
+</ul>
+<p>在某些情况下，我们不希望或是不能直接访问对象 A，而是通过访问一个中介对象 B，由 B 去访问 A 达成目的，这种方式我们就称为代理。<br>这里对象 A 所属类我们称为委托类，也称为被代理类，对象 B 所属类称为代理类。<br>代理优点有：</p>
+<pre><code>隐藏委托类的实现
+解耦，不改变委托类代码情况下做一些额外处理，比如添加初始判断及其他公共操作
+</code></pre><p>根据程序运行前代理类是否已经存在，可以将代理分为静态代理和动态代理。</p>
+<ul>
+<li>1.2 静态代理</li>
+</ul>
+<p>代理类在程序运行前已经存在的代理方式称为静态代理。<br>通过上面解释可以知道，由开发人员编写或是编译器生成代理类的方式都属于静态代理，如下是简单的静态代理实例：</p>
+<pre><code>class ClassA {
+    public void operateMethod1() {};
+
+    public void operateMethod2() {};
+
+    public void operateMethod3() {};
+}
+
+public class ClassB {
+    private ClassA a;
+
+    public ClassB(ClassA a) {
+        this.a = a;
+    }
+
+    public void operateMethod1() {
+        a.operateMethod1();
+    };
+
+    public void operateMethod2() {
+        a.operateMethod2();
+    };
+
+    // not export operateMethod3()
+}
+</code></pre><p>上面ClassA是委托类，ClassB是代理类，ClassB中的函数都是直接调用ClassA相应函数，并且隐藏了Class的operateMethod3()函数。</p>
+<p>静态代理中代理类和委托类也常常继承同一父类或实现同一接口。</p>
+<p>*　1.3 动态代理</p>
+<ul>
+<li><p>代理类在程序运行前不存在、运行时由程序动态生成的代理方式称为动态代理。</p>
+</li>
+<li><p>Java 提供了动态代理的实现方式，可以在运行时刻动态生成代理类。这种代理方式的一大好处是可以方便对代理类的函数做统一或特殊处理，如记录所有函数执行时间、所有函数执行前添加验证判断、对某个特殊函数进行特殊操作，而不用像静态代理方式那样需要修改每个函数。</p>
+</li>
+<li><p>A:动态代理概述</p>
+<ul>
+<li>代理：本来应该自己做的事情，请了别人来做，被请的人就是代理对象。</li>
+<li>举例：春节回家买票让人代买</li>
+<li>动态代理：在程序运行过程中产生的这个对象,而程序运行过程中产生对象其实就是反射讲解的内容，所以，动态代理其实就是通过反射来生成一个代理</li>
+<li>在Java中java.lang.reflect包下提供了一个Proxy类和一个InvocationHandler接口，通过使用这个类和接口就可以生成动态代理对象。JDK提供的代理只能针对接口做代理。我们有更强大的代理cglib，Proxy类中的方法创建动态代理类对象<blockquote>
+<p>动态代理实例</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>实现动态代理包括三步：</p>
+<ul>
+<li>新建委托类；</li>
+<li>实现InvocationHandler接口，这是负责连接代理类和委托类的中间类必须实现的接口；</li>
+<li>通过Proxy类新建代理类对象。</li>
+<li>proxy中的方法</li>
+<li>public static Object newProxyInstance(ClassLoader loader,Class&lt;?&gt;[] interfaces,InvocationHandler h)</li>
+<li>最终会调用InvocationHandler的方法</li>
+<li>InvocationHandler接口 </li>
+<li>public Object invoke(Object proxy,Method method,Object[] args)；</li>
+</ul>
+</li>
+<li><pre><code>//step1: 定义User接口
+
+public interface User {
+    public void add();
+
+    public void delete();
+}
+
+//step2: 定义类实现User接口
+
+public class UserImp implements User {
+    @Override
+    public void add() {
+        //System.out.println(&quot;权限校验&quot;);
+        System.out.println(&quot;添加功能&quot;);
+        //System.out.println(&quot;日志记录&quot;);
+    }
+
+    @Override
+    public void delete() {
+        //System.out.println(&quot;权限校验&quot;);
+        System.out.println(&quot;删除功能&quot;);
+        //System.out.println(&quot;日志记录&quot;);
+    }
+
+}
+
+//step3: InvocationHandler的实现类
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+public class MyInvocationHandler implements InvocationHandler {
+
+    private Object target;
+
+    public MyInvocationHandler(Object target) {
+        this.target = target;
+    }
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args)throws Throwable {
+        System.out.println(&quot;权限校验&quot;);
+        method.invoke(target, args);                    //执行被代理target对象的方法
+        System.out.println(&quot;日志记录&quot;);
+        return null;
+    }
+
+}
+
+//定义测试类
+import java.lang.reflect.Proxy;
+public class Test {
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        /*UserImp ui = new UserImp();
+        ui.add();  //添加功能
+        ui.delete(); //删除功能
+
+        System.out.println(&quot;-------------------------------&quot;);*/
+        /*
+         * public static Object newProxyInstance(ClassLoader loader,Class&lt;?&gt;[] interfaces,
+         * InvocationHandler h)
+         */
+        /*
+        MyInvocationHandler m = new MyInvocationHandler(ui);
+        User u = (User)Proxy.newProxyInstance(ui.getClass().getClassLoader(), ui.getClass().getInterfaces(), m);
+        u.add();   //权限校验    添加功能    日志记录
+        u.delete(); //权限校验 删除功能  日志记录
+        */
+
+        StudentImp si = new StudentImp();
+        si.login();//登录
+        si.submit();//提交
+
+        System.out.println(&quot;-------------------------------&quot;);
+        MyInvocationHandler m = new MyInvocationHandler(si);
+        Student s = (Student)Proxy.newProxyInstance(si.getClass().getClassLoader(), si.getClass().getInterfaces(), m);
+
+        s.login();  //权限校验    登录    日志记录
+        s.submit(); //权限校验 提交  日志记录
+    }
+
+}
+
+//类似step1: 定义Student接口
+public interface Student {
+    public void login();
+
+    public void submit();
+}
+
+//类似step2: 定义类实现Student接口
+public class StudentImp implements Student {
+    @Override
+    public void login() {
+        System.out.println(&quot;登录&quot;);
+    }
+
+    @Override
+    public void submit() {
+        System.out.println(&quot;提交&quot;);
+    }
+
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Wu WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Wu Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-静态代理-动态代理/" rel="tag">#Android,静态代理,动态代理</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/07/依赖注入的解析/" rel="next" title="依赖注入的解析">
+                <i class="fa fa-chevron-left"></i> 依赖注入的解析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/16/Android下数据库的解析/" rel="prev" title="Android下数据库的解析">
+                Android下数据库的解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/09/11/静态代理和动态代理解析/"
+     data-title="静态代理和动态代理解析"
+     data-content=""
+     data-url="http://yoursite.com/2015/09/11/静态代理和动态代理解析/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/09/11/静态代理和动态代理解析/"
+           data-title="静态代理和动态代理解析" data-url="http://yoursite.com/2015/09/11/静态代理和动态代理解析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Mr.Wu" />
+          <p class="site-author-name" itemprop="name">Mr.Wu</p>
+          <p class="site-description motion-element" itemprop="description">The closer you think you are,the less you will actually see.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Wu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="mailto:thisismrwu@163.com">Mr.Wu</a> 强力驱动
+</div>
+
+<!-- <div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    #NexT.Mist
+  </a>
+</div> -->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"thisismrwu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

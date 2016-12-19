@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,软件构架,mvc,mvp,mvvm" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Wu's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这是一篇很好的阐述Android下数据库的解析的文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android下数据库的解析">
+<meta property="og:url" content="http://yoursite.com/2016/01/16/Android下数据库的解析/index.html">
+<meta property="og:site_name" content="Mr.Wu's Blog">
+<meta property="og:description" content="这是一篇很好的阐述Android下数据库的解析的文章">
+<meta property="og:updated_time" content="2016-12-19T13:24:09.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android下数据库的解析">
+<meta name="twitter:description" content="这是一篇很好的阐述Android下数据库的解析的文章">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6365389664446055000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android下数据库的解析 | Mr.Wu's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mr.Wu's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">The closer you think you are,the less you will actually see.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android下数据库的解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-01-16T13:18:53+08:00" content="2016-01-16">
+              2016-01-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/16/Android下数据库的解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/16/Android下数据库的解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Android下数据库的解析"><a href="#Android下数据库的解析" class="headerlink" title="Android下数据库的解析"></a>Android下数据库的解析</h1><h2 id="建表的语句："><a href="#建表的语句：" class="headerlink" title="建表的语句："></a>建表的语句：</h2><ul>
+<li><p>以下语句就可以在数据库文件里创建一个名为students的表名，他有id， name, age 三个字段。</p>
+<pre><code>继承 SqlliteOpenHelper
+在构造里写出数据库名，然后在onCreate里写出创建表的语句：
+db.execSQL(&quot;create table students(_id interger primary key autoincrement,name varchar(20), age integer(20)&quot;);
+</code></pre></li>
+</ul>
+<h2 id="数据库文件的赠删改查："><a href="#数据库文件的赠删改查：" class="headerlink" title="数据库文件的赠删改查："></a>数据库文件的赠删改查：</h2><ul>
+<li><p>以下语句可以实现数据库的增删改查：</p>
+<pre><code>Sql语句：
+add:
+insert into  students(id,name,age) values(1,&apos;huge&apos;,38);
+
+delete：
+delete from students where name = &apos;lxr&apos;;
+
+update:
+update students set age = 34 where name = &apos;lxr&apos;;
+
+query:
+select name age from students where name = &apos;lxr&apos;;
+</code></pre></li>
+</ul>
+<h2 id="数据库的模糊查询"><a href="#数据库的模糊查询" class="headerlink" title="数据库的模糊查询"></a>数据库的模糊查询</h2><ul>
+<li>使用like可以实现数据库的模糊查询</li>
+<li><pre><code>select name age from students where name LIKE&apos;Mc%&apos;; 
+SQL模糊查询，使用like比较字，加上SQL里的通配符，请参考以下：
+  　　1、LIKE&apos;Mc%&apos; 将搜索以字母 Mc 开头的所有字符串（如 McBadden）。
+  　　2、LIKE&apos;%inger&apos; 将搜索以字母 inger 结尾的所有字符串（如 Ringer、Stringer）。
+  　　3、LIKE&apos;%en%&apos; 将搜索在任何位置包含字母 en 的所有字符串（如 Bennet、Green、McBadden）。
+  　　4、LIKE&apos;_heryl&apos; 将搜索以字母 heryl 结尾的所有六个字母的名称（如 Cheryl、Sheryl）。
+  　　5、LIKE&apos;[CK]ars[eo]n&apos; 将搜索下列字符串：Carsen、Karsen、Carson 和 Karson（如 Carson）。
+  　　6、LIKE&apos;[M-Z]inger&apos; 将搜索以字符串 inger 结尾、以从 M 到 Z 的任何单个字母开头的所有名称（如 Ringer）。
+  　　7、LIKE&apos;M[^c]%&apos; 将搜索以字母 M 开头，并且第二个字母不是 c 的所有名称（如MacFeather）。
+</code></pre></li>
+</ul>
+<h2 id="数据库的优化"><a href="#数据库的优化" class="headerlink" title="数据库的优化"></a>数据库的优化</h2><ul>
+<li><p>使用事务。大量数据增加或删除时如果不使用事务，而是循环调用 INSERT 和 DELETE 的话，会因为每一笔操作都需要打开、写入最后关闭 journal  文件（这个文件是临时用来保存数据操作的中间结果）而使得开销非常大。<br>使用方法：</p>
+<ul>
+<li>db.beginTransaction()。</li>
+<li>开始进行循环添加或者删除操作。    </li>
+<li>db.setTransactionSuccessful()。</li>
+<li>db.endTransaction()。</li>
+</ul>
+</li>
+<li><p>使用索引。索引维护着一个表中某一列或某几列的顺序，这样就可 以快速定位到一组值，而不用扫遍全表。所有的索引信息会被保存在一个 独立的索引表中，所以会产生额外的空间占用，不过绝对物超所值，特别 是当你会在数据库中进行大量的读及搜索操作时。</p>
+<ul>
+<li>创建语句：CREATE INDEX name_index ON username(firstname, lastname)</li>
+<li><p>索引分类：</p>
+<ul>
+<li>普通索引和唯一性索引。 </li>
+<li>单个索引：索引建立语句中仅包含单个字段。复合索引：在索引建立语句中同时包含多个字段。</li>
+<li><p>聚簇索引：物理索引，与基表的物理顺序相同，数据值的顺序总是按照 顺序排列。非聚簇索引。</p>
+</li>
+<li><p>使用场景：</p>
+<ul>
+<li>当某字段数据更新频率较低，查询频率较高，经常有范围 查询(&gt;, &lt;, =, &gt;=, &lt;=)或 order by、group by 发生时建议使用索引。</li>
+<li>经常同时存取多列，且每列都含有重复值可考虑建立复合索引。</li>
+<li>使用注意项（较难）：<ul>
+<li>对于复合索引，把使用最频繁的列做为前导列 (索引中第一个字段)。<ul>
+<li>避免对索引列进行计算，对 where 子句列的任何计算如果不能被编译 优化，都会导致查询时索引失效。</li>
+</ul>
+</li>
+<li>比较值避免使用 NULL。 </li>
+<li>多表查询时要注意是选择合适的表做为内表。内外表的选择可由公式： 外层表中的匹配行数*内层表中每一次查找的次数确定，乘积最小为最佳 方案。</li>
+<li>把过滤记录数最多的条件放在最前面。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>sql 语句拼接时可以使用 StringBuffer 代替 String。 </p>
+</li>
+<li>在写表时调用 sqliteOpenHelper..getWritableDatabase()，<br>在读表时候调用 sqliteOpenHelper..getReadableDatabase()，getReadableDatabase 性能更优。</li>
+<li>开启子线程进行数据库读写。</li>
+</ul>
+<h2 id="版本迭代中数据库的更新问题"><a href="#版本迭代中数据库的更新问题" class="headerlink" title="版本迭代中数据库的更新问题"></a>版本迭代中数据库的更新问题</h2><ul>
+<li><p>应用程序如何知道数据库需要升级：SQLiteOpenHelper类的构造函数有 一个参数是int version，它的意思就是指数据库版本号。比如在应用1.0版本 中，我们使用SQLiteOpenHelper访问数据库时，该参数为1，那么数据库版本号 1就会写在我们的数据库中。到了1.1版本，我们的数据库需要发生变化，那么 我们1.1版本的程序中就要使用一个大于1的整数来构造SQLiteOpenHelper类， 用于访问新的数据库，比如2。当我们的1.1新程序读取1.0版本的老数据库时， 就发现老数据库里存储的数据库版本是1，而我们新程序访问它时填的版本号为 2，系统就知道数据库需要升级。<br>何时触发数据库升级：当系统在构造 SQLiteOpenHelper 类的对象时，如果 发现版本号不一样，就会自动调用   onUpgrade    函数，让你在这里对数据库进行升级。</p>
+</li>
+<li><p>升级时应该考虑的问题：数据库中的原数据不能丢失。</p>
+<ul>
+<li>如何升级：在 onUpgrade 方法中执行相应的更新数据库的 sql 语句就行了。下 面列举一些常见的更新的sql 语句。<ul>
+<li>增加新表：CREATE TABLE table_name(_id integer primary key autoincrement, region varchar, code varchar)。 增加或者删除列：SQLite数库对ALTER TABLE命令支持非常有限，只能在表末尾 添加列，不能修改列定义，不能删除已有的列。那么如果要修改表呢？我们可 以采用临时表的办法。具体来说有四步：<ul>
+<li>将表明改为临时表：ALTER TABLE table_name RENAME TO table_name_temp </li>
+<li>创建新表。</li>
+<li>将临时表的数据导入新表（不能出现values关键字）：insert into table_name (_id, region, code, country) select _id, region, code, \”CHINA\” from table_name_temp</li>
+<li>删除临时表：DROP TABLE table_name _temp</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>跨版本的数据库升级问题：应用程序发布了多个版本，以致出现了三个及 以上数据库版本。如何确保所有的用户升级应用后数据库都能用呢？</p>
+<ul>
+<li><p>方法一：确定相邻版本的差别，从版本1开始依次迭代更新，先执行v1到v2，再v2到v3这样依次下去。 优点：每次更新数据库的时候只需要在onUpgrade方法的末尾加一段从上个版 本升级到新版本的代码，易于理解和维护。 缺点：是当版本变多之后，多次迭代升级可能需要花费不少时间，增加用户等 待时间；</p>
+</li>
+<li><p>方式二：为每个版本确定与现在数据库的差别，为每个case撰写专门的升级代码。 优点：则是可以保证每个版本的用户都可以在消耗最少的时间升级到最新的数据库而无需做无用的数据多次转存。缺点：是强迫开发者记忆所有版本数据库的完整结构，且每次升级时 onUpgrade方法都必须全部重写。</p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Wu WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Wu Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-数据库/" rel="tag">#Android,数据库</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/11/静态代理和动态代理解析/" rel="next" title="静态代理和动态代理解析">
+                <i class="fa fa-chevron-left"></i> 静态代理和动态代理解析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/21/MVC,MVP和MVVM开发模式解析 -升级版/" rel="prev" title="MVC,MVP和MVVM开发模式解析">
+                MVC,MVP和MVVM开发模式解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/01/16/Android下数据库的解析/"
+     data-title="Android下数据库的解析"
+     data-content=""
+     data-url="http://yoursite.com/2016/01/16/Android下数据库的解析/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/16/Android下数据库的解析/"
+           data-title="Android下数据库的解析" data-url="http://yoursite.com/2016/01/16/Android下数据库的解析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Mr.Wu" />
+          <p class="site-author-name" itemprop="name">Mr.Wu</p>
+          <p class="site-description motion-element" itemprop="description">The closer you think you are,the less you will actually see.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android下数据库的解析"><span class="nav-number">1.</span> <span class="nav-text">Android下数据库的解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建表的语句："><span class="nav-number">1.1.</span> <span class="nav-text">建表的语句：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库文件的赠删改查："><span class="nav-number">1.2.</span> <span class="nav-text">数据库文件的赠删改查：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的模糊查询"><span class="nav-number">1.3.</span> <span class="nav-text">数据库的模糊查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的优化"><span class="nav-number">1.4.</span> <span class="nav-text">数据库的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本迭代中数据库的更新问题"><span class="nav-number">1.5.</span> <span class="nav-text">版本迭代中数据库的更新问题</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Wu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="mailto:thisismrwu@163.com">Mr.Wu</a> 强力驱动
+</div>
+
+<!-- <div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    #NexT.Mist
+  </a>
+</div> -->
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"thisismrwu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
