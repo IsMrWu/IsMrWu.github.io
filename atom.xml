@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-25T07:44:52.223Z</updated>
+  <updated>2017-01-25T09:45:22.813Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_%E5%BE%AE%E4%BF%A1%E8%87%AA%E5%8A%A8%E6%8A%A2%E7%BA%A2%E5%8C%85%E6%8F%92%E4%BB%B6/"/>
     <id>http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/</id>
     <published>2017-01-25T08:05:00.000Z</published>
-    <updated>2017-01-25T07:44:52.223Z</updated>
+    <updated>2017-01-25T09:45:22.813Z</updated>
     
     <content type="html"><![CDATA[<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><ul>
 <li>使用AccessibilityService对程序进行模拟点击</li>
@@ -52,7 +52,7 @@
 <h1 id="下载链接"><a href="#下载链接" class="headerlink" title="下载链接"></a>下载链接</h1><ul>
 <li><a href="https://www.pgyer.com/zrCk" target="_blank" rel="external">最新版下载链接</a></li>
 <li>下载密码：4321</li>
-<li>由于不可描述的原因，应用的链接可能会失效，若发现失效请发送邮件：thisismrwu@163.com获取应用最新安装包。</li>
+<li>由于不可描述的原因，应用的链接可能会失效，若发现失效请<a href="http://pan.baidu.com/s/1qYRN6zi" target="_blank" rel="external">点击该处通过百度云</a>获取应用最新安装包。</li>
 </ul>
 <h1 id="免责声明"><a href="#免责声明" class="headerlink" title="免责声明"></a>免责声明</h1><ul>
 <li>插件使用者自行承担随之而来的各种风险，包括但不限于“禁用红包功能”、“微信封号”，不过该插件用户群体较少，所以该风险较小。</li>
@@ -61,7 +61,7 @@
     
     <summary type="html">
     
-      这是一款微信抢红包的插件，适用于自动发现红包和自动点击打开红包，让你抢红包总是快人一步（注意：该插件无法控制抢到的金额，只是能再速度上取胜）。
+      这是一款微信抢红包的插件，适用于自动发现红包和自动点击打开红包，让你抢红包总是快人一步（注意：该插件无法控制抢到的金额，只是能在速度上取胜）。
     
     </summary>
     
