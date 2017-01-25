@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-12T13:58:18.372Z</updated>
+  <updated>2017-01-25T07:44:52.223Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件</title>
+    <link href="http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_%E5%BE%AE%E4%BF%A1%E8%87%AA%E5%8A%A8%E6%8A%A2%E7%BA%A2%E5%8C%85%E6%8F%92%E4%BB%B6/"/>
+    <id>http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/</id>
+    <published>2017-01-25T08:05:00.000Z</published>
+    <updated>2017-01-25T07:44:52.223Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><ul>
+<li>使用AccessibilityService对程序进行模拟点击</li>
+<li>使用系统服务监听应用UI变化</li>
+</ul>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><ul>
+<li>打开『GetLuckyMoneyPluginByMr.Wu』的应用，开启插件。</li>
+<li><p>等待微信红包进账。    </p>
+<ul>
+<li>注意:最好设置屏幕常亮<h1 id="软件截图"><a href="#软件截图" class="headerlink" title="软件截图"></a>软件截图</h1></li>
+</ul>
+</li>
+<li><p>第一步打开软件</p>
+</li>
+</ul>
+<p><img src="http://p1.bpimg.com/567571/ee5da0b30b69187a.png" alt="step1"></p>
+<ul>
+<li>第二步查看服务的开启状态</li>
+</ul>
+<p><img src="http://i1.piimg.com/567571/4110ed8a2711aab7.png" alt="step2"></p>
+<ul>
+<li>第三步开启服务</li>
+</ul>
+<p><img src="http://i1.piimg.com/567571/a613fe8e11b60c26.png" alt="step3"></p>
+<ul>
+<li>第四步检查服务是否开启</li>
+</ul>
+<p><img src="http://p1.bpimg.com/567571/2121008ddd2564a8.png" alt="step4"></p>
+<h1 id="下载链接"><a href="#下载链接" class="headerlink" title="下载链接"></a>下载链接</h1><ul>
+<li><a href="https://www.pgyer.com/zrCk" target="_blank" rel="external">最新版下载链接</a></li>
+<li>下载密码：4321</li>
+<li>由于不可描述的原因，应用的链接可能会失效，若发现失效请发送邮件：thisismrwu@163.com获取应用最新安装包。</li>
+</ul>
+<h1 id="免责声明"><a href="#免责声明" class="headerlink" title="免责声明"></a>免责声明</h1><ul>
+<li>插件使用者自行承担随之而来的各种风险，包括但不限于“禁用红包功能”、“微信封号”，不过该插件用户群体较少，所以该风险较小。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      这是一款微信抢红包的插件，适用于自动发现红包和自动点击打开红包，让你抢红包总是快人一步（注意：该插件无法控制抢到的金额，只是能再速度上取胜）。
+    
+    </summary>
+    
+      <category term="生活相关" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="微信红包，插件，自动点击打开" scheme="http://yoursite.com/tags/%E5%BE%AE%E4%BF%A1%E7%BA%A2%E5%8C%85%EF%BC%8C%E6%8F%92%E4%BB%B6%EF%BC%8C%E8%87%AA%E5%8A%A8%E7%82%B9%E5%87%BB%E6%89%93%E5%BC%80/"/>
+    
+  </entry>
   
   <entry>
     <title>HappyNewYear</title>

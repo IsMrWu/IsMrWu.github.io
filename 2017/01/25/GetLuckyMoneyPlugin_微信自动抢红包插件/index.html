@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,依赖注入" />
+  <meta name="keywords" content="微信红包，插件，自动点击打开" />
 
 
 
@@ -86,16 +86,21 @@
 
 
 
-<meta name="description" content="这是一篇很好的阐述Android依赖注入的文章">
+<meta name="description" content="这是一款微信抢红包的插件，适用于自动发现红包和自动点击打开红包，让你抢红包总是快人一步（注意：该插件无法控制抢到的金额，只是能再速度上取胜）。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="依赖注入的解析">
-<meta property="og:url" content="http://yoursite.com/2015/06/07/依赖注入的解析/index.html">
+<meta property="og:title" content="GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件">
+<meta property="og:url" content="http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/index.html">
 <meta property="og:site_name" content="Mr.Wu's Blog">
-<meta property="og:description" content="这是一篇很好的阐述Android依赖注入的文章">
-<meta property="og:updated_time" content="2016-12-19T13:36:31.136Z">
+<meta property="og:description" content="这是一款微信抢红包的插件，适用于自动发现红包和自动点击打开红包，让你抢红包总是快人一步（注意：该插件无法控制抢到的金额，只是能再速度上取胜）。">
+<meta property="og:image" content="http://p1.bpimg.com/567571/ee5da0b30b69187a.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/4110ed8a2711aab7.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/a613fe8e11b60c26.png">
+<meta property="og:image" content="http://p1.bpimg.com/567571/2121008ddd2564a8.png">
+<meta property="og:updated_time" content="2017-01-25T07:44:52.223Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="依赖注入的解析">
-<meta name="twitter:description" content="这是一篇很好的阐述Android依赖注入的文章">
+<meta name="twitter:title" content="GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件">
+<meta name="twitter:description" content="这是一款微信抢红包的插件，适用于自动发现红包和自动点击打开红包，让你抢红包总是快人一步（注意：该插件无法控制抢到的金额，只是能再速度上取胜）。">
+<meta name="twitter:image" content="http://p1.bpimg.com/567571/ee5da0b30b69187a.png">
 
 
 
@@ -113,7 +118,7 @@
   };
 </script>
 
-  <title> 依赖注入的解析 | Mr.Wu's Blog </title>
+  <title> GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件 | Mr.Wu's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +258,7 @@
             
             
               
-                依赖注入的解析
+                GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件
               
             
           </h1>
@@ -265,8 +270,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-07T20:18:43+08:00" content="2015-06-07">
-              2015-06-07
+            <time itemprop="dateCreated" datetime="2017-01-25T16:05:00+08:00" content="2017-01-25">
+              2017-01-25
             </time>
           </span>
 
@@ -279,8 +284,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/依赖注入/" itemprop="url" rel="index">
-                    <span itemprop="name">依赖注入</span>
+                  <a href="/categories/生活相关/" itemprop="url" rel="index">
+                    <span itemprop="name">生活相关</span>
                   </a>
                 </span>
 
@@ -295,8 +300,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/06/07/依赖注入的解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/07/依赖注入的解析/" itemprop="commentsCount"></span>
+                <a href="/2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -324,58 +329,41 @@
       
 
       
-        <h1 id="依赖注入的解析"><a href="#依赖注入的解析" class="headerlink" title="依赖注入的解析"></a>依赖注入的解析</h1><blockquote>
-<ol>
-<li>依赖</li>
-</ol>
-</blockquote>
-<p>如果在 Class A 中，有 Class B 的实例，则称 Class A 对 Class B 有一个依赖。例如下面类 Human 中用到一个 Father 对象，我们就说类 Human 对类 Father 有一个依赖。</p>
-<pre><code>public class Human {
-    ...
-    Father father;
-    ...
-    public Human() {
-        father = new Father();
-    }
-}
-</code></pre><p>仔细看这段代码我们会发现存在一些问题：</p>
-<ul>
-<li>如果现在要改变 father 生成方式，如需要用new Father(String name)初始化 father，需要修改 Human 代码；</li>
-<li>如果想测试不同 Father 对象对 Human 的影响很困难，因为 father 的初始化被写死在了 Human 的构造函数中；</li>
-<li>如果new Father()过程非常缓慢，单测时我们希望用已经初始化好的 father 对象 Mock 掉这个过程也很困难。</li>
+        <h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><ul>
+<li>使用AccessibilityService对程序进行模拟点击</li>
+<li>使用系统服务监听应用UI变化</li>
 </ul>
-<blockquote>
-<p>2.依赖注入</p>
-</blockquote>
-<p>上面将依赖在构造函数中直接初始化是一种 Hard init 方式，弊端在于两个类不够独立，不方便测试。我们还有另外一种 Init 方式，如下：</p>
-<pre><code>public class Human {
-    ...
-    Father father;
-    ...
-    public Human(Father father) {
-        this.father = father;
-    }
-}
-</code></pre><p>上面代码中，我们将 father 对象作为构造函数的一个参数传入。在调用 Human 的构造方法之前外部就已经初始化好了 Father 对象。像这种非自己主动初始化依赖，而通过外部来传入依赖的方式，我们就称为依赖注入。<br>现在我们发现上面 1 中存在的两个问题都很好解决了，简单的说依赖注入主要有两个好处：</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><ul>
+<li>打开『GetLuckyMoneyPluginByMr.Wu』的应用，开启插件。</li>
+<li><p>等待微信红包进账。    </p>
 <ul>
-<li>解耦，将依赖之间解耦。</li>
-<li>因为已经解耦，所以方便做单元测试，尤其是 Mock 测试。</li>
+<li>注意:最好设置屏幕常亮<h1 id="软件截图"><a href="#软件截图" class="headerlink" title="软件截图"></a>软件截图</h1></li>
 </ul>
-<blockquote>
-<p>3.Java 中的依赖注入</p>
-</blockquote>
-<p>依赖注入的实现有多种途径，而在 Java 中，使用注解是最常用的。通过在字段的声明前添加 @Inject 注解进行标记，来实现依赖对象的自动注入。</p>
-<pre><code>public class Human {
-    ...
-    @Inject Father father;
-    ...
-    public Human() {
-    }
-}
-</code></pre><p>上面这段代码看起来很神奇：只是增加了一个注解，Father 对象就能自动注入了？这个注入过程是怎么完成的？实质上，如果你只是写了一个 @Inject 注解，Father 并不会被自动注入。你还需要使用一个依赖注入框架，并进行简单的配置。现在 Java 语言中较流行的依赖注入框架有 Google Guice、Spring 等，而在 Android 上比较流行的有 RoboGuice、Dagger 等。</p>
-<blockquote>
-<p>另外：mock测试就是在测试过程中，对于某些不容易构造或者不容易获取的对象，用一个虚拟的对象来创建以便测试的测试方法。依赖注入的实现有多种途径，而在 Java 中，使用注解是最常用的。比如通过Butter Knife、Dagger依赖注入库实现，都是使用注解来实现依赖注入，但它利用 APT(Annotation Process Tool) 在编译时生成辅助类，这些类继承特定父类或实现特定接口，程序在运行时加载这些辅助类，调用相应接口完成依赖生成和注入。</p>
-</blockquote>
+</li>
+<li><p>第一步打开软件</p>
+</li>
+</ul>
+<p><img src="http://p1.bpimg.com/567571/ee5da0b30b69187a.png" alt="step1"></p>
+<ul>
+<li>第二步查看服务的开启状态</li>
+</ul>
+<p><img src="http://i1.piimg.com/567571/4110ed8a2711aab7.png" alt="step2"></p>
+<ul>
+<li>第三步开启服务</li>
+</ul>
+<p><img src="http://i1.piimg.com/567571/a613fe8e11b60c26.png" alt="step3"></p>
+<ul>
+<li>第四步检查服务是否开启</li>
+</ul>
+<p><img src="http://p1.bpimg.com/567571/2121008ddd2564a8.png" alt="step4"></p>
+<h1 id="下载链接"><a href="#下载链接" class="headerlink" title="下载链接"></a>下载链接</h1><ul>
+<li><a href="https://www.pgyer.com/zrCk" target="_blank" rel="external">最新版下载链接</a></li>
+<li>下载密码：4321</li>
+<li>由于不可描述的原因，应用的链接可能会失效，若发现失效请发送邮件：thisismrwu@163.com获取应用最新安装包。</li>
+</ul>
+<h1 id="免责声明"><a href="#免责声明" class="headerlink" title="免责声明"></a>免责声明</h1><ul>
+<li>插件使用者自行承担随之而来的各种风险，包括但不限于“禁用红包功能”、“微信封号”，不过该插件用户群体较少，所以该风险较小。</li>
+</ul>
 
       
     </div>
@@ -418,7 +406,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Android-依赖注入/" rel="tag">#Android,依赖注入</a>
+            <a href="/tags/微信红包，插件，自动点击打开/" rel="tag">#微信红包，插件，自动点击打开</a>
           
         </div>
       
@@ -427,17 +415,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/01/注解Annotation解析/" rel="next" title="注解Annotation解析">
-                <i class="fa fa-chevron-left"></i> 注解Annotation解析
+              <a href="/2016/12/31/HappyNewYear_2017/" rel="next" title="HappyNewYear">
+                <i class="fa fa-chevron-left"></i> HappyNewYear
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/09/11/静态代理和动态代理解析/" rel="prev" title="静态代理和动态代理解析">
-                静态代理和动态代理解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -452,10 +436,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/06/07/依赖注入的解析/"
-     data-title="依赖注入的解析"
+        <div class="ds-share flat" data-thread-key="2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/"
+     data-title="GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件"
      data-content=""
-     data-url="http://yoursite.com/2015/06/07/依赖注入的解析/">
+     data-url="http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -485,8 +469,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/06/07/依赖注入的解析/"
-           data-title="依赖注入的解析" data-url="http://yoursite.com/2015/06/07/依赖注入的解析/">
+      <div class="ds-thread" data-thread-key="2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/"
+           data-title="GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件" data-url="http://yoursite.com/2017/01/25/GetLuckyMoneyPlugin_微信自动抢红包插件/">
       </div>
     
   </div>
@@ -584,7 +568,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#依赖注入的解析"><span class="nav-number">1.</span> <span class="nav-text">依赖注入的解析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#实现原理"><span class="nav-number">1.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件截图"><span class="nav-number">3.</span> <span class="nav-text">软件截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载链接"><span class="nav-number">4.</span> <span class="nav-text">下载链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#免责声明"><span class="nav-number">5.</span> <span class="nav-text">免责声明</span></a></li></ol></div>
             
           </div>
         </section>
