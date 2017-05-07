@@ -1537,7 +1537,7 @@ public interface KindWoman {
     <link href="http://yoursite.com/2016/09/07/Android%E4%B8%8B%E7%9A%84handler%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E5%85%A8%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2016/09/07/Android下的handler线程间通信全解析/</id>
     <published>2016-09-06T16:00:00.000Z</published>
-    <updated>2017-05-07T12:18:29.786Z</updated>
+    <updated>2017-05-07T12:28:34.432Z</updated>
     
     <content type="html"><![CDATA[<h1 id="android里handler线程间的通信详解"><a href="#android里handler线程间的通信详解" class="headerlink" title="android里handler线程间的通信详解"></a>android里handler线程间的通信详解</h1><p>本文基于Android 的源代码，来分析Java层的handler消息处理机制</p>
 <ul>
@@ -1558,7 +1558,7 @@ libcore/luni/src/main/java/java/lang/ThreadLocal.java
 <li>Looper:不断循环执行（Looper.loop）,按照分发机制将消息分发给目标处理者</li>
 </ul>
 <p>##1.2 构架图</p>
-<p><img src="img/Main.jpg" alt=""> </p>
+<p><img src="/img/Main.jpg" alt=""> </p>
 <ul>
 <li>Looper有一个MessageQueue消息队列；</li>
 <li>MessageQueue有一组待处理的Message；</li>
@@ -1815,7 +1815,7 @@ public Handler(Looper looper, Callback callback, boolean async) {
 调用Handler自身的回调方法handleMessage()，该方法默认为空，Handler子类通过覆写该方法来完成具体的逻辑。
 </code></pre><p>对于很多情况下，消息分发后的处理方法是第3种情况，即Handler.handleMessage()，一般地往往通过覆写该方法从而实现自己的业务逻辑。</p>
 <p>##3.3 消息发送</p>
-<p>发送消息调用链：<br><img src="img/java_sendmessage.png" alt=""></p>
+<p>发送消息调用链：<br><img src="/img/java_sendmessage.png" alt=""></p>
 <p>从上图，可以发现所有的发消息方式，最终都是调用MessageQueue.enqueueMessage();</p>
 <ul>
 <li><p>3.3.1 sendEmptyMessage</p>
@@ -2159,7 +2159,7 @@ private native static void nativeSetFileDescriptorEvents(long ptr, int fd, int e
 </code></pre><p>recycle()，将Message加入到消息池的过程，都是把Message加到链表的表头；</p>
 <p>#六、总结</p>
 <p>最后用一张图，来表示整个消息机制</p>
-<p>图解：<br><img src="img/handler_java.jpg" alt=""> </p>
+<p>图解：<br><img src="/img/handler_java.jpg" alt=""> </p>
 <pre><code>Handler通过sendMessage()发送Message到MessageQueue队列；
 Looper通过loop()，不断提取出达到触发条件的Message，并将Message交给target来处理；
 经过dispatchMessage()后，交回给Handler的handleMessage()来进行相应地处理。
