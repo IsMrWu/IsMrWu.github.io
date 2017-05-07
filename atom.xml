@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-01-25T09:45:22.813Z</updated>
+  <updated>2017-05-07T11:13:57.671Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,1433 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式全解析</title>
+    <link href="http://yoursite.com/2017/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A8%E8%A7%A3%E6%9E%90/"/>
+    <id>http://yoursite.com/2017/05/07/设计模式全解析/</id>
+    <published>2017-05-07T09:49:51.000Z</published>
+    <updated>2017-05-07T11:13:57.671Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>#设计模式全解析（不断更新中…）：</p>
+</blockquote>
+<h1 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h1><ul>
+<li><p>java 语言面向对象的三大特征：封装、继承、多态。</p>
+<ul>
+<li>封装性<ul>
+<li>封装性就是把对象的属性和服务结合成一个独立的相同单位，并尽可能隐蔽对象的内部细节，包含两个含义：<ul>
+<li>把对象的全部属性和全部服务结合在一起，形成一个不可分割的独立单位（即对象）。</li>
+<li>信息隐蔽，即尽可能隐蔽对象的内部细节，对外形成一个边界〔或者说形成一道屏障〕，只保留有限的对外接口使之与外部发生联系。</li>
+</ul>
+</li>
+<li>封装的原则在软件上的反映是：要求使对象以外的部分不能随意存取对象的内部数据（属性），从而有效的避免了外部错误对它的”交叉感染”，使软件错误能够局部化，大大减少查错和排错的难度。</li>
+</ul>
+</li>
+<li><p>继承性</p>
+<ul>
+<li>特殊类的对象拥有其一般类的全部属性与服务，称作特殊类对一般类的继承。一个类可以是多个一般类的特殊类，它从多个一般类中继承了属性与服务，这称为多继承。在java语言中，通常我们称一般类为父类（superclass,超类），特殊类为子类(subclass)。</li>
+</ul>
+</li>
+<li><p>多态性</p>
+<ul>
+<li>对象的多态性是指在一般类中定义的属性或服务被特殊类继承之后，可以具有不同的数据类型或表现出不同的行为。这使得同一个属性或服务在一般类及其各个特殊 类中具有不同的语义。例如：”几何图形”的”绘图”方法，”椭圆”和”多边形”都是”几何图”的子类，其”绘图”方法功能不同。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>java 语言面向对象的六大原则</p>
+<ul>
+<li>开闭原则</li>
+<li>单一职责原则</li>
+<li>里氏替换原则</li>
+<li>依赖倒置原则</li>
+<li>接口隔离原则</li>
+<li>迪米特原则</li>
+</ul>
+</li>
+<li><p>23种传统设计模式：（已经完成11种）</p>
+<ul>
+<li>1.单例设计模式　（完成）</li>
+<li>2.工厂方法模式　（完成）</li>
+<li>3.抽象工厂模式　（完成）</li>
+<li>4.模板方法模式　（完成）</li>
+<li>5.建造者模式　（完成）</li>
+<li>6.代理模式　（完成）</li>
+<li>7.原型模式</li>
+<li>8.中介者模式</li>
+<li>9.命令模式</li>
+<li>10.责任链模式</li>
+<li>11.装饰模式　（完成）</li>
+<li>12.策略模式　（完成）</li>
+<li>13.适配器模式（完成）</li>
+<li>14.迭代器模式</li>
+<li>15.组合模式</li>
+<li>16.观察者模式（完成）</li>
+<li>17.门面模式</li>
+<li>18.备忘录模式</li>
+<li>19.访问者模式</li>
+<li>20.状态模式</li>
+<li>21.解释器模式</li>
+<li>22.享元模式（完成）</li>
+<li>23.桥梁模式</li>
+</ul>
+</li>
+<li>23种传统设计模式PK<ul>
+<li>创建类模式包含工厂方法模式、建造者模式，抽象工厂模式，单例模式和原型模式（5种），他们都能提供对象的创建和管理职责。其中单例模式和原型模式比较容易理解，单例模式是要在内存中只有一个对象，原型模式是要通过复制的方式产生一个新的对象，这两个不容易混淆，剩下的就是工厂方法模式、抽象工厂模式和建造者模式了。这三个之间有较多的相似性。</li>
+<li>结构类模式包括适配器模式，桥梁模式，组合模式，装饰模式，门面模式，享元模式和代理模式（7种），为什么叫结构类模式呢，因为他们都是通过组合类或者对象产生更大结构以适应更高层次的逻辑需求的。</li>
+<li>行为类模式包括责任链模式、命令模式、解释器模式、迭代器模式、中介者模式、备忘录模式、观察者模式、状态模式、策略模式、模板方法模式、访问者模式（11种）。</li>
+</ul>
+</li>
+<li>23种传统设计模式混编<ul>
+<li>比如说：<ul>
+<li>命令模式 +　责任链模式</li>
+<li>工厂方法模式 +　策略模式</li>
+<li>观察者模式　＋　中介者模式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>新的设计模式<ul>
+<li>规格模式、对象池模式、雇工模式、黑板模式、空对象模式…</li>
+</ul>
+</li>
+</ul>
+<h1 id="女孩儿与设计模式"><a href="#女孩儿与设计模式" class="headerlink" title="女孩儿与设计模式"></a>女孩儿与设计模式</h1><ul>
+<li><p>面试的时候，设计模式会经常被问到。其实我们在写代码中或多或少会用到一些模式，面试官问你设计模式的问题，更多是看你有没有总结过。如果一直都是在那垒代码，你当然会认为这是个很难的问题。所以我们需要总结一下设计模式。</p>
+</li>
+<li><p>1.SINGLETON 单例模式</p>
+<ul>
+<li><p>单例模式：单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例单例模式。单例模式只应在有真正的“单一实例”的需求时才可使用。</p>
+</li>
+<li><p>俺有6个漂亮的老婆，她们的老公都是我，我就是我们家里的老公Sigleton，她们只要说道“老公”，都是指的同一个人，那就是我(刚才做了个梦啦，哪有这么好的事)。</p>
+</li>
+</ul>
+</li>
+<li><p>2.FACTORY METHOD 工厂方法模式</p>
+<ul>
+<li><p>工厂方法模式：核心工厂类不再负责所有产品的创建，而是将具体创建的工作交给子类去做，成为一个抽象工厂角色，仅负责给出具体工厂类必须实现的接口，而不接触哪一个产品类应当被实例化这种细节。</p>
+</li>
+<li><p>请MM去麦当劳吃汉堡，不同的MM有不同的口味，要每个都记住是一件烦人的事情，我一般采用Factory Method模式，带着MM到服务员那儿，说“要一个汉堡”，具体要什么样的汉堡呢，让MM直接跟服务员说就行了。</p>
+</li>
+</ul>
+</li>
+<li><p>3.FACTORY 工厂模式</p>
+<ul>
+<li><p>工厂模式：客户类和工厂类分开。消费者任何时候需要某种产品，只需向工厂请求即可。消费者无须修改就可以接纳新产品。缺点是当产品修改时，工厂类也要做相应的修改。如：如何创建及如何向客户端提供。</p>
+</li>
+<li><p>追MM少不了请吃饭了，麦当劳的鸡翅和肯德基的鸡翅都是MM爱吃的东西，虽然口味有所不同，但不管你带MM去麦当劳或肯德基，只管向服务员说“来四个鸡翅”就行了。麦当劳和肯德基就是生产鸡翅的Factory。</p>
+</li>
+</ul>
+</li>
+<li><p>4.BUILDER 建造模式</p>
+<ul>
+<li><p>建造模式：将产品的内部表象和产品的生成过程分割开来，从而使一个建造过程生成具有不同的内部表象的产品对象。建造模式使得产品内部表象可以独立的变化，客户不必知道产品内部组成的细节。建造模式可以强制实行一种分步骤进行的建造过程。</p>
+</li>
+<li><p>MM最爱听的就是“我爱你”这句话了，见到不同地方的MM，要能够用她们的方言跟她说这句话哦，我有一个多种语言翻译机，上面每种语言都有一个按键，见到MM我只要按对应的键，它就能够用相应的语言说出“我爱你”这句话了，国外的MM也可以轻松搞掂，这就是我的“我爱你”builder。（这一定比美军在伊拉克用的翻译机好卖）</p>
+</li>
+</ul>
+</li>
+<li><p>5.PROTOTYPE 原型模式</p>
+<ul>
+<li><p>原型模式允许动态的增加或减少产品类，产品类不需要非得有任何事先确定的等级结构，原始模型模式适用于任何的等级结构。缺点是每一个类都必须配备一个克隆方法。</p>
+</li>
+<li><p>跟MM用QQ聊天，一定要说些深情的话语了，我搜集了好多肉麻的情话，需要时只要copy出来放到QQ里面就行了，这就是我的情话prototype了。 原型模式：通过给出一个原型对象来指明所要创建的对象的类型，然后用复制这个原型对象的方法创建出更多同类型的对象。</p>
+</li>
+</ul>
+</li>
+<li><p>6.ADAPTER 适配器模式</p>
+<ul>
+<li><p>适配器（变压器）模式：把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口原因不匹配而无法一起工作的两个类能够一起工作。适配类可以根据参数返还一个合适的实例给客户端。</p>
+</li>
+<li><p>在朋友聚会上碰到了一个美女Sarah，从香港来的，可我不会说粤语，她不会说普通话，只好求助于我的朋友kent了，他作为我和Sarah之间的Adapter，让我和Sarah可以相互交谈了(也不知道他会不会耍我)。</p>
+</li>
+</ul>
+</li>
+<li><p>7.BRIDGE 桥梁模式</p>
+<ul>
+<li><p>桥梁模式：将抽象化与实现化脱耦，使得二者可以独立的变化，也就是说将他们之间的强关联变成弱关联，也就是指在一个软件系统的抽象化和实现化之间使用组合/聚合关系而不是继承关系，从而使两者可以独立的变化。</p>
+</li>
+<li><p>早上碰到MM，要说早上好，晚上碰到MM，要说晚上好；碰到MM穿了件新衣服，要说你的衣服好漂亮哦，碰到MM新做的发型，要说你的头发好漂亮哦。不要问我“早上碰到MM新做了个发型怎么说”这种问题，自己用BRIDGE组合一下不就行了。</p>
+</li>
+</ul>
+</li>
+<li><p>8.COMPOSITE 合成模式</p>
+<ul>
+<li><p>合成模式：合成模式将对象组织到树结构中，可以用来描述整体与部分的关系。合成模式就是一个处理对象的树结构的模式。合成模式把部分与整体的关系用树结构表示出来。合成模式使得客户端把一个个单独的成分对象和由他们复合而成的合成对象同等看待。</p>
+</li>
+<li><p>Mary今天过生日。“我过生日，你要送我一件礼物。”“嗯，好吧，去商店，你自己挑。”“这件T恤挺漂亮，买，这条裙子好看，买，这个包也不错，买。”“喂，买了三件了呀，我只答应送一件礼物的哦。”“什么呀，T恤加裙子加包包，正好配成一套呀，小姐，麻烦你包起来。”“……”，MM都会用Composite模式了，你会了没有？</p>
+</li>
+</ul>
+</li>
+<li><p>9.DECORATOR 装饰模式</p>
+<ul>
+<li><p>装饰模式：装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案，提供比继承更多的灵活性。动态给一个对象增加功能，这些功能可以再动态的撤消。增加由一些基本功能的排列组合而产生的非常大量的功能。</p>
+</li>
+<li><p>Mary过完轮到Sarly过生日，还是不要叫她自己挑了，不然这个月伙食费肯定玩完，拿出我去年在华山顶上照的照片，在背面写上“最好的的礼物，就是爱你的Fita”，再到街上礼品店买了个像框（卖礼品的MM也很漂亮哦），再找隔壁搞美术设计的Mike设计了一个漂亮的盒子装起来……，我们都是Decorator，最终都在修饰我这个人呀，怎么样，看懂了吗？</p>
+</li>
+</ul>
+</li>
+<li><p>10.FACADE 门面（外观）模式</p>
+<ul>
+<li><p>门面模式：外部与一个子系统的通信必须通过一个统一的门面对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。每一个子系统只有一个门面类，而且此门面类只有一个实例，也就是说它是一个单例模式。但整个系统可以有多个门面类。</p>
+</li>
+<li><p>我有一个专业的Nikon相机，我就喜欢自己手动调光圈、快门，这样照出来的照片才专业，但MM可不懂这些，教了半天也不会。幸好相机有Facade设计模式，把相机调整到自动档，只要对准目标按快门就行了，一切由相机自动调整，这样MM也可以用这个相机给我拍张照片了。</p>
+</li>
+</ul>
+</li>
+<li><p>11.FLYWEIGHT 享元模式</p>
+<ul>
+<li><p>享元模式：FLYWEIGHT在拳击比赛中指最轻量级。享元模式以共享的方式高效的支持大量的细粒度对象。享元模式能做到共享的关键是区分内蕴状态和外蕴状态。内蕴状态存储在享元内部，不会随环境的改变而有所不同。外蕴状态是随环境的改变而改变的。外蕴状态不能影响内蕴状态，它们是相互独立的。将可以共享的状态和不可以共享的状态从常规类中区分开来，将不可以共享的状态从类里剔除出去。客户端不可以直接创建被共享的对象，而应当使用一个工厂对象负责创建被共享的对象。享元模式大幅度的降低内存中对象的数量。</p>
+</li>
+<li><p>每天跟MM发短信，手指都累死了，最近买了个新手机，可以把一些常用的句子存在手机里，要用的时候，直接拿出来，在前面加上MM的名字就可以发送了，再不用一个字一个字敲了。共享的句子就是Flyweight，MM的名字就是提取出来的外部特征，根据上下文情况使用。</p>
+</li>
+</ul>
+</li>
+<li><p>12.PROXY 代理模式</p>
+<ul>
+<li><p>代理模式：代理模式给某一个对象提供一个代理对象，并由代理对象控制对源对象的引用。代理就是一个人或一个机构代表另一个人或者一个机构采取行动。某些情况下，客户不想或者不能够直接引用一个对象，代理对象可以在客户和目标对象直接起到中介的作用。客户端分辨不出代理主题对象与真实主题对象。代理模式可以并不知道真正的被代理对象，而仅仅持有一个被代理对象的接口，这时候代理对象不能够创建被代理对象，被代理对象必须有系统的其他角色代为创建并传入。</p>
+</li>
+<li><p>跟MM在网上聊天，一开头总是“hi,你好”,“你从哪儿来呀？”“你多大了？”“身高多少呀？”这些话，真烦人，写个程序做为我的Proxy吧，凡是接收到这些话都设置好了自己的回答，接收到其他的话时再通知我回答，怎么样，酷吧。</p>
+</li>
+</ul>
+</li>
+<li><p>13.CHAIN OF RESPONSIBLEITY 责任链模式</p>
+<ul>
+<li><p>责任链模式：在责任链模式中，很多对象由每一个对象对其下家的引用而接起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。客户并不知道链上的哪一个对象最终处理这个请求，系统可以在不影响客户端的情况下动态的重新组织链和分配责任。处理者有两个选择：承担责任或者把责任推给下家。一个请求可以最终不被任何接收端对象所接受。</p>
+</li>
+<li><p>晚上去上英语课，为了好开溜坐到了最后一排，哇，前面坐了好几个漂亮的MM哎，找张纸条，写上“Hi,可以做我的女朋友吗？如果不愿意请向前传”，纸条就一个接一个的传上去了，糟糕，传到第一排的MM把纸条传给老师了，听说是个老处女呀，快跑!</p>
+</li>
+</ul>
+</li>
+<li><p>14.COMMAND 命令模式</p>
+<ul>
+<li><p>命令模式：命令模式把一个请求或者操作封装到一个对象中。命令模式把发出命令的责任和执行命令的责任分割开，委派给不同的对象。命令模式允许请求的一方和发送的一方独立开来，使得请求的一方不必知道接收请求的一方的接口，更不必知道请求是怎么被接收，以及操作是否执行，何时被执行以及是怎么被执行的。系统支持命令的撤消。</p>
+</li>
+<li><p>俺有一个MM家里管得特别严，没法见面，只好借助于她弟弟在我们俩之间传送信息，她对我有什么指示，就写一张纸条让她弟弟带给我。这不，她弟弟又传送过来一个COMMAND，为了感谢他，我请他吃了碗杂酱面，哪知道他说：“我同时给我姐姐三个男朋友送COMMAND，就数你最小气，才请我吃面。”</p>
+</li>
+</ul>
+</li>
+<li><p>15.INTERPRETER 解释器模式</p>
+<ul>
+<li><p>解释器模式：给定一个语言后，解释器模式可以定义出其文法的一种表示，并同时提供一个解释器。客户端可以使用这个解释器来解释这个语言中的句子。解释器模式将描述怎样在有了一个简单的文法后，使用模式设计解释这些语句。在解释器模式里面提到的语言是指任何解释器对象能够解释的任何组合。在解释器模式中需要定义一个代表文法的命令类的等级结构，也就是一系列的组合规则。每一个命令对象都有一个解释方法，代表对命令对象的解释。命令对象的等级结构中的对象的任何排列组合都是一个语言。</p>
+</li>
+<li><p>俺有一个《泡MM真经》，上面有各种泡MM的攻略，比如说去吃西餐的步骤、去看电影的方法等等，跟MM约会时，只要做一个Interpreter，照着上面的脚本执行就可以了。</p>
+</li>
+</ul>
+</li>
+<li><p>16.ITERATOR 迭代子模式</p>
+<ul>
+<li><p>迭代子模式：迭代子模式可以顺序访问一个聚集中的元素而不必暴露聚集的内部表象。多个对象聚在一起形成的总体称之为聚集，聚集对象是能够包容一组对象的容器对象。迭代子模式将迭代逻辑封装到一个独立的子对象中，从而与聚集本身隔开。迭代子模式简化了聚集的界面。每一个聚集对象都可以有一个或一个以上的迭代子对象，每一个迭代子的迭代状态可以是彼此独立的。迭代算法可以独立于聚集角色变化。</p>
+</li>
+<li><p>我爱上了Mary，不顾一切的向她求婚。Mary：“想要我跟你结婚，得答应我的条件” 我：“什么条件我都答应，你说吧” Mary：“我看上了那个一克拉的钻石” 我：“我买，我买，还有吗？” Mary：“我看上了湖边的那栋别墅” 我：“我买，我买，还有吗？” Mary：“我看上那辆法拉利跑车” 我脑袋嗡的一声，坐在椅子上，一咬牙：“我买，我买，还有吗？” ……</p>
+</li>
+</ul>
+</li>
+<li><p>17.MEDIATOR 调停者模式</p>
+<ul>
+<li><p>调停者模式：调停者模式包装了一系列对象相互作用的方式，使得这些对象不必相互明显作用。从而使他们可以松散偶合。当某些对象之间的作用发生改变时，不会立即影响其他的一些对象之间的作用。保证这些作用可以彼此独立的变化。调停者模式将多对多的相互作用转化为一对多的相互作用。调停者模式将对象的行为和协作抽象化，把对象在小尺度的行为上与其他对象的相互作用分开处理。</p>
+</li>
+<li><p>四个MM打麻将，相互之间谁应该给谁多少钱算不清楚了，幸亏当时我在旁边，按照各自的筹码数算钱，赚了钱的从我这里拿，赔了钱的也付给我，一切就OK啦，俺得到了四个MM的电话。</p>
+</li>
+</ul>
+</li>
+<li><p>18.MEMENTO 备忘录模式</p>
+<ul>
+<li><p>备忘录模式：备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捉住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。</p>
+</li>
+<li><p>同时跟几个MM聊天时，一定要记清楚刚才跟MM说了些什么话，不然MM发现了会不高兴的哦，幸亏我有个备忘录，刚才与哪个MM说了什么话我都拷贝一份放到备忘录里面保存，这样可以随时察看以前的记录啦。</p>
+</li>
+</ul>
+</li>
+<li><p>19.OBSERVER 观察者模式</p>
+<ul>
+<li><p>观察者模式：观察者模式定义了一种一队多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使他们能够自动更新自己。</p>
+</li>
+<li><p>想知道咱们公司最新MM情报吗？加入公司的MM情报邮件组就行了，tom负责搜集情报，他发现的新情报不用一个一个通知我们，直接发布给邮件组，我们作为订阅者（观察者）就可以及时收到情报啦。</p>
+</li>
+</ul>
+</li>
+<li><p>20.STATE 状态模式</p>
+<ul>
+<li><p>状态模式：状态模式允许一个对象在其内部状态改变的时候改变行为。这个对象看上去象是改变了它的类一样。状态模式把所研究的对象的行为包装在不同的状态对象里，每一个状态对象都属于一个抽象状态类的一个子类。状态模式的意图是让一个对象在其内部状态改变的时候，其行为也随之改变。状态模式需要对每一个系统可能取得的状态创立一个状态类的子类。当系统的状态变化时，系统便改变所选的子类。</p>
+</li>
+<li><p>跟MM交往时，一定要注意她的状态哦，在不同的状态时她的行为会有不同，比如你约她今天晚上去看电影，对你没兴趣的MM就会说“有事情啦”，对你不讨厌但还没喜欢上的MM就会说“好啊，不过可以带上我同事么？”，已经喜欢上你的MM就会说“几点钟？看完电影再去泡吧怎么样？”，当然你看电影过程中表现良好的话，也可以把MM的状态从不讨厌不喜欢变成喜欢哦。</p>
+</li>
+</ul>
+</li>
+<li><p>21.STRATEGY 策略模式</p>
+<ul>
+<li><p>策略模式：策略模式针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。策略模把行为和环境分开。环境类负责维持和查询行为类，各种算法在具体的策略类中提供。由于算法和环境独立开来，算法的增减，修改都不会影响到环境和客户端。</p>
+</li>
+<li><p>跟不同类型的MM约会，要用不同的策略，有的请电影比较好，有的则去吃小吃效果不错，有的去海边浪漫最合适，单目的都是为了得到MM的芳心，我的追MM锦囊中有好多Strategy哦。</p>
+</li>
+</ul>
+</li>
+<li><p>22.TEMPLATE METHOD 模板模式</p>
+<ul>
+<li><p>模板方法模式：模板方法模式准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。先制定一个顶级逻辑框架，而将逻辑的细节留给具体的子类去实现。</p>
+</li>
+<li><p>看过《如何说服女生上床》这部经典文章吗？女生从认识到上床的不变的步骤分为巧遇、打破僵局、展开追求、接吻、前戏、动手、爱抚、进去八大步骤(Template method)，但每个步骤针对不同的情况，都有不一样的做法，这就要看你随机应变啦(具体实现)。</p>
+</li>
+</ul>
+</li>
+<li><p>23.VISITOR 访问者模式</p>
+<ul>
+<li><p>访问者模式：访问者模式的目的是封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改的话，接受这个操作的数据结构可以保持不变。访问者模式适用于数据结构相对未定的系统，它把数据结构和作用于结构上的操作之间的耦合解脱开，使得操作集合可以相对自由的演化。访问者模式使得增加新的操作变的很容易，就是增加一个新的访问者类。访问者模式将有关的行为集中到一个访问者对象中，而不是分散到一个个的节点类中。当使用访问者模式时，要将尽可能多的对象浏览逻辑放在访问者类中，而不是放到它的子类中。访问者模式可以跨过几个类的等级结构访问属于不同的等级结构的成员类。</p>
+</li>
+<li><p>情人节到了，要给每个MM送一束鲜花和一张卡片，可是每个MM送的花都要针对她个人的特点，每张卡片也要根据个人的特点来挑，我一个人哪搞得清楚，还是找花店老板和礼品店老板做一下Visitor，让花店老板根据MM的特点选一束花，让礼品店老板也根据每个人特点选一张卡，这样就轻松多了。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="设计模式各个击破"><a href="#设计模式各个击破" class="headerlink" title="设计模式各个击破"></a>设计模式各个击破</h1><p>##1.单例设计模式</p>
+<ul>
+<li>保证类在内存中只有一个对象。</li>
+<li>如何保证类在内存中只有一个对象呢？<ul>
+<li>控制类的创建，不让其他类来创建本类的对象，也就是私有化构造；</li>
+<li>在本类中定义本类的对象；</li>
+<li>提供公共的访问方式；</li>
+</ul>
+</li>
+<li><p>单例的几种写法</p>
+<ul>
+<li><p>饿汉式：直接new出对象，这种就是以空间换时间</p>
+<pre><code>//饿汉式
+class Singleton {
+    //1,私有构造函数
+    private Singleton(){}
+    //2,创建本类对象
+    private static Singleton s = new Singleton();
+    //3,对外提供公共的访问方法
+    public static Singleton getInstance() {
+        return s;
+    }
+
+    public static void print() {
+        System.out.println(&quot;饿汉式的方法&quot;);
+    }
+}
+</code></pre></li>
+<li><p>(2)懒汉式 面试写这种方式。多线程的问题？</p>
+<pre><code>//懒汉式,单例的延迟加载模式
+class Singleton {
+    //1,私有构造函数
+    private Singleton(){}
+    //2,声明一个本类的引用
+    private static Singleton s;
+    //3,对外提供公共的访问方法
+    public static Singleton getInstance() {
+        if(s == null)
+            //线程1,线程2（可能某个对象在wait()）
+            s = new Singleton();
+        return s;
+    }
+
+    public static void print() {
+        System.out.println(&quot;懒汉式的方法&quot;);
+    }
+}
+ * 饿汉式和懒汉式的区别
+ * 1,饿汉式是空间换时间,懒汉式是时间换空间
+ * 2,在多线程访问时,饿汉式不会创建多个对象,而懒汉式有可能会创建多个对象
+ */
+
+由于懒汉式存在线程安全的问题，所以我们可以这样做：
+使用双重检测锁机制，先检测是否为空，如果为空再对该单例类加锁，再判断一次是否为空，这样既解决了线程的安全问题，也避免了每次使用单例都要加锁带来的系统资源的消耗。代码如下：
+class Singleton {
+    //1,私有构造函数
+    private Singleton(){}
+    //2,声明一个本类的引用
+    private static volatile Singleton s;
+    //3,对外提供公共的访问方法
+    public static Singleton getInstance() {
+        if(s == null)
+            Synchronized(Singleton.class){
+                if(s == null) {
+                    s = new Singleton();
+                }
+            }
+        return s;
+    }
+
+    public static void print() {
+        System.out.println(&quot;懒汉式的方法&quot;);
+    }
+}
+</code></pre></li>
+<li><p>(3)第三种格式</p>
+<pre><code>class Singleton {
+    private Singleton() {}
+
+    public static final Singleton s = new Singleton();//final是最终的意思,被final修饰的变量不可以被更改
+}
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p>##2.装饰设计模式</p>
+<ul>
+<li><p>顾名思义，装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例。</p>
+<pre><code>public class Demo_Wrap {
+
+    /**
+     * @param args
+     * 装饰设计模式的好处是:
+     * 耦合性不强,被装饰的类的变化与装饰类的变化无关
+     */
+    public static void main(String[] args) {
+        AdvanceStudent as = new AdvanceStudent(new Student());
+        as.code();
+    }
+
+}
+
+interface Coder {
+    public void code();
+}
+
+class Student implements Coder {
+
+    @Override
+    public void code() {
+        System.out.println(&quot;javase&quot;);
+        System.out.println(&quot;javaweb&quot;);
+    }
+
+}
+
+class AdvanceStudent implements Coder {
+    //1,获取被装饰类的引用
+    private Student s;                        //获取学生引用
+
+    //2,在构造方法中传入被装饰类的对象
+    public AdvanceStudent(Student s) {
+        this.s = s;
+    }
+
+    //3,对原有的功能进行升级
+    @Override
+    public void code() {
+        s.code();
+        System.out.println(&quot;ssh&quot;);
+        System.out.println(&quot;数据库&quot;);
+        System.out.println(&quot;大数据&quot;);
+        System.out.println(&quot;...&quot;);
+    }
+}
+</code></pre></li>
+</ul>
+<p>##3.简单工厂设计模式</p>
+<ul>
+<li>简单工厂模式概述<ul>
+<li>又叫静态工厂方法模式，它定义一个具体的工厂类负责创建一些类的实例</li>
+</ul>
+</li>
+<li>优点<ul>
+<li>客户端不需要在负责对象的创建，从而明确了各个类的职责</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>这个静态工厂类负责所有对象的创建，如果有新的对象增加，或者某些对象的创建方式不同，就需要不断的修改工厂类，不利于后期的维护</li>
+</ul>
+</li>
+<li>案例演示<ul>
+<li>动物抽象类：public abstract Animal { public abstract void eat(); }</li>
+<li>具体狗类：public class Dog extends Animal {}</li>
+<li>具体猫类：public class Cat extends Animal {}</li>
+<li>开始，在测试类中每个具体的内容自己创建对象，但是，创建对象的工作如果比较麻烦，就需要有人专门做这个事情，所以就知道了一个专门的类来创建对象。</li>
+</ul>
+</li>
+<li><pre><code>//动物抽象类
+public abstract class Animal {
+    public abstract void eat();
+}
+</code></pre></li>
+</ul>
+<pre><code>//猫类
+public class Cat extends Animal {
+
+    @Override
+    public void eat() {
+        System.out.println(&quot;猫吃鱼&quot;);
+    }
+
+}
+
+
+//狗类
+public class Dog extends Animal {
+
+    @Override
+    public void eat() {
+        System.out.println(&quot;狗吃肉&quot;);
+    }
+
+}
+
+//动物工厂类
+public class AnimalFactory {
+    /*public static Dog createDog() {
+        return new Dog();
+    }
+
+    public static Cat createCat() {
+        return new Cat();
+    }*/
+
+    //发现方法会定义很多,复用性太差
+    //改进
+    public static Animal createAnimal(String name) {
+        if(&quot;dog&quot;.equals(name)) {
+            return new Dog();
+        }else if(&quot;cat&quot;.equals(name)) {
+            return new Cat();
+        }else {
+            return null;
+        }
+    }
+}
+
+//测试类
+public class Test {
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        //Dog d = AnimalFactory.createDog();
+
+        Dog d = (Dog) AnimalFactory.createAnimal(&quot;dog&quot;);
+        d.eat();
+
+        Cat c = (Cat) AnimalFactory.createAnimal(&quot;cat&quot;);
+        c.eat();
+    }
+}
+</code></pre><p>##3.工厂方法设计模式</p>
+<ul>
+<li>工厂方法模式概述<ul>
+<li>工厂方法模式中抽象工厂类负责定义创建对象的接口，具体对象的创建工作由继承抽象工厂的具体类实现。</li>
+</ul>
+</li>
+<li>优点<ul>
+<li>客户端不需要在负责对象的创建，从而明确了各个类的职责，如果有新的对象增加，只需要增加一个具体的类和具体的工厂类即可，不影响已有的代码，后期维护容易，增强了系统的扩展性</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>需要额外的编写代码，增加了工作量</li>
+</ul>
+</li>
+<li>案例演示<ul>
+<li>动物抽象类：public abstract Animal { public abstract void eat(); }</li>
+<li>工厂接口：public interface Factory {public abstract Animal createAnimal();}</li>
+<li>具体狗类：public class Dog extends Animal {}</li>
+<li>具体猫类：public class Cat extends Animal {}<br>开始，在测试类中每个具体的内容自己创建对象，但是，创建对象的工作如果比较麻烦，就需要有人专门做这个事情，所以就知道了一个专门的类来创建对象。发现每次修改代码太麻烦，用工厂方法改进，针对每一个具体的实现提供一个具体工厂。</li>
+<li>狗工厂：public class DogFactory implements Factory {<pre><code>    public Animal createAnimal() {…}
+}
+</code></pre></li>
+<li>猫工厂：public class CatFactory implements Factory {<pre><code>    public Animal createAnimal() {…}
+}  
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<pre><code>//动物抽象类
+public abstract class Animal {
+    public abstract void eat();
+}
+
+//工厂接口
+public interface Factory {
+    public Animal createAnimal();
+}
+
+//猫工厂类
+public class CatFactory implements Factory {
+
+    @Override
+    public Animal createAnimal() {
+
+        return new Cat();
+    }
+
+}
+
+//猫类
+public class Cat extends Animal {
+
+    @Override
+    public void eat() {
+        System.out.println(&quot;猫吃鱼&quot;);
+    }
+
+}
+
+//狗工厂类
+public class DogFactory implements Factory {
+
+    @Override
+    public Animal createAnimal() {
+
+        return new Dog();
+    }
+
+}
+
+//狗类
+public class Dog extends Animal {
+
+    @Override
+    public void eat() {
+        System.out.println(&quot;狗吃肉&quot;);
+    }
+
+}
+
+//测试类
+public class Test {
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        DogFactory df = new DogFactory();
+        Dog d = (Dog) df.createAnimal();
+        d.eat();
+    }
+
+}
+</code></pre><p>##4.抽象工厂设计模式</p>
+<ul>
+<li>定义：提供一个创建一系列相关或者相互依赖产品的接口， 而无需制定他们的具体类，一对多的关系。抽象工厂模式是 工厂方法模式的升级版。</li>
+<li>例子： 我们接着前边土豪的故事继续讲。话说这个土豪还有一个爱好，就是打猎。但是土豪打猎是有要求的（毕竟土豪嘛，要就就得高一点），他如果坐Audi车去打猎，那么他就一定要使用AK47这把枪（这是去打猎吗？）；如果他坐Benz车去打猎那么他就一定要用M4A1这把枪，如果按照我们前边讲的工厂方法模式来编程，那么应该是建立一个Car的抽象工厂类CarFactory，然后Benz车的工厂继承自这个抽象的父类并实现生产Benz车的方法，Audi车的工厂继承自这个抽象的父类并实现生产Audi车的方法。并且还要有一个生产Gun的抽象工厂类，由它的具体子类工厂来实现生产AK47和M4A1。这样做是非常麻烦的，我们已经知道了如果土豪做Audi的话那他一定是使用AK47，所以我们可以使用一个工厂来同时生产Audi车和AK47，注意我说的前提是我们已经知道了土豪一定是Audi车和AK47一起使用的，如果不满足这个条件的话是不能使用抽象工厂模式来解决这个问题的。</li>
+<li><p>优点：即符合面向对象设计的“开闭原则”和“单一职责原 则”。又减少了系统中的类的数量，不用像工厂方法一样每生 产一个产品都要有一个具体的工厂类。</p>
+<pre><code>/**
+ * 仅仅定义生产同一族产品的两个不同等级结构的产品接口，具体的实现由子类工厂来实现
+ * @Mr.Wu
+ *
+ */
+public abstract class AbstractFactory {
+    public abstract Car getCar();
+    public abstract Gun getGun();   
+}
+</code></pre></li>
+</ul>
+<pre><code>/**
+ * Audi车的工厂同时生产Audi车和配套的AK47
+ * @Mr.Wu
+ *
+ */
+public class AudiFactory extends AbstractFactory{
+
+    public Car getCar() {       
+        return new Audi();      
+    }
+
+    public Gun getGun() {
+        return new AK47();
+    }
+}
+
+
+/**
+ * Benz车的工厂同时生产Benz车和配套的M4A1
+ * @Mr.Wu
+ *
+ */
+public class BenzFactory extends AbstractFactory{
+
+    public Car getCar() {        
+        return new Benz();        
+    }
+
+    public Gun getGun() {
+        return new M4A1();
+    }
+}
+
+//gun的抽象类
+public abstract class Gun {
+    abstract void fire();
+}
+
+//M4A1的具体类
+public class M4A1 extends Gun{
+
+    public M4A1(){
+        System.out.println(&quot;Create an M4A1&quot;);
+    }
+
+    public void fire(){
+        System.out.println(&quot;M4A1 start fire&quot;);
+    }
+}
+
+//AK47的类
+public class AK47 extends Gun{
+
+    public AK47(){
+        System.out.println(&quot;Create an AK47&quot;);
+    }
+
+    public void fire(){
+        System.out.println(&quot;AK47 start fire&quot;);
+    }
+}
+
+//车的抽象类
+public abstract class Car {
+    abstract void drive();
+}
+
+//奥迪车的类
+public class Audi extends Car{
+
+    public Audi(){
+        System.out.println(&quot;Create a Audi&quot;);
+    }
+
+    public void drive(){
+        System.out.println(&quot;Audi start engine&quot;);
+    }
+}
+
+//奔驰车的类
+public class Benz extends Car{
+
+    public Benz(){
+        System.out.println(&quot;Create a Benz&quot;);
+    }
+
+    public void drive(){
+        System.out.println(&quot;Benz start engine&quot;);
+    }
+}
+
+//测试类
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        //奔驰车司机
+        AbstractFactory factory = new BenzFactory();
+        //今天想做奥迪车
+        Car car = factory.getCar();
+        //开车
+        car.drive();
+        //获得开Benz时要用的枪
+        Gun gun = factory.getGun();
+        //开火
+        gun.fire();
+    }
+}
+</code></pre><blockquote>
+<p>说明：当抽象工厂模式中每一个具体工厂类只创建一个产品对象，也就是只存在一个产品等级结构时，抽象工厂模式退化成工厂方法模式；当工厂方法模式中抽象工厂与具体工厂合并，提供一个统一的工厂来创建产品对象，并将创建对象的工厂方法设计为静态方法时，工厂方法模式退化成简单工厂模式。</p>
+</blockquote>
+<h2 id="5-享元设计模式"><a href="#5-享元设计模式" class="headerlink" title="5.享元设计模式"></a>5.享元设计模式</h2><ul>
+<li><p>解释一下概念：也就是说在一个系统中如果有多个相同的对象，那么只共享一份就可以了，不必每个都去实例化一个对象。比如说一个文本系统，每个字母定一个对象，那么大小写字母一共就是52个，那么就要定义52个对象。如果有一个1M的文本，那么字母是何其的多，如果每个字母都定义一个对象那么内存早就爆了。那么如果要是每个字母都共享一个对象，那么就大大节约了资源。</p>
+</li>
+<li><p>在Flyweight模式中，由于要产生各种各样的对象，所以在Flyweight(享元)模式中常出现Factory模式。Flyweight的内部状态是用来共享的,Flyweight factory负责维护一个对象存储池（Flyweight Pool）来存放内部状态的对象。Flyweight模式是一个提高程序效率和性能的模式,会大大加快程序的运行速度.应用场合很多，下面举个例子：</p>
+<pre><code>      　　先定义一个抽象的Flyweight类：
+package Flyweight;  
+public abstract class Flyweight{  
+　public abstract void operation();  
+}  
+实现一个具体类：
+</code></pre></li>
+</ul>
+<pre><code>    package Flyweight;  
+    public class ConcreteFlyweight extends Flyweight{  
+    　private String string;  
+    　public ConcreteFlyweight(String str){  
+    　　string = str;  
+    　}  
+    　public void operation()  
+    　{  
+    　　System.out.println(&quot;Concrete---Flyweight : &quot; + string);  
+    　}  
+    }  
+
+实现一个工厂方法类：
+
+    package Flyweight;  
+    import java.util.Hashtable;  
+    public class FlyweightFactory{  
+    　private Hashtable flyweights = new Hashtable();//----------------------------1  
+    　public FlyweightFactory(){}  
+    　public Flyweight getFlyWeight(Object obj){  
+    　　Flyweight flyweight = (Flyweight) flyweights.get(obj);//----------------2  
+    　　if(flyweight == null){//---------------------------------------------------3  
+    　　　//产生新的ConcreteFlyweight  
+    　　　flyweight = new ConcreteFlyweight((String)obj);  
+    　　　flyweights.put(obj, flyweight);//--------------------------------------5  
+    　　}  
+    　　return flyweight;//---------------------------------------------------------6  
+    　}  
+    　public int getFlyweightSize(){  
+    　　return flyweights.size();  
+    　}  
+    }  
+
+这个工厂方法类非常关键，这里详细解释一下：
+　　在1处定义了一个Hashtable用来存储各个对象；在2处选出要实例化的对象，在6处将该对象返回，如果在Hashtable中没有要选择的对象，此时变量flyweight为null，产生一个新的flyweight存储在Hashtable中，并将该对象返回。
+　　最后看看Flyweight的调用：
+
+    package Flyweight;  
+    import java.util.Hashtable;  
+    public class FlyweightPattern{  
+    　FlyweightFactory factory = new FlyweightFactory();   
+    　Flyweight fly1;  
+    　Flyweight fly2;  
+    　Flyweight fly3;  
+    　Flyweight fly4;  
+    　Flyweight fly5;  
+    　Flyweight fly6;  
+    　/** *//** Creates a new instance of FlyweightPattern */  
+    　public FlyweightPattern(){  
+    　　fly1 = factory.getFlyWeight(&quot;Google&quot;);  
+    　　fly2 = factory.getFlyWeight(&quot;Qutr&quot;);  
+    　　fly3 = factory.getFlyWeight(&quot;Google&quot;);  
+    　　fly4 = factory.getFlyWeight(&quot;Google&quot;);  
+    　　fly5 = factory.getFlyWeight(&quot;Google&quot;);  
+    　　fly6 = factory.getFlyWeight(&quot;Google&quot;);  
+    　}  
+    　public void showFlyweight(){  
+    　　fly1.operation();  
+    　　fly2.operation();  
+    　　fly3.operation();  
+    　　fly4.operation();  
+    　　fly5.operation();  
+    　　fly6.operation();  
+    　　int objSize = factory.getFlyweightSize();  
+    　　System.out.println(&quot;objSize = &quot; + objSize);  
+    　}  
+    　public static void main(String[] args){  
+    　　System.out.println(&quot;The FlyWeight Pattern!&quot;);  
+    　　FlyweightPattern fp = new FlyweightPattern();  
+    　　fp.showFlyweight();  
+    　}  
+    }  
+
+
+下面是运行结果：
+
+    Concrete---Flyweight : Google  
+    Concrete---Flyweight : Qutr  
+    Concrete---Flyweight : Google  
+    Concrete---Flyweight : Google  
+    Concrete---Flyweight : Google  
+    Concrete---Flyweight : Google  
+    objSize = 2  
+
+
+　我们定义了6个对象，其中有5个是相同的，按照Flyweight模式的定义“Google”应该共享一个对象，在实际的对象数中我们可以看出实际的对象却是只有2个。
+
+总结：
+　　Flyweight(享元)模式是如此的重要，因为它能帮你在一个复杂的系统中大量的节省内存空间。在Java语言中，String类型就是使用了享元模式。String对象是final类型，对象一旦创建就不可改变。在JAVA中字符串常量都是存在常量池中的，JAVA会确保一个字符串常量在常量池中只有一个拷贝。String a=&quot;abc&quot;，其中&quot;abc&quot;就是一个字符串常量。
+
+熟悉java的应该知道下面这个例子：
+    String a = &quot;hello&quot;;  
+    String b = &quot;hello&quot;;  
+    if(a == b)  
+    　System.out.println(&quot;OK&quot;);  
+    else  
+    　System.out.println(&quot;Error&quot;);  
+
+输出结果是：OK。可以看出if条件比较的是两a和b的地址，也可以说是内存空间
+核心总结，可以共享的对象，也就是说返回的同一类型的对象其实是同一实例，当客户端要求生成一个对象时，工厂会检测是否存在此对象的实例，如果存在那么直接返回此对象实例，如果不存在就创建一个并保存起来，这点有些单例模式的意思。通常工厂类会有一个集合类型的成员变量来用以保存对象，如hashtable,vector等。在java中，数据库连接池，线程池等即是用享元模式的应用。
+</code></pre><p>##6.适配器设计模式</p>
+<pre><code>public class Demo_Adapter {
+
+    /**
+     * @param args
+     * 适配器设计模式
+     * 鲁智深
+     */
+    public static void main(String[] args) {
+        鲁智深 鲁智深 = new 鲁智深();
+        鲁智深.习武();
+    }
+
+}
+
+interface 和尚 {
+    public void 打坐();
+    public void 念经();
+    public void 撞钟();
+    public void 习武();
+}
+
+abstract class 天罡星 implements 和尚 {        //声明成抽象的原因是,不想让其他类创建本类对象,因为创建也没有意义,方法都是空的
+
+    @Override
+    public void 打坐() {
+    }
+
+    @Override
+    public void 念经() {
+    }
+
+    @Override
+    public void 撞钟() {
+    }
+
+    @Override
+    public void 习武() {
+    }
+
+}
+
+class 鲁智深 extends 天罡星 {
+    public void 习武() {
+        System.out.println(&quot;倒拔垂杨柳&quot;);
+        System.out.println(&quot;拳打镇关西&quot;);
+        System.out.println(&quot;大闹野猪林&quot;);
+        System.out.println(&quot;......&quot;);
+    }
+}
+</code></pre><p>##7.模板方法设计模式</p>
+<ul>
+<li>模版设计模式概述<br>模版方法模式就是定义一个算法的骨架，而将具体的算法延迟到子类中来实现模板方法使得子类可以不改变一个算法的结构即可重定义算法的某些特定步骤。</li>
+<li>优点和缺点<ul>
+<li>优点:使用模版方法模式，在定义算法骨架的同时，可以很灵活的实现具体的算法，满足用户灵活多变的需求</li>
+<li>缺点:如果算法骨架有修改的话，则需要修改抽象类</li>
+</ul>
+</li>
+</ul>
+<pre><code>public class Demo1_Template {
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        /*long start = System.currentTimeMillis();
+        for(int i = 0; i &lt; 1000000; i++) {
+            System.out.println(&quot;x&quot;);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);*/
+        Demo d = new Demo();
+        System.out.println(d.getTime());
+    }
+
+}
+
+abstract class GetTime {
+    public final long getTime() {
+        long start = System.currentTimeMillis();
+        code();
+        long end = System.currentTimeMillis();
+        return end - start;
+    }  //final修饰，目的是不让被重写
+
+    public abstract void code(); //由子类取实现想测试的代码
+}
+
+class Demo extends GetTime {
+
+    @Override
+    public void code() {
+        int i = 0;
+        while(i &lt; 100000) {
+            System.out.println(&quot;x&quot;);
+            i++;
+        }
+    }
+}
+</code></pre><p>##8.观察者设计模式</p>
+<ul>
+<li>定义：又名发布—订阅模式，对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</li>
+<li><p>组成部分：</p>
+<ul>
+<li><p>抽象目标(被观察者)角色(Subject)：目标角色知道它的观察者，可以 有任意多个观察者观察同一个目标。并且提供注册和删除观 察者对象、通知观察者的方法。目标角色往往由抽象类或者 接口来实现。</p>
+</li>
+<li><p>抽象观察者角色(Observer)：为那些在目标发生改变时需<br>要获得通知的对象定义一个更新接口，里面有一个更新数据 的方法。抽象观察者角色主要由抽象类或者接口来实现。</p>
+</li>
+<li>具体目标(被观察者)角色(Concrete Subject)：实现Subject，实现添 加、删除观察者、通知观察者的方法，当它的状态发生改变 时, 向它的各个观察者发出通知。</li>
+<li>具体观察者角色(Concrete Observer)：实现Observer的更 新接口以使自身状态与目标的状态保持一致，获取通知进行 更新。</li>
+</ul>
+</li>
+<li><p>观察者模式中，一个被观察者管理所有相依于它的观察者物件，并且在本身的状态改变时主动发出通知。这通常通过呼叫各观察者所提供的方法来实现。此种模式通常被用来实现事件处理系统。</p>
+</li>
+<li>举例：珠宝商运送一批钻石，有黄金强盗准备抢劫，珠宝商雇佣了私人保镖，警察局也派人护送，于是当运输车上路的时候，强盗保镖警察都要观察运输车一举一动，</li>
+</ul>
+<pre><code>抽象的观察者
+    public interface Watcher  
+    {  
+         public void update();  
+    }  
+
+
+抽象的被观察者，在其中声明方法（添加、移除观察者，通知观察者）：
+    public interface Watched  
+    {  
+         public void addWatcher(Watcher watcher);  
+
+         public void removeWatcher(Watcher watcher);  
+
+         public void notifyWatchers();  
+    }  
+
+
+
+具体的观察者
+保镖
+    public class Security implements Watcher  
+    {  
+         @Override  
+         public void update()  
+         {  
+              System.out.println(“运输车有行动，保安贴身保护&quot;);  
+         }  
+    }  
+
+强盗
+    public class Thief implements Watcher  
+    {  
+         @Override  
+         public void update()  
+         {  
+              System.out.println(“运输车有行动，强盗准备动手&quot;);  
+         }  
+    }  
+
+警察
+    public class Police implements Watcher  
+    {  
+         @Override  
+         public void update()  
+         {  
+              System.out.println(“运输车有行动，警察护航&quot;);  
+         }  
+    }  
+
+具体的被观察者
+    public class Transporter implements Watched  
+    {  
+         private List&lt;Watcher&gt; list = new ArrayList&lt;Watcher&gt;();  
+
+         @Override  
+         public void addWatcher(Watcher watcher)  
+         {  
+              list.add(watcher);  
+         }  
+
+         @Override  
+         public void removeWatcher(Watcher watcher)  
+         {  
+              list.remove(watcher);  
+         }  
+
+         @Override  
+         public void notifyWatchers(String str)  
+         {  
+              for (Watcher watcher : list)  
+              {  
+                   watcher.update();  
+              }  
+         }  
+
+    }  
+
+测试类
+
+
+    public class Test  
+    {  
+         public static void main(String[] args)  
+         {  
+              Transporter transporter = new Transporter();  
+
+              Police police = new Police();  
+              Security security = new Security();  
+              Thief thief = new Thief();  
+
+              transporter.addWatcher(police);  
+              transporter.addWatcher(security);  
+              transporter.addWatcher(security);  
+
+              transporter.notifyWatchers();  
+         }  
+    }  
+</code></pre><ul>
+<li>我推你拉例子中没有关于数据和状态的变化通知，只是简单通知到各个观察者，告诉他们被观察者有行动。<br>观察者模式在关于目标角色、观察者角色通信的具体实现中，有两个版本。<ul>
+<li>一种情况便是目标角色在发生变化后，仅仅告诉观察者角色“我变化了”，观察者角色如果想要知道具体的变化细节，则就要自己从目标角色的接口中得到。这种模式被很形象的称为：拉模式——就是说变化的信息是观察者角色主动从目标角色中“拉”出来的。</li>
+<li>还有一种方法，那就是我目标角色“服务一条龙”，通知你发生变化的同时，通过一个参数将变化的细节传递到观察者角色中去。这就是“推模式”——管你要不要，先给你啦。</li>
+</ul>
+</li>
+<li>这两种模式的使用，取决于系统设计时的需要。如果目标角色比较复杂，并且观察者角色进行更新时必须得到一些具体变化的信息，则“推模式”比较合适。如果目标角色比较简单，则“拉模式”就很合适啦。<br>##9.代理设计模式</li>
+<li>什么是代理模式：代理模式的作用是，为其他对象提供一种代理以控制对这个对象的访问。</li>
+<li>好处：在某些情况下，一个客户不想或者不能直接引用另一个对象，而代理对象可以在客户端和目标对象之间起到中介的作用。</li>
+<li>代理模式一般涉及到的角色有：<ul>
+<li>抽象角色：声明真实对象和代理对象的共同接口；</li>
+<li>代理角色：代理对象角色内部含有对真实对象的引用，从而可以操作真实对象，同时代理对象提供与真实对象相同的接口以便在任何时刻都能代替真实对象。同时，代理对象可以在执行真实对象操作时，附加其他的操作，相当于对真实对象进行封装。</li>
+<li>真实角色：代理角色所代表的真实对象，是我们最终要引用的对象。</li>
+</ul>
+</li>
+<li><p>应用场景举例：比如西门庆找潘金莲，那潘金莲不好意思答复呀，咋办，找那个王婆做代理，表现在程序上时是这样的体现的先说说这个场景中的要素：一种类型的女人，潘金莲，王婆，西门庆，后来扩展的贾氏也和西门庆勾上了，我们是假设的，然后西门庆找潘金莲happy,但潘金莲不好意思直接，就找个王婆代理呗。我们看看具体代码。</p>
+<pre><code>先定义一种女人
+/** 
+ *  
+ * @author Mr.Wu
+ *定义一种类型的女人，王婆和潘金莲都属于这个类型的女人 
+ */  
+public interface KindWoman {  
+
+    //这种女人能做什么事情呢？  
+    public void makeEyesWithMan();//抛媚眼  
+
+    public void happyWithMan();//和男人那个....  
+
+}  
+</code></pre></li>
+</ul>
+<pre><code>一种类型嘛，那肯定是接口，定义个潘金莲 
+    /** 
+     *  
+     * @author Mr.Wu
+     *定义一个潘金莲是什么样的人 
+     */  
+    public class PanJinLian  implements KindWoman{  
+
+        @Override  
+        public void happyWithMan() {  
+            System.out.println(&quot;潘金莲和男人在做那个...&quot;);  
+
+        }  
+
+        @Override  
+        public void makeEyesWithMan() {  
+            System.out.println(&quot;潘金莲抛媚眼...&quot;);  
+
+        }  
+
+    }  
+
+
+
+再定义个丑陋的王婆 
+    /** 
+     *  
+     * @author Mr.Wu
+     *王婆这个人老聪明了，她太老了，是个男人都看不上她， 
+     *但是她有智慧经验呀，他作为一类女人的代理！ 
+     */  
+    public class WangPo implements KindWoman {  
+
+        private KindWoman kindWoman;  
+
+        public WangPo(){  
+            //默认的话是潘金莲的代理  
+            this.kindWoman = new PanJinLian();  
+        }  
+        //她可以是KindWomam的任何一个女人的代理，只要你是这一类型  
+        public WangPo(KindWoman kindWoman){  
+            this.kindWoman = kindWoman;  
+        }  
+
+        @Override  
+        public void happyWithMan() {  
+            //自己老了，干不了了，但可以叫年轻的代替。  
+            this.kindWoman.happyWithMan();  
+
+        }  
+
+        @Override  
+        public void makeEyesWithMan() {  
+            //王婆年纪大了，谁看她抛媚眼啊  
+            this.kindWoman.makeEyesWithMan();  
+
+        }  
+
+    }  
+
+
+
+两个女主角都上场了，该男主角了，定义个西门庆
+    /** 
+     *  
+     * @author Mr.Wu
+     *水浒传是这样写的：西门庆被潘金莲用竹竿敲了一下，西门庆看痴迷了，被王婆看到了，就开始撮合两人好事，王婆作为潘金莲的代理人收了不少好处费，那我们假设一下： 
+     *如果没有王婆在中间牵线，这两个不要脸的能成事吗？难说得很！ 
+     */  
+    public class XiMenQing {  
+
+        /** 
+         * @param args 
+         */  
+        public static void main(String[] args) {  
+            WangPo wangPo;  
+            //把王婆叫出来  
+             wangPo = new WangPo();  
+            //然后西门庆说，我要和潘金莲Happy,然后王婆就安排了西门庆丢筷子哪出戏：  
+            wangPo.makeEyesWithMan();  
+            //看到没有表面是王婆在做，其实爽的是潘金莲  
+            wangPo.happyWithMan();  
+
+
+
+        }  
+
+    }  
+
+
+
+那这就是活生生的一个例子，通过代理人实现了某种目的，如果真去了王婆这个中间环节，直接西门庆和潘金莲勾搭，估计很难成就武松杀嫂事件。
+
+     那我们再考虑一下，水浒里面还有没有这类型的女人？有，卢俊义的老婆贾氏（就是和那个管家苟合的那个），这个名字起的：“贾氏”，那我们也让王婆做她的代理：
+    /** 
+     *  
+     * @author Mr.Wu
+     *定义一个贾氏是什么样的人 
+     */  
+    public class JiaShi implements KindWoman {  
+
+        @Override  
+        public void happyWithMan() {  
+            System.out.println(&quot;贾氏和男人在做那个...&quot;);  
+
+        }  
+
+        @Override  
+        public void makeEyesWithMan() {  
+            System.out.println(&quot;贾氏抛媚眼...&quot;);  
+
+        }  
+
+
+    }  
+
+
+
+西门庆勾潘金莲又勾引贾氏
+    /** 
+     *  
+     * @author Mr.Wu
+     *水浒传是这样写的：西门庆被潘金莲用竹竿敲了一下，西门庆看痴迷了，被王婆看到了，就开始撮合两人好事，王婆作为潘金莲的代理人收了不少好处费，那我们假设一下： 
+     *如果没有王婆在中间牵线，这两个不要脸的能成事吗？难说得很！ 
+     */  
+    public class XiMenQing {  
+
+        /** 
+         * @param args 
+         */  
+        public static void main(String[] args) {  
+            WangPo wangPo;  
+            //把王婆叫出来  
+             wangPo = new WangPo();  
+            //然后西门庆说，我要和潘金莲Happy,然后王婆就安排了西门庆丢筷子哪出戏：  
+            wangPo.makeEyesWithMan();  
+            //看到没有表面是王婆在做，其实爽的是潘金莲  
+            wangPo.happyWithMan();  
+
+
+
+            //西门庆勾引贾氏  
+            JiaShi jiaShi = new JiaShi();  
+            wangPo = new WangPo(jiaShi);  
+            wangPo.makeEyesWithMan();  
+            wangPo.happyWithMan();  
+
+        }  
+
+    }  
+</code></pre><blockquote>
+<p>说完这个故事，那我总结一下，代理模式主要使用了java的多态，干活的是被代理类，代理类主要是接活，你让我干活，好，我交给幕后的类去干，你满意就成，那怎么知道被代理类能不能干呢？同根就成，大家知根知底，你能做啥，我能做啥都清楚得很，同样一个接口呗。好了不多说了，慢慢体会吧。</p>
+<p>##10.策略设计模式</p>
+</blockquote>
+<ul>
+<li><p>背景</p>
+<p>  在软件开发中常常遇到这种情况，实现某一个功能有多种算法或者策略，我们可以根据环境或者条件的不同选择不同的算法或者策略来完成该功能。如查找、排序等，一种常用的方法是硬编码(Hard Coding)在一个类中，如需要提供多种查找算法，可以将这些算法写到一个类中，在该类中提供多个方法，每一个方法对应一个具体的查找算法；当然也可以将这些查找算法封装在一个统一的方法中，通过if…else…或者case等条件判断语句来进行选择。<br>  这两种实现方法我们都可以称之为硬编码，如果需要增加一种新的查找算法，需要修改封装算法类的源代码；更换查找算法，也需要修改客户端调用代码。在这个算法类中封装了大量查找算法，该类代码将较复杂，维护较为困难。如果我们将这些策略包含在客户端，这种做法更不可取，将导致客户端程序庞大而且难以维护，如果存在大量可供选择的算法时问题将变得更加严重。</p>
+</li>
+</ul>
+<ul>
+<li><p>问题</p>
+<p>  如何让算法和对象分开来，使得算法可以独立于使用它的客户而变化？</p>
+</li>
+<li><p>方案</p>
+<p>  把一个类中经常改变或者将来可能改变的部分提取出来，作为一个接口，然后在类中包含这个对象的实例，这样类的实例在运行时就可以随意调用实现了这个接口的类的行为。<br>  比如定义一系列的算法,把每一个算法封装起来, 并且使它们可相互替换，使得算法可独立于使用它的客户而变化。这就是策略模式。</p>
+</li>
+<li><p>适用情况</p>
+<p>  许多相关的类仅仅是行为有异。 “策略”提供了一种用多个行为中的一个行为来配置一个类的方法。即一个系统需要动态地在几种算法中选择一种。<br>  ，而且该程序有多种实现方式时使用。<br>  一个类定义了多种行为 , 并且这些行为在这个类的操作中以多个条件语句的形式出现。将相关的条件分支移入它们各自的Strategy类中以代替这些条件语句。</p>
+</li>
+<li><p>优点</p>
+<pre><code>1、可以动态的改变对象的行为
+缺点
+1、客户端必须知道所有的策略类，并自行决定使用哪一个策略类
+2、策略模式将造成产生很多策略类
+</code></pre></li>
+<li><p>组成</p>
+<p>  环境类(Context):用一个ConcreteStrategy对象来配置。维护一个对Strategy对象的引用。可定义一个接口来让Strategy访问它的数据。<br>  抽象策略类(Strategy):定义所有支持的算法的公共接口。 Context使用这个接口来调用某ConcreteStrategy定义的算法。<br>  具体策略类(ConcreteStrategy):以Strategy接口实现某具体算法。</p>
+</li>
+<li><p>应用</p>
+<p>  场景如下，刘备要到江东娶老婆了，走之前诸葛亮给赵云三个锦囊妙计，说是按天机拆开能解决棘手问题。场景中出现三个要素：三个妙计（具体策略类）、一个锦囊（环境类）、赵云（调用者）。</p>
+<pre><code>抽象策略类（Strategy）
+</code></pre></li>
+</ul>
+<pre><code>    public interface Strategy {  
+         public void operate();  
+    }  
+
+
+三个实现类（ConcreteStrategy）：
+妙计一：初到吴国
+
+
+    public class BackDoor implements IStrategy {  
+         @Override  
+         public void operate() {  
+              System.out.println(&quot;找乔国老帮忙，让吴国太给孙权施加压力，使孙权不能杀刘备&quot;);  
+         }  
+    }  
+
+妙计二：求吴国太开绿灯放行
+
+
+    public class GivenGreenLight implements IStrategy {  
+         @Override  
+         public void operate() {  
+              System.out.println(&quot;求吴国太开个绿灯，放行&quot;);  
+         }  
+    }  
+
+妙计三：孙夫人断后，挡住追兵
+
+
+    public class BlackEnemy implements IStrategy {  
+         @Override  
+         public void operate() {  
+              System.out.println(&quot;孙夫人断后，挡住追兵&quot;);  
+         }  
+    }  
+
+
+环境类（Context)
+
+
+    public class Context {  
+         private Strategy strategy;  
+         //构造函数，要你使用哪个妙计  
+         public Context(Strategy strategy){  
+              this.strategy = strategy;  
+         }  
+         public void setStrategy(Strategy strategy){  
+              this.strategy = strategy;  
+         }  
+         public void operate(){  
+              this.strategy.operate();  
+         }  
+    }  
+
+
+下面就是使用的情况了
+
+
+    public class Zhaoyun {  
+
+    public static void main(String[] args) {  
+         Context context;  
+
+         System.out.println(&quot;----------刚到吴国使用第一个锦囊---------------&quot;);  
+         context = new Context(new BackDoor());  
+         context.operate();  
+         System.out.println(&quot;\n&quot;);  
+
+         System.out.println(&quot;----------刘备乐不思蜀使用第二个锦囊---------------&quot;);  
+         context.setStrategy(new GivenGreenLight());  
+         context.operate();  
+         System.out.println(&quot;\n&quot;);  
+
+         System.out.println(&quot;----------孙权的追兵来了，使用第三个锦囊---------------&quot;);  
+         context.setStrategy(new BlackEnemy());  
+         context.operate();  
+         System.out.println(&quot;\n&quot;);  
+         }  
+    }  
+
+
+三招下来，搞得的周郎是“赔了夫人又折兵”。
+
+以上就是策略模式，多种不同解决方案动态切换，起到改变对象行为的效果。
+</code></pre><p>##11.建造者设计模式</p>
+<ul>
+<li><p>概念</p>
+<pre><code>将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。 [构建与表示分离，同构建不同表示]
+与抽象工厂的区别：在建造者模式里，有个指导者，由指导者来管理建造者，用户是与指导者联系的，指导者联系建造者最后得到产品。即建造模式可以强制实行一种分步骤进行的建造过程。
+</code></pre><p>  　　建造模式是将复杂的内部创建封装在内部，对于外部调用的人来说，只需要传入建造者和建造工具，对于内部是如何建造成成品的，调用者无需关心。<br>  　　举个简单的例子，如汽车，有很多部件，车轮，方向盘，发动机还有各种小零件等等，部件很多，但远不止这些，如何将这些部件装配成一部汽车，这个装配过程也很复杂（需要很好的组装技术）， builder模式就是为了将部件和组装分开。</p>
+</li>
+<li><p>代码</p>
+<pre><code> public interface Builder { 
+  　　　　void buildPartA(); 
+  　　　　void buildPartB(); 
+  　　　　void buildPartC(); 
+  　　
+  　　　　Product getResult(); 
+  　　} 
+
+//具体建造工具
+  　　public class ConcreteBuilder implements Builder { 
+  　　　　Part partA, partB, partC; 
+
+  　　　　public void buildPartA() {
+  　　　　　　//这里是具体如何构建partA的代码
+  　　　　}; 
+  　　　　public void buildPartB() { 
+  　　　　　　//这里是具体如何构建partB的代码
+  　　　　}; 
+  　　　　 public void buildPartC() { 
+  　　　　　　//这里是具体如何构建partB的代码
+  　　　　}; 
+  　　　　 public Product getResult() { 
+  　　　　　　//返回最后组装成品结果
+  　　　　}; 
+  　　}
+
+//指导者
+  　　public class Director {
+  　　　　private Builder builder; 
+  　　
+  　　　　public Director( Builder builder ) { 
+  　　　　　　this.builder = builder; 
+  　　　　} 
+  　　　　public void construct() { 
+  　　　　　　builder.buildPartA();
+  　　　　　　builder.buildPartB();
+  　　　　　　builder.buildPartC(); 
+  　　　　} 
+  　　} 
+</code></pre></li>
+</ul>
+<pre><code>    　　public interface Product { }
+    　　public interface Part { }
+    　　
+
+下面是调用builder的方法：
+    　　ConcreteBuilder builder = new ConcreteBuilder();
+    　　Director director = new Director( builder ); 
+    　　
+    　　director.construct(); 
+    　　Product product = builder.getResult();
+</code></pre><ul>
+<li>应用场景<ul>
+<li>在Java的应用中JavaMail使用到了该模式，android中的Dialog使用到该模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="12-原型模式"><a href="#12-原型模式" class="headerlink" title="12.原型模式"></a>12.原型模式</h2><h2 id="13-中介者模式"><a href="#13-中介者模式" class="headerlink" title="13.中介者模式"></a>13.中介者模式</h2><h2 id="14-命令模式"><a href="#14-命令模式" class="headerlink" title="14.命令模式"></a>14.命令模式</h2><h2 id="15-责任链模式"><a href="#15-责任链模式" class="headerlink" title="15.责任链模式"></a>15.责任链模式</h2><h2 id="16-迭代器模式"><a href="#16-迭代器模式" class="headerlink" title="16.迭代器模式"></a>16.迭代器模式</h2><h2 id="17-组合模式"><a href="#17-组合模式" class="headerlink" title="17.组合模式"></a>17.组合模式</h2><h2 id="18-门面模式"><a href="#18-门面模式" class="headerlink" title="18.门面模式"></a>18.门面模式</h2><h2 id="19-备忘录模式"><a href="#19-备忘录模式" class="headerlink" title="19.备忘录模式"></a>19.备忘录模式</h2><h2 id="20-访问者模式"><a href="#20-访问者模式" class="headerlink" title="20.访问者模式"></a>20.访问者模式</h2><h2 id="21-状态模式"><a href="#21-状态模式" class="headerlink" title="21.状态模式"></a>21.状态模式</h2><h2 id="22-解释器模式"><a href="#22-解释器模式" class="headerlink" title="22.解释器模式"></a>22.解释器模式</h2><h2 id="23-桥梁模式"><a href="#23-桥梁模式" class="headerlink" title="23.桥梁模式"></a>23.桥梁模式</h2>]]></content>
+    
+    <summary type="html">
+    
+      这是一篇很好的阐述设计模式的文章
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>GetLuckyMoneyPluginByMr.Wu_微信自动抢红包插件</title>
