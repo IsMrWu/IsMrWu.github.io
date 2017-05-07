@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,依赖注入" />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -86,16 +86,15 @@
 
 
 
-<meta name="description" content="这是一篇很好的阐述Android依赖注入的文章">
-<meta property="og:type" content="article">
-<meta property="og:title" content="依赖注入的解析">
-<meta property="og:url" content="http://yoursite.com/2015/06/07/依赖注入的解析/index.html">
+<meta name="description" content="The closer you think you are,the less you will actually see.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mr.Wu's Blog">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="Mr.Wu's Blog">
-<meta property="og:description" content="这是一篇很好的阐述Android依赖注入的文章">
-<meta property="og:updated_time" content="2016-12-19T13:36:31.136Z">
+<meta property="og:description" content="The closer you think you are,the less you will actually see.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="依赖注入的解析">
-<meta name="twitter:description" content="这是一篇很好的阐述Android依赖注入的文章">
+<meta name="twitter:title" content="Mr.Wu's Blog">
+<meta name="twitter:description" content="The closer you think you are,the less you will actually see.">
 
 
 
@@ -113,7 +112,7 @@
   };
 </script>
 
-  <title> 依赖注入的解析 | Mr.Wu's Blog </title>
+  <title> Mr.Wu's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -144,7 +143,9 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -231,9 +232,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
   
@@ -253,7 +254,10 @@
             
             
               
-                依赖注入的解析
+                
+                <a class="post-title-link" href="/2014/05/16/android下的屏幕适配全解析/" itemprop="url">
+                  Android下屏幕适配全解析
+                </a>
               
             
           </h1>
@@ -265,8 +269,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-07T20:18:43+08:00" content="2015-06-07">
-              2015-06-07
+            <time itemprop="dateCreated" datetime="2014-05-16T22:19:43+08:00" content="2014-05-16">
+              2014-05-16
             </time>
           </span>
 
@@ -279,8 +283,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/依赖注入/" itemprop="url" rel="index">
-                    <span itemprop="name">依赖注入</span>
+                  <a href="/categories/屏幕适配/" itemprop="url" rel="index">
+                    <span itemprop="name">屏幕适配</span>
                   </a>
                 </span>
 
@@ -295,8 +299,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/06/07/依赖注入的解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/07/依赖注入的解析/" itemprop="commentsCount"></span>
+                <a href="/2014/05/16/android下的屏幕适配全解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/16/android下的屏幕适配全解析/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -307,11 +311,6 @@
           
           
 
-          
-              &nbsp; | &nbsp;
-              <span class="page-pv"><i class="fa fa-file-o"></i>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-              </span>
           
         </div>
       </header>
@@ -324,173 +323,53 @@
       
 
       
-        <h1 id="依赖注入的解析"><a href="#依赖注入的解析" class="headerlink" title="依赖注入的解析"></a>依赖注入的解析</h1><blockquote>
-<ol>
-<li>依赖</li>
-</ol>
-</blockquote>
-<p>如果在 Class A 中，有 Class B 的实例，则称 Class A 对 Class B 有一个依赖。例如下面类 Human 中用到一个 Father 对象，我们就说类 Human 对类 Father 有一个依赖。</p>
-<pre><code>public class Human {
-    ...
-    Father father;
-    ...
-    public Human() {
-        father = new Father();
-    }
-}
-</code></pre><p>仔细看这段代码我们会发现存在一些问题：</p>
-<ul>
-<li>如果现在要改变 father 生成方式，如需要用new Father(String name)初始化 father，需要修改 Human 代码；</li>
-<li>如果想测试不同 Father 对象对 Human 的影响很困难，因为 father 的初始化被写死在了 Human 的构造函数中；</li>
-<li>如果new Father()过程非常缓慢，单测时我们希望用已经初始化好的 father 对象 Mock 掉这个过程也很困难。</li>
-</ul>
-<blockquote>
-<p>2.依赖注入</p>
-</blockquote>
-<p>上面将依赖在构造函数中直接初始化是一种 Hard init 方式，弊端在于两个类不够独立，不方便测试。我们还有另外一种 Init 方式，如下：</p>
-<pre><code>public class Human {
-    ...
-    Father father;
-    ...
-    public Human(Father father) {
-        this.father = father;
-    }
-}
-</code></pre><p>上面代码中，我们将 father 对象作为构造函数的一个参数传入。在调用 Human 的构造方法之前外部就已经初始化好了 Father 对象。像这种非自己主动初始化依赖，而通过外部来传入依赖的方式，我们就称为依赖注入。<br>现在我们发现上面 1 中存在的两个问题都很好解决了，简单的说依赖注入主要有两个好处：</p>
-<ul>
-<li>解耦，将依赖之间解耦。</li>
-<li>因为已经解耦，所以方便做单元测试，尤其是 Mock 测试。</li>
-</ul>
-<blockquote>
-<p>3.Java 中的依赖注入</p>
-</blockquote>
-<p>依赖注入的实现有多种途径，而在 Java 中，使用注解是最常用的。通过在字段的声明前添加 @Inject 注解进行标记，来实现依赖对象的自动注入。</p>
-<pre><code>public class Human {
-    ...
-    @Inject Father father;
-    ...
-    public Human() {
-    }
-}
-</code></pre><p>上面这段代码看起来很神奇：只是增加了一个注解，Father 对象就能自动注入了？这个注入过程是怎么完成的？实质上，如果你只是写了一个 @Inject 注解，Father 并不会被自动注入。你还需要使用一个依赖注入框架，并进行简单的配置。现在 Java 语言中较流行的依赖注入框架有 Google Guice、Spring 等，而在 Android 上比较流行的有 RoboGuice、Dagger 等。</p>
-<blockquote>
-<p>另外：mock测试就是在测试过程中，对于某些不容易构造或者不容易获取的对象，用一个虚拟的对象来创建以便测试的测试方法。依赖注入的实现有多种途径，而在 Java 中，使用注解是最常用的。比如通过Butter Knife、Dagger依赖注入库实现，都是使用注解来实现依赖注入，但它利用 APT(Annotation Process Tool) 在编译时生成辅助类，这些类继承特定父类或实现特定接口，程序在运行时加载这些辅助类，调用相应接口完成依赖生成和注入。</p>
-</blockquote>
-
-      
-    </div>
-
-    <div>
-      
+        
+          这是一篇很好的阐述Android下屏幕适配全解析的文章
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/05/16/android下的屏幕适配全解析/">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
 
     <div>
       
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Wu WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Wu Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
     </div>
-  </div>
 
-
+    <div>
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Android-依赖注入/" rel="tag">#Android,依赖注入</a>
-          
-        </div>
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/05/01/注解Annotation解析/" rel="next" title="注解Annotation解析">
-                <i class="fa fa-chevron-left"></i> 注解Annotation解析
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/09/11/静态代理和动态代理解析/" rel="prev" title="静态代理和动态代理解析">
-                静态代理和动态代理解析 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-        <div class="ds-share flat" data-thread-key="2015/06/07/依赖注入的解析/"
-     data-title="依赖注入的解析"
-     data-content=""
-     data-url="http://yoursite.com/2015/06/07/依赖注入的解析/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
-    </div>
-  </div>
 
 
           </div>
           
 
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
-
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2015/06/07/依赖注入的解析/"
-           data-title="依赖注入的解析" data-url="http://yoursite.com/2015/06/07/依赖注入的解析/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -510,17 +389,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -577,17 +447,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#依赖注入的解析"><span class="nav-number">1.</span> <span class="nav-text">依赖注入的解析</span></a></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -700,10 +559,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
