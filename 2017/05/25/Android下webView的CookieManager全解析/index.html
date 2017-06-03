@@ -1,0 +1,739 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,webView,cookie,CookieManager" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Wu's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这是一篇很好的阐述Android下webview的CookieManager的文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Andorid下的webview的CookieManager全解析">
+<meta property="og:url" content="http://yoursite.com/2017/05/25/Android下webView的CookieManager全解析/index.html">
+<meta property="og:site_name" content="Mr.Wu's Blog">
+<meta property="og:description" content="这是一篇很好的阐述Android下webview的CookieManager的文章">
+<meta property="og:updated_time" content="2017-06-03T12:03:47.572Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Andorid下的webview的CookieManager全解析">
+<meta name="twitter:description" content="这是一篇很好的阐述Android下webview的CookieManager的文章">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6365389664446055000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Andorid下的webview的CookieManager全解析 | Mr.Wu's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b10095e40d33ad1705710d0562faee35";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mr.Wu's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">The closer you think you are,the less you will actually see.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Andorid下的webview的CookieManager全解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-25T17:11:53+08:00" content="2017-05-25">
+              2017-05-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/webView的CookieManager/" itemprop="url" rel="index">
+                    <span itemprop="name">webView的CookieManager</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/25/Android下webView的CookieManager全解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/25/Android下webView的CookieManager全解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#Android下webview的CookieManager详解</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=340395&auto=1&height=66"></iframe>
+
+<h2 id="CookieManager介绍"><a href="#CookieManager介绍" class="headerlink" title="CookieManager介绍"></a>CookieManager介绍</h2><ul>
+<li>java.net.CookieManager<ul>
+<li>java.net.CookieManager供java工程使用的（略）</li>
+</ul>
+</li>
+<li>android.webkit.CookieManager<ul>
+<li>android.webkit.CookieManager包下提供了供andorid系统使用的一个cookie管理的类<ul>
+<li>Manages the cookies used by an application’s WebView instances.<ul>
+<li>Cookies are manipulated according to RFC2109.<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Android APP应用的某些功能, 需要调用内嵌的WebView去加载某个URL使用.  但用户在手机APP已经成功登录过了. 这时, 如果在内置浏览器去打开网页还需要用户再输入登录一次, 似乎显得不够人性化.  又或者, 用户在内置浏览器(WebView) 访问过一些页面, 想把这些有用的 Cookies 信息保存在本地.  因此, 我们会想, 要是能管理APP上浏览器(WebView) 在该站点URL的 Cookies, 使后台识别为已登录, 棒棒哒~</li>
+</ul>
+<h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><ul>
+<li><p>1、客户端通过以下代码设置cookie</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CookieManager cookieManager = CookieManager.getInstance();   //获取单例对象</div><div class="line">cookieManager.setCookie(url, &quot;uid=test_value&quot;); 	    	//同步方法，给url设置cookie字段，key为uid,value为test_value</div></pre></td></tr></table></figure>
+</li>
+<li><p>2、CookieManager会将这个Cookie存入该应用程序/data/data/databases/目录下的webviewCookiesChromium.db数据库的cookies表中</p>
+</li>
+<li><p>3、打开网页，WebView从数据库中读取该cookie值，放到http请求的头部，传递到服务器</p>
+</li>
+<li><p>4、客户端可以在某些时刻清除该应用程序用到的所有cookies</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CookieManager cookieManager = CookieManager.getInstance(); //获取单例对象</div><div class="line">cookieManager.removeAllCookie();//清除所有的cookie</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="天坑所在"><a href="#天坑所在" class="headerlink" title="天坑所在"></a>天坑所在</h2><ul>
+<li>removeAllCookie（）与removeSessionCookies（）竟然是异步的删除cookie的方法，但是却没有回调。所以会出现一种您觉得你删除成功了，其实并没有删除成功的情况，那你再次登录可能会存在cookie同步不合预期的情况产生。<h2 id="API解析"><a href="#API解析" class="headerlink" title="API解析"></a>API解析</h2></li>
+<li>以下来解析源码，read the funk source code:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Gets the singleton CookieManager instance.</div><div class="line"> *</div><div class="line"> * @return the singleton CookieManager instance</div><div class="line"> */</div><div class="line">public static synchronized CookieManager getInstance() &#123;  //获取单例对象</div><div class="line">    return WebViewFactory.getProvider().getCookieManager();   </div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Sets whether the application&apos;s &#123;@link WebView&#125; instances should send and</div><div class="line"> * accept cookies.</div><div class="line"> * By default this is set to true and the WebView accepts cookies.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * When this is true</div><div class="line"> * &#123;@link CookieManager#setAcceptThirdPartyCookies setAcceptThirdPartyCookies&#125; and</div><div class="line"> * &#123;@link CookieManager#setAcceptFileSchemeCookies setAcceptFileSchemeCookies&#125;</div><div class="line"> * can be used to control the policy for those specific types of cookie.</div><div class="line"> *</div><div class="line"> * @param accept whether &#123;@link WebView&#125; instances should send and accept</div><div class="line"> *               cookies</div><div class="line"> */</div><div class="line">public abstract void setAcceptCookie(boolean accept);  //设置是否接受cookie,默认是true</div><div class="line"></div><div class="line">/**</div><div class="line"> * Gets whether the application&apos;s &#123;@link WebView&#125; instances send and accept</div><div class="line"> * cookies.</div><div class="line"> *</div><div class="line"> * @return true if &#123;@link WebView&#125; instances send and accept cookies</div><div class="line"> */</div><div class="line">public abstract boolean acceptCookie(); //获取webview是否接受cookie</div><div class="line"></div><div class="line">/**</div><div class="line"> * Sets whether the &#123;@link WebView&#125; should allow third party cookies to be set.</div><div class="line"> * Allowing third party cookies is a per WebView policy and can be set</div><div class="line"> * differently on different WebView instances.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Apps that target &#123;@link android.os.Build.VERSION_CODES#KITKAT&#125; or below</div><div class="line"> * default to allowing third party cookies. Apps targeting</div><div class="line"> * &#123;@link android.os.Build.VERSION_CODES#LOLLIPOP&#125; or later default to disallowing</div><div class="line"> * third party cookies.</div><div class="line"> *</div><div class="line"> * @param webview the &#123;@link WebView&#125; instance to set the cookie policy on</div><div class="line"> * @param accept whether the &#123;@link WebView&#125; instance should accept</div><div class="line"> *               third party cookies</div><div class="line"> */</div><div class="line">public abstract void setAcceptThirdPartyCookies(WebView webview, boolean accept);//  设置跨域cookie读取,当Build.Version小于kitkat时候，默认值是true,之后的为false</div><div class="line">     </div><div class="line"></div><div class="line">/**</div><div class="line"> * Gets whether the &#123;@link WebView&#125; should allow third party cookies to be set.</div><div class="line"> *</div><div class="line"> * @param webview the &#123;@link WebView&#125; instance to get the cookie policy for</div><div class="line"> * @return true if the &#123;@link WebView&#125; accepts third party cookies</div><div class="line"> */</div><div class="line">public abstract boolean acceptThirdPartyCookies(WebView webview);  //获取是否设置了跨域cookie读取</div><div class="line"></div><div class="line">/**</div><div class="line"> * Sets a cookie for the given URL. Any existing cookie with the same host,</div><div class="line"> * path and name will be replaced with the new cookie. The cookie being set</div><div class="line"> * will be ignored if it is expired.</div><div class="line"> *</div><div class="line"> * @param url the URL for which the cookie is to be set</div><div class="line"> * @param value the cookie as a string, using the format of the &apos;Set-Cookie&apos;</div><div class="line"> *              HTTP response header</div><div class="line"> */</div><div class="line">public abstract void setCookie(String url, String value); //根据URL设置cookie字段</div><div class="line"></div><div class="line">/**</div><div class="line"> * Sets a cookie for the given URL. Any existing cookie with the same host,</div><div class="line"> * path and name will be replaced with the new cookie. The cookie being set</div><div class="line"> * will be ignored if it is expired.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * This method is asynchronous.</div><div class="line"> * If a &#123;@link ValueCallback&#125; is provided,</div><div class="line"> * &#123;@link ValueCallback#onReceiveValue(T) onReceiveValue()&#125; will be called on the current</div><div class="line"> * thread&apos;s &#123;@link android.os.Looper&#125; once the operation is complete.</div><div class="line"> * The value provided to the callback indicates whether the cookie was set successfully.</div><div class="line"> * You can pass &#123;@code null&#125; as the callback if you don&apos;t need to know when the operation</div><div class="line"> * completes or whether it succeeded, and in this case it is safe to call the method from a</div><div class="line"> * thread without a Looper.</div><div class="line"> *</div><div class="line"> * @param url the URL for which the cookie is to be set</div><div class="line"> * @param value the cookie as a string, using the format of the &apos;Set-Cookie&apos;</div><div class="line"> *              HTTP response header</div><div class="line"> * @param callback a callback to be executed when the cookie has been set</div><div class="line"> */</div><div class="line">public abstract void setCookie(String url, String value, ValueCallback&lt;Boolean&gt; callback);//根据url覆盖cookie某字段的值</div><div class="line"></div><div class="line">/**</div><div class="line"> * Gets the cookies for the given URL.</div><div class="line"> *</div><div class="line"> * @param url the URL for which the cookies are requested</div><div class="line"> * @return value the cookies as a string, using the format of the &apos;Cookie&apos;</div><div class="line"> *               HTTP request header</div><div class="line"> */</div><div class="line">public abstract String getCookie(String url);  //根据url获取cookie</div><div class="line"></div><div class="line">/**</div><div class="line"> * See &#123;@link #getCookie(String)&#125;.</div><div class="line"> *</div><div class="line"> * @param url the URL for which the cookies are requested</div><div class="line"> * @param privateBrowsing whether to use the private browsing cookie jar</div><div class="line"> * @return value the cookies as a string, using the format of the &apos;Cookie&apos;</div><div class="line"> *               HTTP request header</div><div class="line"> * @hide Used by Browser and by WebViewProvider implementations.</div><div class="line"> */</div><div class="line">@SystemApi</div><div class="line">public abstract String getCookie(String url, boolean privateBrowsing);  //系统api</div><div class="line"></div><div class="line">/**</div><div class="line"> * Gets cookie(s) for a given uri so that it can be set to &quot;cookie:&quot; in http</div><div class="line"> * request header.</div><div class="line"> *</div><div class="line"> * @param uri the WebAddress for which the cookies are requested</div><div class="line"> * @return value the cookies as a string, using the format of the &apos;Cookie&apos;</div><div class="line"> *               HTTP request header</div><div class="line"> * @hide Used by RequestHandle and by WebViewProvider implementations.</div><div class="line"> */</div><div class="line">@SystemApi</div><div class="line">public synchronized String getCookie(WebAddress uri) &#123; //系统api</div><div class="line">    return getCookie(uri.toString());</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Removes all session cookies, which are cookies without an expiration</div><div class="line"> * date.</div><div class="line"> * @deprecated use &#123;@link #removeSessionCookies(ValueCallback)&#125; instead.</div><div class="line"> */</div><div class="line">public abstract void removeSessionCookie();  //清除未过期的cookie</div><div class="line"></div><div class="line">/**</div><div class="line"> * Removes all session cookies, which are cookies without an expiration</div><div class="line"> * date.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * This method is asynchronous.</div><div class="line"> * If a &#123;@link ValueCallback&#125; is provided,</div><div class="line"> * &#123;@link ValueCallback#onReceiveValue(T) onReceiveValue()&#125; will be called on the current</div><div class="line"> * thread&apos;s &#123;@link android.os.Looper&#125; once the operation is complete.</div><div class="line"> * The value provided to the callback indicates whether any cookies were removed.</div><div class="line"> * You can pass &#123;@code null&#125; as the callback if you don&apos;t need to know when the operation</div><div class="line"> * completes or whether any cookie were removed, and in this case it is safe to call the</div><div class="line"> * method from a thread without a Looper.</div><div class="line"> * @param callback a callback which is executed when the session cookies have been removed</div><div class="line"> */</div><div class="line">public abstract void removeSessionCookies(ValueCallback&lt;Boolean&gt; callback);  //坑爹的异步方法</div><div class="line"></div><div class="line">/**</div><div class="line"> * Removes all cookies.</div><div class="line"> * @deprecated Use &#123;@link #removeAllCookies(ValueCallback)&#125; instead.</div><div class="line"> */</div><div class="line">@Deprecated</div><div class="line">public abstract void removeAllCookie();</div><div class="line"></div><div class="line">/**</div><div class="line"> * Removes all cookies.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * This method is asynchronous.</div><div class="line"> * If a &#123;@link ValueCallback&#125; is provided,</div><div class="line"> * &#123;@link ValueCallback#onReceiveValue(T) onReceiveValue()&#125; will be called on the current</div><div class="line"> * thread&apos;s &#123;@link android.os.Looper&#125; once the operation is complete.</div><div class="line"> * The value provided to the callback indicates whether any cookies were removed.</div><div class="line"> * You can pass &#123;@code null&#125; as the callback if you don&apos;t need to know when the operation</div><div class="line"> * completes or whether any cookies were removed, and in this case it is safe to call the</div><div class="line"> * method from a thread without a Looper.</div><div class="line"> * @param callback a callback which is executed when the cookies have been removed</div><div class="line"> */</div><div class="line">public abstract void removeAllCookies(ValueCallback&lt;Boolean&gt; callback); //清除所有cookie</div><div class="line"></div><div class="line">/**</div><div class="line"> * Gets whether there are stored cookies.</div><div class="line"> *</div><div class="line"> * @return true if there are stored cookies</div><div class="line"> */</div><div class="line">public abstract boolean hasCookies();  //获取是否有cookie</div><div class="line"></div><div class="line">/**</div><div class="line"> * See &#123;@link #hasCookies()&#125;.</div><div class="line"> *</div><div class="line"> * @param privateBrowsing whether to use the private browsing cookie jar</div><div class="line"> * @hide Used by Browser and WebViewProvider implementations.</div><div class="line"> */</div><div class="line">@SystemApi</div><div class="line">public abstract boolean hasCookies(boolean privateBrowsing); //系统api</div><div class="line"></div><div class="line">/**</div><div class="line"> * Removes all expired cookies.</div><div class="line"> * @deprecated The WebView handles removing expired cookies automatically.</div><div class="line"> */</div><div class="line">@Deprecated</div><div class="line">public abstract void removeExpiredCookie();   //清除过期的cookie</div><div class="line"></div><div class="line">/**</div><div class="line"> * Ensures all cookies currently accessible through the getCookie API are</div><div class="line"> * written to persistent storage.</div><div class="line"> * This call will block the caller until it is done and may perform I/O.</div><div class="line"> */</div><div class="line">public abstract void flush(); //确保cookie都是写进本地了，会阻塞IO</div><div class="line"></div><div class="line">/**</div><div class="line"> * Gets whether the application&apos;s &#123;@link WebView&#125; instances send and accept</div><div class="line"> * cookies for file scheme URLs.</div><div class="line"> *</div><div class="line"> * @return true if &#123;@link WebView&#125; instances send and accept cookies for</div><div class="line"> *         file scheme URLs</div><div class="line"> */</div><div class="line">// Static for backward compatibility.</div><div class="line">public static boolean allowFileSchemeCookies() &#123;  </div><div class="line">    return getInstance().allowFileSchemeCookiesImpl();</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Implements &#123;@link #allowFileSchemeCookies()&#125;.</div><div class="line"> *</div><div class="line"> * @hide Only for use by WebViewProvider implementations</div><div class="line"> */</div><div class="line">@SystemApi</div><div class="line">protected abstract boolean allowFileSchemeCookiesImpl();</div><div class="line"></div><div class="line">/**</div><div class="line"> * Sets whether the application&apos;s &#123;@link WebView&#125; instances should send and</div><div class="line"> * accept cookies for file scheme URLs.</div><div class="line"> * Use of cookies with file scheme URLs is potentially insecure and turned</div><div class="line"> * off by default.</div><div class="line"> * Do not use this feature unless you can be sure that no unintentional</div><div class="line"> * sharing of cookie data can take place.</div><div class="line"> * &lt;p&gt;</div><div class="line"> * Note that calls to this method will have no effect if made after a</div><div class="line"> * &#123;@link WebView&#125; or CookieManager instance has been created.</div><div class="line"> */</div><div class="line">// Static for backward compatibility.</div><div class="line">public static void setAcceptFileSchemeCookies(boolean accept) &#123;</div><div class="line">    getInstance().setAcceptFileSchemeCookiesImpl(accept);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Implements &#123;@link #setAcceptFileSchemeCookies(boolean)&#125;.</div><div class="line"> *</div><div class="line"> * @hide Only for use by WebViewProvider implementations</div><div class="line"> */</div><div class="line">@SystemApi</div><div class="line">protected abstract void setAcceptFileSchemeCookiesImpl(boolean accept);</div></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Wu WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Wu Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android-webView-cookie-CookieManager/" rel="tag">#Android,webView,cookie,CookieManager</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/07/设计模式全解析/" rel="next" title="设计模式全解析">
+                <i class="fa fa-chevron-left"></i> 设计模式全解析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/03/Android下webView缓存全解析/" rel="prev" title="Andorid下的webview缓存全解析">
+                Andorid下的webview缓存全解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/05/25/Android下webView的CookieManager全解析/"
+     data-title="Andorid下的webview的CookieManager全解析"
+     data-content=""
+     data-url="http://yoursite.com/2017/05/25/Android下webView的CookieManager全解析/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/25/Android下webView的CookieManager全解析/"
+           data-title="Andorid下的webview的CookieManager全解析" data-url="http://yoursite.com/2017/05/25/Android下webView的CookieManager全解析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Mr.Wu" />
+          <p class="site-author-name" itemprop="name">Mr.Wu</p>
+          <p class="site-description motion-element" itemprop="description">The closer you think you are,the less you will actually see.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CookieManager介绍"><span class="nav-number">1.</span> <span class="nav-text">CookieManager介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用步骤"><span class="nav-number">3.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#天坑所在"><span class="nav-number">4.</span> <span class="nav-text">天坑所在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API解析"><span class="nav-number">5.</span> <span class="nav-text">API解析</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Wu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="mailto:thisismrwu@163.com">Mr.Wu</a> 强力驱动
+</div>
+
+<!-- <div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    #NexT.Mist
+  </a>
+</div> -->
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"thisismrwu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
