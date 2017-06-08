@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/07/设计模式全解析/index.html">
 <meta property="og:site_name" content="Mr.Wu's Blog">
 <meta property="og:description" content="这是一篇很好的阐述设计模式的文章">
-<meta property="og:updated_time" content="2017-06-08T11:37:22.082Z">
+<meta property="og:updated_time" content="2017-06-08T11:40:40.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式全解析">
 <meta name="twitter:description" content="这是一篇很好的阐述设计模式的文章">
@@ -898,306 +898,210 @@
 </ul>
 <ul>
 <li><p>通用代码实现<br>  -单状态单备份备忘录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">    class Originator &#123;  </div><div class="line">        private String state = &quot;&quot;;  </div><div class="line">          </div><div class="line">        public String getState() &#123;  </div><div class="line">            return state;  </div><div class="line">        &#125;  </div><div class="line">        public void setState(String state) &#123;  </div><div class="line">            this.state = state;  </div><div class="line">        &#125;  </div><div class="line">        public Memento createMemento()&#123;  </div><div class="line">            return new Memento(this.state);  </div><div class="line">        &#125;  </div><div class="line">        public void restoreMemento(Memento memento)&#123;  </div><div class="line">            this.setState(memento.getState());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">      </div><div class="line">    class Memento &#123;  </div><div class="line">        private String state = &quot;&quot;;  </div><div class="line">        public Memento(String state)&#123;  </div><div class="line">            this.state = state;  </div><div class="line">        &#125;  </div><div class="line">        public String getState() &#123;  </div><div class="line">            return state;  </div><div class="line">        &#125;  </div><div class="line">        public void setState(String state) &#123;  </div><div class="line">            this.state = state;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">    class Caretaker &#123;  </div><div class="line">        private Memento memento;  </div><div class="line">        public Memento getMemento()&#123;  </div><div class="line">            return memento;  </div><div class="line">        &#125;  </div><div class="line">        public void setMemento(Memento memento)&#123;  </div><div class="line">            this.memento = memento;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">    public class Client &#123;  </div><div class="line">        public static void main(String[] args)&#123;  </div><div class="line">            Originator originator = new Originator();  </div><div class="line">            originator.setState(&quot;状态1&quot;);  </div><div class="line">            System.out.println(&quot;初始状态:&quot;+originator.getState());  </div><div class="line">            Caretaker caretaker = new Caretaker();  </div><div class="line">            caretaker.setMemento(originator.createMemento());  </div><div class="line">            originator.setState(&quot;状态2&quot;);  </div><div class="line">            System.out.println(&quot;改变后状态:&quot;+originator.getState());  </div><div class="line">            originator.restoreMemento(caretaker.getMemento());  </div><div class="line">            System.out.println(&quot;恢复后状态:&quot;+originator.getState());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line"></div><div class="line">        代码演示了一个单状态单备份的例子，逻辑非常简单：Originator类中的state变量需要备份，以便在需要的时候恢复；Memento类中，也有一个state变量，用来存储Originator类中state变量的临时状态；而Caretaker类就是用来管理备忘录类的，用来向备忘录对象中写入状态或者取回状态。</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line">- 多状态多备份备忘录</div><div class="line">	- 通用代码演示的例子中，Originator类只有一个state变量需要备份，而通常情况下，发起人角色通常是一个javaBean，对象中需要备份的变量不止一个，需要备份的状态也不止一个，这就是多状态多备份备忘录。实现备忘录的方法很多，备忘录模式有很多变形和处理方式，像通用代码那样的方式一般不会用到，多数情况下的备忘录模式，是多状态多备份的。其实实现多状态多备份也很简单，最常用的方法是，我们在Memento中增加一个Map容器来存储所有的状态，在Caretaker类中同样使用一个Map容器才存储所有的备份。下面我们给出一个多状态多备份的例子：</div></pre></td></tr></table></figure>
-<p>  class Originator {  </p>
-<pre><code>private String state1 = &quot;&quot;;  
-private String state2 = &quot;&quot;;  
-private String state3 = &quot;&quot;;  
-
-public String getState1() {  
-    return state1;  
-}  
-public void setState1(String state1) {  
-    this.state1 = state1;  
-}  
-public String getState2() {  
-    return state2;  
-}  
-public void setState2(String state2) {  
-    this.state2 = state2;  
-}  
-public String getState3() {  
-    return state3;  
-}  
-public void setState3(String state3) {  
-    this.state3 = state3;  
-}  
-public Memento createMemento(){  
-    return new Memento(BeanUtils.backupProp(this));  
-}  
-
-public void restoreMemento(Memento memento){  
-    BeanUtils.restoreProp(this, memento.getStateMap());  
-}  
-public String toString(){  
-    return &quot;state1=&quot;+state1+&quot;state2=&quot;+state2+&quot;state3=&quot;+state3;  
-}  
-</code></pre><p>  }<br>  class Memento {  </p>
-<pre><code>private Map&lt;String, Object&gt; stateMap;  
-
-public Memento(Map&lt;String, Object&gt; map){  
-    this.stateMap = map;  
-}  
-
-public Map&lt;String, Object&gt; getStateMap() {  
-    return stateMap;  
-}  
-
-public void setStateMap(Map&lt;String, Object&gt; stateMap) {  
-    this.stateMap = stateMap;  
-}  
-</code></pre><p>  }<br>  class BeanUtils {  </p>
-<pre><code>public static Map&lt;String, Object&gt; backupProp(Object bean){  
-    Map&lt;String, Object&gt; result = new HashMap&lt;String, Object&gt;();  
-    try{  
-        BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());  
-        PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();  
-        for(PropertyDescriptor des: descriptors){  
-            String fieldName = des.getName();  
-            Method getter = des.getReadMethod();  
-            Object fieldValue = getter.invoke(bean, new Object[]{});  
-            if(!fieldName.equalsIgnoreCase(&quot;class&quot;)){  
-                result.put(fieldName, fieldValue);  
-            }  
-        }  
-
-    }catch(Exception e){  
-        e.printStackTrace();  
-    }  
-    return result;  
-}  
-
-public static void restoreProp(Object bean, Map&lt;String, Object&gt; propMap){  
-    try {  
-        BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());  
-        PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();  
-        for(PropertyDescriptor des: descriptors){  
-            String fieldName = des.getName();  
-            if(propMap.containsKey(fieldName)){  
-                Method setter = des.getWriteMethod();  
-                setter.invoke(bean, new Object[]{propMap.get(fieldName)});  
-            }  
-        }  
-    } catch (Exception e) {  
-        e.printStackTrace();  
-    }  
-}  
-</code></pre><p>  }<br>  class Caretaker {  </p>
-<pre><code>private Map&lt;String, Memento&gt; memMap = new HashMap&lt;String, Memento&gt;();  
-public Memento getMemento(String index){  
-    return memMap.get(index);  
-}  
-
-public void setMemento(String index, Memento memento){  
-    this.memMap.put(index, memento);  
-}  
-</code></pre><p>  }<br>  class Client {  </p>
-<pre><code>public static void main(String[] args){  
-    Originator ori = new Originator();  
-    Caretaker caretaker = new Caretaker();  
-    ori.setState1(&quot;中国&quot;);  
-    ori.setState2(&quot;强盛&quot;);  
-    ori.setState3(&quot;繁荣&quot;);  
-    System.out.println(&quot;===初始化状态===\n&quot;+ori);  
-
-    caretaker.setMemento(&quot;001&quot;,ori.createMemento());  
-    ori.setState1(&quot;软件&quot;);  
-    ori.setState2(&quot;架构&quot;);  
-    ori.setState3(&quot;优秀&quot;);  
-    System.out.println(&quot;===修改后状态===\n&quot;+ori);  
-
-    ori.restoreMemento(caretaker.getMemento(&quot;001&quot;));  
-    System.out.println(&quot;===恢复后状态===\n&quot;+ori);  
-}  
-</code></pre><p>  }  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div></pre></td><td class="code"><pre><div class="line">   class Originator &#123;  </div><div class="line">       private String state = &quot;&quot;;  </div><div class="line">         </div><div class="line">       public String getState() &#123;  </div><div class="line">           return state;  </div><div class="line">       &#125;  </div><div class="line">       public void setState(String state) &#123;  </div><div class="line">           this.state = state;  </div><div class="line">       &#125;  </div><div class="line">       public Memento createMemento()&#123;  </div><div class="line">           return new Memento(this.state);  </div><div class="line">       &#125;  </div><div class="line">       public void restoreMemento(Memento memento)&#123;  </div><div class="line">           this.setState(memento.getState());  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">     </div><div class="line">   class Memento &#123;  </div><div class="line">       private String state = &quot;&quot;;  </div><div class="line">       public Memento(String state)&#123;  </div><div class="line">           this.state = state;  </div><div class="line">       &#125;  </div><div class="line">       public String getState() &#123;  </div><div class="line">           return state;  </div><div class="line">       &#125;  </div><div class="line">       public void setState(String state) &#123;  </div><div class="line">           this.state = state;  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">   class Caretaker &#123;  </div><div class="line">       private Memento memento;  </div><div class="line">       public Memento getMemento()&#123;  </div><div class="line">           return memento;  </div><div class="line">       &#125;  </div><div class="line">       public void setMemento(Memento memento)&#123;  </div><div class="line">           this.memento = memento;  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">   public class Client &#123;  </div><div class="line">       public static void main(String[] args)&#123;  </div><div class="line">           Originator originator = new Originator();  </div><div class="line">           originator.setState(&quot;状态1&quot;);  </div><div class="line">           System.out.println(&quot;初始状态:&quot;+originator.getState());  </div><div class="line">           Caretaker caretaker = new Caretaker();  </div><div class="line">           caretaker.setMemento(originator.createMemento());  </div><div class="line">           originator.setState(&quot;状态2&quot;);  </div><div class="line">           System.out.println(&quot;改变后状态:&quot;+originator.getState());  </div><div class="line">           originator.restoreMemento(caretaker.getMemento());  </div><div class="line">           System.out.println(&quot;恢复后状态:&quot;+originator.getState());  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line"></div><div class="line">       代码演示了一个单状态单备份的例子，逻辑非常简单：Originator类中的state变量需要备份，以便在需要的时候恢复；Memento类中，也有一个state变量，用来存储Originator类中state变量的临时状态；而Caretaker类就是用来管理备忘录类的，用来向备忘录对象中写入状态或者取回状态。</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">   多状态多备份备忘录</div><div class="line">通用代码演示的例子中，Originator类只有一个state变量需要备份，而通常情况下，发起人角色通常是一个javaBean，对象中需要备份的变量不止一个，需要备份的状态也不止一个，这就是多状态多备份备忘录。实现备忘录的方法很多，备忘录模式有很多变形和处理方式，像通用代码那样的方式一般不会用到，多数情况下的备忘录模式，是多状态多备份的。其实实现多状态多备份也很简单，最常用的方法是，我们在Memento中增加一个Map容器来存储所有的状态，在Caretaker类中同样使用一个Map容器才存储所有的备份。下面我们给出一个多状态多备份的例子：</div><div class="line"></div><div class="line">   class Originator &#123;  </div><div class="line">       private String state1 = &quot;&quot;;  </div><div class="line">       private String state2 = &quot;&quot;;  </div><div class="line">       private String state3 = &quot;&quot;;  </div><div class="line">     </div><div class="line">       public String getState1() &#123;  </div><div class="line">           return state1;  </div><div class="line">       &#125;  </div><div class="line">       public void setState1(String state1) &#123;  </div><div class="line">           this.state1 = state1;  </div><div class="line">       &#125;  </div><div class="line">       public String getState2() &#123;  </div><div class="line">           return state2;  </div><div class="line">       &#125;  </div><div class="line">       public void setState2(String state2) &#123;  </div><div class="line">           this.state2 = state2;  </div><div class="line">       &#125;  </div><div class="line">       public String getState3() &#123;  </div><div class="line">           return state3;  </div><div class="line">       &#125;  </div><div class="line">       public void setState3(String state3) &#123;  </div><div class="line">           this.state3 = state3;  </div><div class="line">       &#125;  </div><div class="line">       public Memento createMemento()&#123;  </div><div class="line">           return new Memento(BeanUtils.backupProp(this));  </div><div class="line">       &#125;  </div><div class="line">         </div><div class="line">       public void restoreMemento(Memento memento)&#123;  </div><div class="line">           BeanUtils.restoreProp(this, memento.getStateMap());  </div><div class="line">       &#125;  </div><div class="line">       public String toString()&#123;  </div><div class="line">           return &quot;state1=&quot;+state1+&quot;state2=&quot;+state2+&quot;state3=&quot;+state3;  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">   class Memento &#123;  </div><div class="line">       private Map&lt;String, Object&gt; stateMap;  </div><div class="line">         </div><div class="line">       public Memento(Map&lt;String, Object&gt; map)&#123;  </div><div class="line">           this.stateMap = map;  </div><div class="line">       &#125;  </div><div class="line">     </div><div class="line">       public Map&lt;String, Object&gt; getStateMap() &#123;  </div><div class="line">           return stateMap;  </div><div class="line">       &#125;  </div><div class="line">     </div><div class="line">       public void setStateMap(Map&lt;String, Object&gt; stateMap) &#123;  </div><div class="line">           this.stateMap = stateMap;  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">   class BeanUtils &#123;  </div><div class="line">       public static Map&lt;String, Object&gt; backupProp(Object bean)&#123;  </div><div class="line">           Map&lt;String, Object&gt; result = new HashMap&lt;String, Object&gt;();  </div><div class="line">           try&#123;  </div><div class="line">               BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());  </div><div class="line">               PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();  </div><div class="line">               for(PropertyDescriptor des: descriptors)&#123;  </div><div class="line">                   String fieldName = des.getName();  </div><div class="line">                   Method getter = des.getReadMethod();  </div><div class="line">                   Object fieldValue = getter.invoke(bean, new Object[]&#123;&#125;);  </div><div class="line">                   if(!fieldName.equalsIgnoreCase(&quot;class&quot;))&#123;  </div><div class="line">                       result.put(fieldName, fieldValue);  </div><div class="line">                   &#125;  </div><div class="line">               &#125;  </div><div class="line">                 </div><div class="line">           &#125;catch(Exception e)&#123;  </div><div class="line">               e.printStackTrace();  </div><div class="line">           &#125;  </div><div class="line">           return result;  </div><div class="line">       &#125;  </div><div class="line">         </div><div class="line">       public static void restoreProp(Object bean, Map&lt;String, Object&gt; propMap)&#123;  </div><div class="line">           try &#123;  </div><div class="line">               BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());  </div><div class="line">               PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();  </div><div class="line">               for(PropertyDescriptor des: descriptors)&#123;  </div><div class="line">                   String fieldName = des.getName();  </div><div class="line">                   if(propMap.containsKey(fieldName))&#123;  </div><div class="line">                       Method setter = des.getWriteMethod();  </div><div class="line">                       setter.invoke(bean, new Object[]&#123;propMap.get(fieldName)&#125;);  </div><div class="line">                   &#125;  </div><div class="line">               &#125;  </div><div class="line">           &#125; catch (Exception e) &#123;  </div><div class="line">               e.printStackTrace();  </div><div class="line">           &#125;  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">   class Caretaker &#123;  </div><div class="line">       private Map&lt;String, Memento&gt; memMap = new HashMap&lt;String, Memento&gt;();  </div><div class="line">       public Memento getMemento(String index)&#123;  </div><div class="line">           return memMap.get(index);  </div><div class="line">       &#125;  </div><div class="line">         </div><div class="line">       public void setMemento(String index, Memento memento)&#123;  </div><div class="line">           this.memMap.put(index, memento);  </div><div class="line">       &#125;  </div><div class="line">   &#125;  </div><div class="line">   class Client &#123;  </div><div class="line">       public static void main(String[] args)&#123;  </div><div class="line">           Originator ori = new Originator();  </div><div class="line">           Caretaker caretaker = new Caretaker();  </div><div class="line">           ori.setState1(&quot;中国&quot;);  </div><div class="line">           ori.setState2(&quot;强盛&quot;);  </div><div class="line">           ori.setState3(&quot;繁荣&quot;);  </div><div class="line">           System.out.println(&quot;===初始化状态===\n&quot;+ori);  </div><div class="line">             </div><div class="line">           caretaker.setMemento(&quot;001&quot;,ori.createMemento());  </div><div class="line">           ori.setState1(&quot;软件&quot;);  </div><div class="line">           ori.setState2(&quot;架构&quot;);  </div><div class="line">           ori.setState3(&quot;优秀&quot;);  </div><div class="line">           System.out.println(&quot;===修改后状态===\n&quot;+ori);  </div><div class="line">             </div><div class="line">           ori.restoreMemento(caretaker.getMemento(&quot;001&quot;));  </div><div class="line">           System.out.println(&quot;===恢复后状态===\n&quot;+ori);  </div><div class="line">       &#125;  </div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>备忘录模式的优缺点和适用场景</p>
+<ul>
+<li>备忘录模式的优点有：<ul>
+<li>当发起人角色中的状态改变时，有可能这是个错误的改变，我们使用备忘录模式就可以把这个错误的改变还原。备份的状态是保存在发起人角色之外的，这样，发起人角色就不需要对各个备份的状态进行管理。</li>
+</ul>
+</li>
+<li>备忘录模式的缺点：<ul>
+<li>在实际应用中，备忘录模式都是多状态和多备份的，发起人角色的状态需要存储到备忘录对象中，对资源的消耗是比较严重的。<br>-如果有需要提供回滚操作的需求，使用备忘录模式非常适合，比如jdbc的事务操作，文本编辑器的Ctrl+Z恢复等。</li>
+</ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 备忘录模式的优缺点和适用场景</div><div class="line">	- 备忘录模式的优点有：</div><div class="line">    	- 当发起人角色中的状态改变时，有可能这是个错误的改变，我们使用备忘录模式就可以把这个错误的改变还原。备份的状态是保存在发起人角色之外的，这样，发起人角色就不需要对各个备份的状态进行管理。</div><div class="line">	- 备忘录模式的缺点：</div><div class="line">    	- 在实际应用中，备忘录模式都是多状态和多备份的，发起人角色的状态需要存储到备忘录对象中，对资源的消耗是比较严重的。</div><div class="line">	-如果有需要提供回滚操作的需求，使用备忘录模式非常适合，比如jdbc的事务操作，文本编辑器的Ctrl+Z恢复等。</div><div class="line"></div><div class="line">## 20.访问者模式 ##</div><div class="line"></div><div class="line">- 定义</div><div class="line">	- 封装某些作用于某种数据结构中各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</div></pre></td></tr></table></figure>
-<pre><code>class A {    
-    public void method1(){    
-        System.out.println(&quot;我是A&quot;);    
-    }    
-
-    public void method2(B b){    
-        b.showA(this);    
-    }    
-}    
-
-class B {    
-    public void showA(A a){    
-        a.method1();    
-    }    
-}   
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 看一下在类A中，方法method1和方法method2的区别在哪里，方法method1很简单，就是打印出一句“我是A”；方法method2稍微复杂一点，使用类B作为参数，并调用类B的showA方法。再来看一下类B的showA方法，showA方法使用类A作为参数，然后调用类A的method1方法，可以看到，method2方法绕来绕去，无非就是调用了一下自己的method1方法而已，它的运行结果应该也是“我是A”，分析完之后，我们来运行一下这两个方法，并看一下运行结果：</div></pre></td></tr></table></figure>
-<pre><code>public class Test {    
-    public static void main(String[] args){    
-        A a = new A();    
-        a.method1();    
-        a.method2(new B());    
-    }    
-}    
-</code></pre><p>运行结果为：<br>我是A<br>我是A<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- 角色</div><div class="line">	- 在例子中，对于类A来说，类B就是一个访问者。</div><div class="line">	- 抽象访问者：抽象类或者接口，声明访问者可以访问哪些元素，具体到程序中就是visit方法中的参数定义哪些对象是可以被访问的。</div><div class="line">	- 访问者：实现抽象访问者所声明的方法，它影响到访问者访问到一个类后该干什么，要做什么事情。</div><div class="line">	- 抽象元素类：接口或者抽象类，声明接受哪一类访问者访问，程序上是通过accept方法中的参数来定义的。抽象元素一般有两类方法，一部分是本身的业务逻辑，另外就是允许接收哪类访问者来访问。</div><div class="line">	- 元素类：实现抽象元素类所声明的accept方法，通常都是visitor.visit(this)，基本上已经形成一种定式了。</div><div class="line">	- 结构对象：一个元素的容器，一般包含一个容纳多个不同类、不同接口的容器，如List、Set、Map等，在项目中一般很少抽象出这个角色。</div></pre></td></tr></table></figure></p>
-<p>抽象元素类</p>
-<pre><code>abstract class Element {    
-    public abstract void accept(IVisitor visitor);    
-    public abstract void doSomething();    
-}    
-</code></pre><p>元素类</p>
-<pre><code>class ConcreteElement1 extends Element {    
-    public void doSomething(){    
-        System.out.println(&quot;这是元素1&quot;);    
-    }    
-
-    public void accept(IVisitor visitor) {    
-        visitor.visit(this);    
-    }    
-}    
-
-class ConcreteElement2 extends Element {    
-    public void doSomething(){    
-        System.out.println(&quot;这是元素2&quot;);    
-    }    
-
-    public void accept(IVisitor visitor) {    
-        visitor.visit(this);    
-    }    
-}    
-</code></pre><p>抽象访问者</p>
-<pre><code>interface IVisitor {    
-    public void visit(ConcreteElement1 el1);    
-    public void visit(ConcreteElement2 el2);    
-}    
-</code></pre><p>访问者</p>
-<pre><code>class Visitor implements IVisitor {    
-
-    public void visit(ConcreteElement1 el1) {    
-        el1.doSomething();    
-    }    
-
-    public void visit(ConcreteElement2 el2) {    
-        el2.doSomething();    
-    }    
-}   
-</code></pre><p>结构对象</p>
-<pre><code>class ObjectStruture {    
-    public static List&lt;Element&gt; getList(){    
-        List&lt;Element&gt; list = new ArrayList&lt;Element&gt;();    
-        Random ran = new Random();    
-        for(int i=0; i&lt;10; i++){    
-            int a = ran.nextInt(100);    
-            if(a&gt;50){    
-                list.add(new ConcreteElement1());    
-            }else{    
-                list.add(new ConcreteElement2());    
-            }    
-        }    
-        return list;    
-    }    
-}    
-</code></pre><p>客户端</p>
-<pre><code>public class Client {    
-    public static void main(String[] args){    
-        List&lt;Element&gt; list = ObjectStruture.getList();    
-        for(Element e: list){    
-            e.accept(new Visitor());    
-        }    
-    }    
-}   
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">- 优点</div><div class="line">	- 符合单一职责原则：凡是适用访问者模式的场景中，元素类中需要封装在访问者中的操作必定是与元素类本身关系不大且是易变的操作，使用访问者模式一方面符合单一职责原则，另一方面，因为被封装的操作通常来说都是易变的，所以当发生变化时，就可以在不改变元素类本身的前提下，实现对变化部分的扩展。</div><div class="line">	- 扩展性良好：元素类可以通过接受不同的访问者来实现对不同操作的扩展。</div><div class="line"></div><div class="line">- 缺点</div><div class="line">	- 增加新的元素类比较困难。通过访问者模式的代码可以看到，在访问者类中，每一个元素类都有它对应的处理方法，也就是说，每增加一个元素类都需要修改访问者类（也包括访问者类的子类或者实现类），修改起来相当麻烦。也就是说，在元素类数目不确定的情况下，应该慎用访问者模式。所以，访问者模式比较适用于对已有功能的重构，比如说，一个项目的基本功能已经确定下来，元素类的数据已经基本确定下来不会变了，会变的只是这些元素内的相关操作，这时候，我们可以使用访问者模式对原有的代码进行重构一遍，这样一来，就可以在不修改各个元素类的情况下，对原有功能进行修改。</div><div class="line"></div><div class="line">- 适用场景</div><div class="line">	- 假如一个对象中存在着一些与本对象不相干（或者关系较弱）的操作，为了避免这些操作污染这个对象，则可以使用访问者模式来把这些操作封装到访问者中去。</div><div class="line">	- 假如一组对象中，存在着相似的操作，为了避免出现大量重复的代码，也可以将这些重复的操作封装到访问者中去。</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">## 21.状态模式 ##</div><div class="line"></div><div class="line">- 状态（state）模式的定义：定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并被自动更新。允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类</div><div class="line"></div><div class="line">- 状态模式(State)适用性</div><div class="line"></div><div class="line">	- 1.一个对象的行为取决于它的状态,并且它必须在运行时刻根据状态改变它的行为。</div><div class="line"></div><div class="line">	- 2.一个操作中含有庞大的多分支的条件语句，且这些分支依赖于该对象的状态。</div><div class="line"></div><div class="line">		- 这个状态通常用一个或多个枚举常量表示。</div><div class="line">		</div><div class="line">		- 通常,有多个操作包含这一相同的条件结构。</div><div class="line">		</div><div class="line">		- State模式将每一个条件分支放入一个独立的类中。</div><div class="line">		</div><div class="line">		- 这使得你可以根据对象自身的情况将对象的状态作为一个对象，这一对象可以不依赖于其他对象而独立变化。</div><div class="line"></div><div class="line">- 状态模式(State)的参与者</div><div class="line"></div><div class="line">	- 1.Context</div><div class="line"></div><div class="line">		- 定义客户感兴趣的接口。</div><div class="line">		</div><div class="line">		- 维护一个ConcreteState子类的实例，这个实例定义当前状态。</div><div class="line"></div><div class="line">	- 2.State</div><div class="line"></div><div class="line">      	- 定义一个接口以封装与Context的一个特定状态相关的行为。</div><div class="line"></div><div class="line">	- 3.ConcreteStatesubclasses</div><div class="line"></div><div class="line">      	- 每一子类实现一个与Context的一个状态相关的行为。</div><div class="line"></div><div class="line"></div><div class="line">　　　　　　</div><div class="line">- 具体代码实现：</div></pre></td></tr></table></figure>
-<p>定义State</p>
-<p>//定义和Context中的状态相对应的行为<br> public interface State {<br>     //获取天气情况<br>     String getState();<br> }</p>
-<p>定义Context</p>
-<p> //定义当前的状态<br>public class Context {</p>
-<pre><code>private State state;
-
-public State getState() {
-    return state;
-}
-
-public void setState(State state) {
-    this.state = state;
-}
-public String stateMessage(){
-    return state.getState();
-}
-</code></pre><p>}</p>
-<p>定义ConcreteStatesubclasses</p>
-<p>class Sunshine implements State{</p>
-<pre><code>@Override
-public String getState() {
-
-    return &quot;晴天&quot;;
-}
-</code></pre><p>}<br>class Rain implements State{</p>
-<pre><code>@Override
-public String getState() {
-
-    return &quot;下雨&quot;;
-}
-</code></pre><p> }</p>
-<p>测试一下<br> public class StateTest {</p>
-<pre><code>public static void main(String args[]){
-    Context context=new Context();
-    context.setState(new Rain());
-    System.out.println(context.stateMessage());
-    context.setState(new Sunshine());
-    System.out.println(context.stateMessage());
-}
-</code></pre><p> }</p>
-<p>运行结果：<br>下雨<br>晴天<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- 接下来我们用Java编程思想中的一个例子来讲解一下状态模式</div><div class="line">	- 我们学习了多态，看起来似乎所有的东西都可以去继承，因为多态是一个如此巧妙的工具。事实上，当我们使用现成的类建立新类时，如果首先考虑使用继承技术，反倒会加重我们的设计负担，使得事情变得复杂起来。</div><div class="line">	- 更好的设计思想是首先选择&quot;组合&quot;,尤其是不能十分确定应该使用哪一种方式的时候。组合不会强制我们的程序设计进入继承的层次结构中。而且，组合更加灵活，因为它可以动态选择类型(因此也就选择了行为)，想法，继承在编译时就需要知道确定的类型，下面是具体代码体现：</div></pre></td></tr></table></figure></p>
-<p> //相当于状态模式中的state<br> class Actor {<br>    public void act(){}<br> }<br> //相当于状态模式中的ConcreteStateSubclassess<br> class HappyActor extends Actor{<br>     public void act(){<br>         System.out.println(“HappyActor”);<br>     }<br> }<br> class SadActor extends Actor{<br>     public void act(){<br>         System.out.println(“SadActor”);<br>     }<br> }<br> //相当于状态模式中的Context<br> class Stage{<br>     private Actor actor=new HappyActor();<br>     //改变引用actor的指向的具体类型<br>     public void change(){<br>         actor=new SadActor();<br>     }<br>     //根据状态的不同执行不同的行为<br>     public void performPlay(){<br>         actor.act();<br>     }<br> }</p>
-<p>测试一下：</p>
-<p> public class Transmogrify {</p>
-<pre><code>/**
- * @param args
- */
- public static void main(String[] args) {
-
-     Stage stage=new Stage();
-     stage.performPlay();
-     stage.change();
-     stage.performPlay();
- }
-</code></pre><p> }</p>
-<p>运行结果：<br>HappyActor<br>SadActor<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- 程序分析：在这里，Stage对象包含一个对Actor的引用，而Actor被初始化为HappyActor对象，这意味着performPlay()会产生某种特殊行为。既然引用在运行时可以和另一个不同的对象重新绑定起来，SadActor对象的引用可以在actor中被替换，然后由performPlay()产生的行为也随之改变，这样一来，我们在运行期间获得了动态灵活性。与此相反的是，我们不能在运行期间决定继承不同的对象，因为它要求在编译期间完全确定下来。</div><div class="line"></div><div class="line">- 大家是不是觉得状态模式和策略模式不是一样的吗？我们讲一下他们之间的区别和联系：</div><div class="line">	- 状态模式和策略模式的区别和联系(取自知乎网友的回答，很精辟)：</div><div class="line">		- 区别：状态模式将各个状态所对应的操作分离开来，即对于不同的状态，由不同的子类实现具体操作，不同状态的切换由子类实现，当发现传入参数不是自己这个状态所对应的参数，则自己给Context类切换状态；而策略模式是直接依赖注入到Context类的参数进行选择策略，不存在切换状态的操作练习</div><div class="line">		- 联系状态模式和策略模式都是为具有多种可能情形设计的模式，把不同的处理情形抽象为一个相同的接口，符合对扩展开放，对修改封闭的原则。还有就是，策略模式更具有一般性一些，在实践中，可以用策略模式来封装几乎任何类型的规则，只要在分析过程中听到需要在不同实践应用不同的业务规则，就可以考虑使用策略模式处理，在这点上策略模式是包含状态模式的功能的，策略模式是一个重要的设计模式。</div><div class="line"></div><div class="line">## 22.解释器模式 ##</div><div class="line">- 概述</div><div class="line">	- 解释器模式是一种用得比较少的行为型模式.提供了一种解释语言的语法或表达式的方式.</div><div class="line">	- 通过定义一个表达式接口,解释一个特定的上下文.</div><div class="line">- 定义</div><div class="line">	- 给定一个语言，解释器模式可以定义出其文法的一种表示,并定义一个解释器,该解释器使用该表示来解释语言中的句子.</div></pre></td></tr></table></figure></p>
-<pre><code>解释器中涉及到的文法,就是符合一定规则的语句结构.
-如 abcd…….cdef(ab开头,ef结尾,中间N个cd)中,根据N值的不同,可以得到不同的字符串如,abef,abcdef,abcdcdef….
-假设我们有如下推导式
-S ::= abA*ef
-A ::= cd
-其中 ::=表示推导,*表示闭包,意思是A可以有0~N个重复,S是初始符号,abef和cd是终结符号.
-像这样的从一个具体的符号出发,通过不断地应用一些产生式规则 从而生成一个字符串的集合,我们将描述这个集合的文法称为形式文法.
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">	- 给定一个语言(如由abcdef六个字符组成的字符串集合),定义它的文法的一种表示(S::=abA*ef,A::=cd)并定义一个解释器,解释器使用该表示来解释语言中的句子.</div><div class="line">	- 其中的解释器类似一个翻译机</div><div class="line">- 使用场景</div><div class="line">    - 某个简单的语言需要解释执行并且可以将该语言中的语句表示为一个抽象语法树的时候.</div><div class="line">    - 在某些特定的领域出现不断重复的问题时,可以将该领域的问题转化为一种语法规则下的语句,并构建解释器来解释该语句.</div><div class="line">  </div><div class="line">- 其中涉及到的角色有:</div><div class="line"></div><div class="line">	- AbstractExpression: 抽象表达式,声明一个抽象的解释操作父类,定义一个抽象的解释方法,具体的实现由子类解释器完成/</div><div class="line">	- TerminalExpression: 终结符表达式,实现文法中与终结符有关的解释操作,文法中每一个终结符都有一个具体的终结表达式与之对应</div><div class="line">	- NonterminalExpression: 非终结符表达式,实现文法中与非终结符有关的解释操作</div><div class="line">	- Context: 上下文环境类,包含解释器之外的全局信息</div><div class="line">	- Client: 客户端,解析表达式,构建抽象语法树,执行具体的解释操作等.</div><div class="line">- 实例</div></pre></td></tr></table></figure>
-<p>如下我们通过对算术表达式的解释来看一个解释器模式的实现,<br>如表达式m+n+p中,如果我们使用解释器模式对该表达式进行解释,那么m,n,p代表的三个字母可以看成是终结符号,而+代表的运算符则可以看成是非终结符号</p>
-<p> 首先建立抽象解释器表示数学运算<br>public abstract class ArithmeticExpression {<br>  public abstract int interptet();<br>}</p>
-<p>解释器中定义了interptet()方法,ArithmeticExpression有两个直接子类,NumExpression,和OperatorExpression</p>
-<p>建立NumExpression,对数字进行解释<br>public class NumExpression extends ArithmeticExpression {<br>  private int num;</p>
-<p>  public NumExpression(int _num) {<br>    num = _num;<br>  }</p>
-<p>  @Override public int interptet() {<br>    return num;<br>  }<br>}</p>
-<p>建立OperatorExpression,对运算符进行解释<br>public abstract class OperatorExpression extends ArithmeticExpression {<br>  protected ArithmeticExpression mArithmeticExpression1,mArithmeticExpression2;</p>
-<p>  public OperatorExpression(ArithmeticExpression _arithmeticExpression1,<br>      ArithmeticExpression _arithmeticExpression2) {<br>    mArithmeticExpression1 = _arithmeticExpression1;<br>    mArithmeticExpression2 = _arithmeticExpression2;<br>  }<br>}</p>
-<p>AdditionExpression,OperatorExpression的直接子类,加法运算解释器</p>
-<p>public class AdditionExpression extends OperatorExpression {<br>  public AdditionExpression(ArithmeticExpression _arithmeticExpression1,<br>      ArithmeticExpression _arithmeticExpression2) {<br>    super(_arithmeticExpression1, _arithmeticExpression2);<br>  }</p>
-<p>  @Override public int interptet() {<br>    return mArithmeticExpression1.interptet() + mArithmeticExpression2.interptet();<br>  }<br>}</p>
-<p>新增业务逻辑处理类<br>public class Calculator {</p>
-<p>  protected Stack<arithmeticexpression> mArithmeticExpressionStack = new Stack&lt;&gt;();</arithmeticexpression></p>
-<p>  public Calculator(String expression) {<br>    ArithmeticExpression arithmeticExpression1, arithmeticExpression2;<br>    String[] elements = expression.split(“ “);<br>    for (int i = 0; i &lt; elements.length; ++i) {<br>      switch (elements[i].charAt(0)) {<br>        case ‘+’:<br>          arithmeticExpression1 = mArithmeticExpressionStack.pop();<br>          arithmeticExpression2 = new NumExpression(Integer.valueOf(elements[++i]));<br>          mArithmeticExpressionStack.push(<br>              new AdditionExpression(arithmeticExpression1, arithmeticExpression2));<br>          break;<br>        default:<br>          mArithmeticExpressionStack.push(new NumExpression(Integer.valueOf(elements[i])));<br>          break;<br>      }<br>    }<br>  }</p>
-<p>  public int calculate() {<br>    return mArithmeticExpressionStack.pop().interptet();<br>  }<br>}</p>
-<p>客户端调用</p>
-<p>// 解释计算123+124+125+126的运算结果<br>Calculator calculator = new Calculator(“123+124+125+126”);<br>   Log.d(TAG, “setBtnClick: –&gt;” + calculator.calculate());<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- 优缺点</div><div class="line">	- 优点</div><div class="line">    	- 灵活性强,如上边的例子,当我们想对文法规则进行扩展延伸时,只需要增加相应的非终结符解释器,并在构建语法树的时候使用新增的解释器对象进行具体的解释即可.</div><div class="line">	- 缺点</div><div class="line">    	- 因为每一条文法都可以对应至少一个解释器,会生成大量的类,导致后期维护困难,而且对应复杂的文法,构建语法树会显得异常繁琐.</div><div class="line"></div><div class="line">实例代码</div><div class="line">## 23.桥梁模式 ##</div><div class="line">- 应用场景</div><div class="line">	- 举个例子，铅笔和钢笔，都可以用来写字和画画。邮局可以邮寄信件和包裹，两者都有平邮和挂号邮寄两种功能。明白使用场景后，我们可以提取主要元素：事物和功能。</div><div class="line">	- 可以这样定义：有一类事务的集合，&#123;A1，A2，A3...&#125;，每个事物都具有功能F1，F2，F3。当然会有个功能的集合&#123;F1，F2，F3...&#125;。在计算机的世界里我们如何表示呢，代码如下：</div></pre></td></tr></table></figure></p>
-<p>public class 信件{<br>    public void 平邮(){}<br>    public void 挂号(){}<br>}   </p>
-<p>public class 包裹{<br>    public void 平邮(){}<br>    public void 挂号(){}<br>}<br>每个事物是一个类，有m个事物，就有m个类，每个类有n个功能，一共下来有m*n个功能。显然，这种方法是不可取的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 桥接模式概念</div><div class="line">	- 桥接模式是关于怎么将抽象部分和它的实现部分分离，使它们都可以独立变化。像之前那种写法，会有大量的重复的代码。</div><div class="line">- 解决办法</div><div class="line">  	- 利用语义，对于平邮和挂号，它们是邮局发送的两种方式，所以一句话：邮局有发送功能，我们就可以先得到一个接口，代码如下：</div></pre></td></tr></table></figure></p>
-<p>package qj_1;</p>
-<p>public interface iPost {//邮局<br>        public void send();//发送功能<br>}</p>
-<p>有了这个接口后，我们当然想着的是它的实现类了。</p>
-<p>//平邮实现类<br>public class Pmail implements iPost{<br>    @Override<br>    public void send() {<br>        System.out.println(“平邮发送。。”);<br>    }<br>}</p>
-<p>//挂号实现类<br>public class Gmail implements iPost{<br>    @Override<br>    public void send() {<br>        System.out.println(“挂号发送。。”);<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 以上我们解决了问题的一半：邮局有平邮和挂号两种功能。信件和包裹，是两种不同的事物，它们有相同的功能，当然也有不同的。对于它们共同的部分我们可以将其封装到一个类中，但是该类又不能代替一个具体的事物，所以我们可以将其定义为抽象类。</div></pre></td></tr></table></figure></p>
-<p>public abstract class AbstractThing {// 抽象类<br>    private iPost post;// 多态成员<br>    public AbstractThing(iPost obj) {<br>        post = obj;<br>    }<br>    public void post() {// 平邮和挂号两种功能<br>        post.send();<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 该抽象类是桥接模式的核心。重点是在该类中定义了多态成员，发送的两种方式是信件和包裹共享的功能。接下的就很明确了，信件和包裹两个具体的事物去继承抽象类。</div></pre></td></tr></table></figure></p>
-<p>//信件实现类<br>public class Letter extends AbstractThing{<br>    public Letter(iPost obj) {<br>        super(obj);<br>    }<br>    //其他独有的变量和方法<br>}</p>
-<p>//包裹实现类<br>public class Parcel extends AbstractThing{<br>    public Parcel(iPost obj) {<br>        super(obj);<br>    }<br>    //其他独有的变量和方法<br>}</p>
-<p>测试类代码如下：<br>public class Test {<br>    public static void main(String[] str) {<br>        iPost post = new Gmail();<br>        Letter letter = new Letter(post);<br>        letter.post();<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- 分析总结</div><div class="line"></div><div class="line">	- 从测试类中我们可以看出，先功能类中选择一种发送方式，然后再在事物类中选择一种具体的事物类，然后完成发送任务。所以可以总结，桥接模式完成的是一个多条件选择问题，假设有二维条件，分别有N1，N2个选择，桥接模式就是要求在一维的条件中选一个条件，再在二维的条件中选一个，完成有效的组合。这种情景在生活中很常见，比如，10件上衣10件裤子，你想搭配出一套衣服，你肯定会上衣摆出一排，在其中选一件，裤子摆出一排，在其中选一件。而不是衣服裤子混在一起挑。你从家里到长春，必须经过中转站北京，从家到北京好多路线和方式，从北京到长春同样很多路线，你肯定从家到北京的路线先选择一条，从北京到长春的路线选一条，完成从家到北京这个事。</div><div class="line">- 当需求发生变化时，桥接模式是如何满足的呢？</div><div class="line">  	- 当添加了新的事物，从抽象类中派生一个类即可。</div></pre></td></tr></table></figure></p>
-<p>public class NewThing extends AbstractThing{<br>    public NewThing(iPost obj) {<br>    super(obj);<br>    }<br>    //其他独有的变量和方法<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 当添加了新的发送方式，从接口派生出一个类即可。</div></pre></td></tr></table></figure></p>
-<p>public class NewMail implements iPost{<br>    @Override<br>    public void send() {<br>        System.out.println(“新增的一种发送方式”);<br>    }<br>}<br>```</p>
+</li>
+</ul>
+<h2 id="20-访问者模式"><a href="#20-访问者模式" class="headerlink" title="20.访问者模式"></a>20.访问者模式</h2><ul>
+<li><p>定义</p>
+<ul>
+<li>封装某些作用于某种数据结构中各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class A &#123;    </div><div class="line">    public void method1()&#123;    </div><div class="line">        System.out.println(&quot;我是A&quot;);    </div><div class="line">    &#125;    </div><div class="line">        </div><div class="line">    public void method2(B b)&#123;    </div><div class="line">        b.showA(this);    </div><div class="line">    &#125;    </div><div class="line">&#125;    </div><div class="line">    </div><div class="line">class B &#123;    </div><div class="line">    public void showA(A a)&#123;    </div><div class="line">        a.method1();    </div><div class="line">    &#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>看一下在类A中，方法method1和方法method2的区别在哪里，方法method1很简单，就是打印出一句“我是A”；方法method2稍微复杂一点，使用类B作为参数，并调用类B的showA方法。再来看一下类B的showA方法，showA方法使用类A作为参数，然后调用类A的method1方法，可以看到，method2方法绕来绕去，无非就是调用了一下自己的method1方法而已，它的运行结果应该也是“我是A”，分析完之后，我们来运行一下这两个方法，并看一下运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    public class Test &#123;    </div><div class="line">        public static void main(String[] args)&#123;    </div><div class="line">            A a = new A();    </div><div class="line">            a.method1();    </div><div class="line">            a.method2(new B());    </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line"></div><div class="line">运行结果为：</div><div class="line">我是A</div><div class="line">我是A</div></pre></td></tr></table></figure>
+</li>
+<li><p>角色</p>
+<ul>
+<li>在例子中，对于类A来说，类B就是一个访问者。</li>
+<li>抽象访问者：抽象类或者接口，声明访问者可以访问哪些元素，具体到程序中就是visit方法中的参数定义哪些对象是可以被访问的。</li>
+<li>访问者：实现抽象访问者所声明的方法，它影响到访问者访问到一个类后该干什么，要做什么事情。</li>
+<li>抽象元素类：接口或者抽象类，声明接受哪一类访问者访问，程序上是通过accept方法中的参数来定义的。抽象元素一般有两类方法，一部分是本身的业务逻辑，另外就是允许接收哪类访问者来访问。</li>
+<li>元素类：实现抽象元素类所声明的accept方法，通常都是visitor.visit(this)，基本上已经形成一种定式了。</li>
+<li>结构对象：一个元素的容器，一般包含一个容纳多个不同类、不同接口的容器，如List、Set、Map等，在项目中一般很少抽象出这个角色。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">抽象元素类</div><div class="line"></div><div class="line">    abstract class Element &#123;    </div><div class="line">        public abstract void accept(IVisitor visitor);    </div><div class="line">        public abstract void doSomething();    </div><div class="line">    &#125;    </div><div class="line"></div><div class="line">元素类</div><div class="line"></div><div class="line"></div><div class="line">    class ConcreteElement1 extends Element &#123;    </div><div class="line">        public void doSomething()&#123;    </div><div class="line">            System.out.println(&quot;这是元素1&quot;);    </div><div class="line">        &#125;    </div><div class="line">            </div><div class="line">        public void accept(IVisitor visitor) &#123;    </div><div class="line">            visitor.visit(this);    </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line">        </div><div class="line">    class ConcreteElement2 extends Element &#123;    </div><div class="line">        public void doSomething()&#123;    </div><div class="line">            System.out.println(&quot;这是元素2&quot;);    </div><div class="line">        &#125;    </div><div class="line">            </div><div class="line">        public void accept(IVisitor visitor) &#123;    </div><div class="line">            visitor.visit(this);    </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line"></div><div class="line">抽象访问者</div><div class="line"></div><div class="line"></div><div class="line">    interface IVisitor &#123;    </div><div class="line">        public void visit(ConcreteElement1 el1);    </div><div class="line">        public void visit(ConcreteElement2 el2);    </div><div class="line">    &#125;    </div><div class="line"></div><div class="line">访问者</div><div class="line"></div><div class="line"></div><div class="line">    class Visitor implements IVisitor &#123;    </div><div class="line">        </div><div class="line">        public void visit(ConcreteElement1 el1) &#123;    </div><div class="line">            el1.doSomething();    </div><div class="line">        &#125;    </div><div class="line">            </div><div class="line">        public void visit(ConcreteElement2 el2) &#123;    </div><div class="line">            el2.doSomething();    </div><div class="line">        &#125;    </div><div class="line">    &#125;   </div><div class="line"></div><div class="line">结构对象</div><div class="line"></div><div class="line">    class ObjectStruture &#123;    </div><div class="line">        public static List&lt;Element&gt; getList()&#123;    </div><div class="line">            List&lt;Element&gt; list = new ArrayList&lt;Element&gt;();    </div><div class="line">            Random ran = new Random();    </div><div class="line">            for(int i=0; i&lt;10; i++)&#123;    </div><div class="line">                int a = ran.nextInt(100);    </div><div class="line">                if(a&gt;50)&#123;    </div><div class="line">                    list.add(new ConcreteElement1());    </div><div class="line">                &#125;else&#123;    </div><div class="line">                    list.add(new ConcreteElement2());    </div><div class="line">                &#125;    </div><div class="line">            &#125;    </div><div class="line">            return list;    </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line"></div><div class="line">客户端</div><div class="line"></div><div class="line"></div><div class="line">    public class Client &#123;    </div><div class="line">        public static void main(String[] args)&#123;    </div><div class="line">            List&lt;Element&gt; list = ObjectStruture.getList();    </div><div class="line">            for(Element e: list)&#123;    </div><div class="line">                e.accept(new Visitor());    </div><div class="line">            &#125;    </div><div class="line">        &#125;    </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>符合单一职责原则：凡是适用访问者模式的场景中，元素类中需要封装在访问者中的操作必定是与元素类本身关系不大且是易变的操作，使用访问者模式一方面符合单一职责原则，另一方面，因为被封装的操作通常来说都是易变的，所以当发生变化时，就可以在不改变元素类本身的前提下，实现对变化部分的扩展。</li>
+<li>扩展性良好：元素类可以通过接受不同的访问者来实现对不同操作的扩展。</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>增加新的元素类比较困难。通过访问者模式的代码可以看到，在访问者类中，每一个元素类都有它对应的处理方法，也就是说，每增加一个元素类都需要修改访问者类（也包括访问者类的子类或者实现类），修改起来相当麻烦。也就是说，在元素类数目不确定的情况下，应该慎用访问者模式。所以，访问者模式比较适用于对已有功能的重构，比如说，一个项目的基本功能已经确定下来，元素类的数据已经基本确定下来不会变了，会变的只是这些元素内的相关操作，这时候，我们可以使用访问者模式对原有的代码进行重构一遍，这样一来，就可以在不修改各个元素类的情况下，对原有功能进行修改。</li>
+</ul>
+</li>
+<li><p>适用场景</p>
+<ul>
+<li>假如一个对象中存在着一些与本对象不相干（或者关系较弱）的操作，为了避免这些操作污染这个对象，则可以使用访问者模式来把这些操作封装到访问者中去。</li>
+<li>假如一组对象中，存在着相似的操作，为了避免出现大量重复的代码，也可以将这些重复的操作封装到访问者中去。</li>
+</ul>
+</li>
+</ul>
+<h2 id="21-状态模式"><a href="#21-状态模式" class="headerlink" title="21.状态模式"></a>21.状态模式</h2><ul>
+<li><p>状态（state）模式的定义：定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并被自动更新。允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类</p>
+</li>
+<li><p>状态模式(State)适用性</p>
+<ul>
+<li><p>1.一个对象的行为取决于它的状态,并且它必须在运行时刻根据状态改变它的行为。</p>
+</li>
+<li><p>2.一个操作中含有庞大的多分支的条件语句，且这些分支依赖于该对象的状态。</p>
+<ul>
+<li><p>这个状态通常用一个或多个枚举常量表示。</p>
+</li>
+<li><p>通常,有多个操作包含这一相同的条件结构。</p>
+</li>
+<li><p>State模式将每一个条件分支放入一个独立的类中。</p>
+</li>
+<li><p>这使得你可以根据对象自身的情况将对象的状态作为一个对象，这一对象可以不依赖于其他对象而独立变化。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>状态模式(State)的参与者</p>
+<ul>
+<li><p>1.Context</p>
+<ul>
+<li><p>定义客户感兴趣的接口。</p>
+</li>
+<li><p>维护一个ConcreteState子类的实例，这个实例定义当前状态。</p>
+</li>
+</ul>
+</li>
+<li><p>2.State</p>
+<pre><code>- 定义一个接口以封装与Context的一个特定状态相关的行为。
+</code></pre></li>
+<li><p>3.ConcreteStatesubclasses</p>
+<pre><code>- 每一子类实现一个与Context的一个状态相关的行为。
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p>　　　　　　</p>
+<ul>
+<li><p>具体代码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">定义State</div><div class="line"></div><div class="line">//定义和Context中的状态相对应的行为</div><div class="line"> public interface State &#123;</div><div class="line">     //获取天气情况</div><div class="line">     String getState();</div><div class="line"> &#125;</div><div class="line"></div><div class="line">定义Context</div><div class="line"></div><div class="line"> //定义当前的状态</div><div class="line">public class Context &#123;</div><div class="line"></div><div class="line">	 private State state;</div><div class="line">	</div><div class="line">	 public State getState() &#123;</div><div class="line">	     return state;</div><div class="line">	 &#125;</div><div class="line">	</div><div class="line">	 public void setState(State state) &#123;</div><div class="line">	     this.state = state;</div><div class="line">	 &#125;</div><div class="line">	 public String stateMessage()&#123;</div><div class="line">	     return state.getState();</div><div class="line">	 &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">定义ConcreteStatesubclasses</div><div class="line"></div><div class="line"></div><div class="line">class Sunshine implements State&#123;</div><div class="line">  </div><div class="line">      @Override</div><div class="line">      public String getState() &#123;</div><div class="line">          </div><div class="line">          return &quot;晴天&quot;;</div><div class="line">      &#125;</div><div class="line">     </div><div class="line">&#125;</div><div class="line">class Rain implements State&#123;</div><div class="line"> </div><div class="line">     @Override</div><div class="line">     public String getState() &#123;</div><div class="line">         </div><div class="line">         return &quot;下雨&quot;;</div><div class="line">     &#125;</div><div class="line">     </div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line">测试一下</div><div class="line"> public class StateTest &#123;</div><div class="line"> </div><div class="line">     public static void main(String args[])&#123;</div><div class="line">         Context context=new Context();</div><div class="line">         context.setState(new Rain());</div><div class="line">         System.out.println(context.stateMessage());</div><div class="line">         context.setState(new Sunshine());</div><div class="line">         System.out.println(context.stateMessage());</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line">运行结果：</div><div class="line">下雨</div><div class="line">晴天</div></pre></td></tr></table></figure>
+</li>
+<li><p>接下来我们用Java编程思想中的一个例子来讲解一下状态模式</p>
+<ul>
+<li>我们学习了多态，看起来似乎所有的东西都可以去继承，因为多态是一个如此巧妙的工具。事实上，当我们使用现成的类建立新类时，如果首先考虑使用继承技术，反倒会加重我们的设计负担，使得事情变得复杂起来。</li>
+<li>更好的设计思想是首先选择”组合”,尤其是不能十分确定应该使用哪一种方式的时候。组合不会强制我们的程序设计进入继承的层次结构中。而且，组合更加灵活，因为它可以动态选择类型(因此也就选择了行为)，想法，继承在编译时就需要知道确定的类型，下面是具体代码体现：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"> //相当于状态模式中的state</div><div class="line"> class Actor &#123;</div><div class="line">    public void act()&#123;&#125;</div><div class="line"> &#125;</div><div class="line"> //相当于状态模式中的ConcreteStateSubclassess</div><div class="line"> class HappyActor extends Actor&#123;</div><div class="line">     public void act()&#123;</div><div class="line">         System.out.println(&quot;HappyActor&quot;);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"> class SadActor extends Actor&#123;</div><div class="line">     public void act()&#123;</div><div class="line">         System.out.println(&quot;SadActor&quot;);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"> //相当于状态模式中的Context</div><div class="line"> class Stage&#123;</div><div class="line">     private Actor actor=new HappyActor();</div><div class="line">     //改变引用actor的指向的具体类型</div><div class="line">     public void change()&#123;</div><div class="line">         actor=new SadActor();</div><div class="line">     &#125;</div><div class="line">     //根据状态的不同执行不同的行为</div><div class="line">     public void performPlay()&#123;</div><div class="line">         actor.act();</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">测试一下：</div><div class="line"></div><div class="line"></div><div class="line"> public class Transmogrify &#123;</div><div class="line"> </div><div class="line">    /**</div><div class="line">     * @param args</div><div class="line">     */</div><div class="line">     public static void main(String[] args) &#123;</div><div class="line"> </div><div class="line">         Stage stage=new Stage();</div><div class="line">         stage.performPlay();</div><div class="line">         stage.change();</div><div class="line">         stage.performPlay();</div><div class="line">     &#125;</div><div class="line"> </div><div class="line"> &#125;</div><div class="line"></div><div class="line">运行结果：</div><div class="line">HappyActor</div><div class="line">SadActor</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>程序分析：在这里，Stage对象包含一个对Actor的引用，而Actor被初始化为HappyActor对象，这意味着performPlay()会产生某种特殊行为。既然引用在运行时可以和另一个不同的对象重新绑定起来，SadActor对象的引用可以在actor中被替换，然后由performPlay()产生的行为也随之改变，这样一来，我们在运行期间获得了动态灵活性。与此相反的是，我们不能在运行期间决定继承不同的对象，因为它要求在编译期间完全确定下来。</p>
+</li>
+<li><p>大家是不是觉得状态模式和策略模式不是一样的吗？我们讲一下他们之间的区别和联系：</p>
+<ul>
+<li>状态模式和策略模式的区别和联系(取自知乎网友的回答，很精辟)：<ul>
+<li>区别：状态模式将各个状态所对应的操作分离开来，即对于不同的状态，由不同的子类实现具体操作，不同状态的切换由子类实现，当发现传入参数不是自己这个状态所对应的参数，则自己给Context类切换状态；而策略模式是直接依赖注入到Context类的参数进行选择策略，不存在切换状态的操作练习</li>
+<li>联系状态模式和策略模式都是为具有多种可能情形设计的模式，把不同的处理情形抽象为一个相同的接口，符合对扩展开放，对修改封闭的原则。还有就是，策略模式更具有一般性一些，在实践中，可以用策略模式来封装几乎任何类型的规则，只要在分析过程中听到需要在不同实践应用不同的业务规则，就可以考虑使用策略模式处理，在这点上策略模式是包含状态模式的功能的，策略模式是一个重要的设计模式。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="22-解释器模式"><a href="#22-解释器模式" class="headerlink" title="22.解释器模式"></a>22.解释器模式</h2><ul>
+<li>概述<ul>
+<li>解释器模式是一种用得比较少的行为型模式.提供了一种解释语言的语法或表达式的方式.</li>
+<li>通过定义一个表达式接口,解释一个特定的上下文.</li>
+</ul>
+</li>
+<li><p>定义</p>
+<ul>
+<li><p>给定一个语言，解释器模式可以定义出其文法的一种表示,并定义一个解释器,该解释器使用该表示来解释语言中的句子.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">解释器中涉及到的文法,就是符合一定规则的语句结构.</div><div class="line">如 abcd…….cdef(ab开头,ef结尾,中间N个cd)中,根据N值的不同,可以得到不同的字符串如,abef,abcdef,abcdcdef….</div><div class="line">假设我们有如下推导式</div><div class="line">S ::= abA*ef</div><div class="line">A ::= cd</div><div class="line">其中 ::=表示推导,*表示闭包,意思是A可以有0~N个重复,S是初始符号,abef和cd是终结符号.</div><div class="line">像这样的从一个具体的符号出发,通过不断地应用一些产生式规则 从而生成一个字符串的集合,我们将描述这个集合的文法称为形式文法.</div></pre></td></tr></table></figure>
+</li>
+<li><p>给定一个语言(如由abcdef六个字符组成的字符串集合),定义它的文法的一种表示(S::=abA*ef,A::=cd)并定义一个解释器,解释器使用该表示来解释语言中的句子.</p>
+</li>
+<li>其中的解释器类似一个翻译机</li>
+</ul>
+</li>
+<li><p>使用场景</p>
+<ul>
+<li>某个简单的语言需要解释执行并且可以将该语言中的语句表示为一个抽象语法树的时候.</li>
+<li>在某些特定的领域出现不断重复的问题时,可以将该领域的问题转化为一种语法规则下的语句,并构建解释器来解释该语句.</li>
+</ul>
+</li>
+<li><p>其中涉及到的角色有:</p>
+<ul>
+<li>AbstractExpression: 抽象表达式,声明一个抽象的解释操作父类,定义一个抽象的解释方法,具体的实现由子类解释器完成/</li>
+<li>TerminalExpression: 终结符表达式,实现文法中与终结符有关的解释操作,文法中每一个终结符都有一个具体的终结表达式与之对应</li>
+<li>NonterminalExpression: 非终结符表达式,实现文法中与非终结符有关的解释操作</li>
+<li>Context: 上下文环境类,包含解释器之外的全局信息</li>
+<li>Client: 客户端,解析表达式,构建抽象语法树,执行具体的解释操作等.</li>
+</ul>
+</li>
+<li><p>实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">如下我们通过对算术表达式的解释来看一个解释器模式的实现,</div><div class="line">如表达式m+n+p中,如果我们使用解释器模式对该表达式进行解释,那么m,n,p代表的三个字母可以看成是终结符号,而+代表的运算符则可以看成是非终结符号</div><div class="line"></div><div class="line"> 首先建立抽象解释器表示数学运算</div><div class="line">public abstract class ArithmeticExpression &#123;</div><div class="line">  public abstract int interptet();</div><div class="line">&#125;</div><div class="line"></div><div class="line">解释器中定义了interptet()方法,ArithmeticExpression有两个直接子类,NumExpression,和OperatorExpression</div><div class="line"></div><div class="line">建立NumExpression,对数字进行解释</div><div class="line">public class NumExpression extends ArithmeticExpression &#123;</div><div class="line">  private int num;</div><div class="line"></div><div class="line">  public NumExpression(int _num) &#123;</div><div class="line">    num = _num;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override public int interptet() &#123;</div><div class="line">    return num;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">建立OperatorExpression,对运算符进行解释</div><div class="line">public abstract class OperatorExpression extends ArithmeticExpression &#123;</div><div class="line">  protected ArithmeticExpression mArithmeticExpression1,mArithmeticExpression2;</div><div class="line"></div><div class="line">  public OperatorExpression(ArithmeticExpression _arithmeticExpression1,</div><div class="line">      ArithmeticExpression _arithmeticExpression2) &#123;</div><div class="line">    mArithmeticExpression1 = _arithmeticExpression1;</div><div class="line">    mArithmeticExpression2 = _arithmeticExpression2;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">AdditionExpression,OperatorExpression的直接子类,加法运算解释器</div><div class="line"></div><div class="line">public class AdditionExpression extends OperatorExpression &#123;</div><div class="line">  public AdditionExpression(ArithmeticExpression _arithmeticExpression1,</div><div class="line">      ArithmeticExpression _arithmeticExpression2) &#123;</div><div class="line">    super(_arithmeticExpression1, _arithmeticExpression2);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override public int interptet() &#123;</div><div class="line">    return mArithmeticExpression1.interptet() + mArithmeticExpression2.interptet();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">新增业务逻辑处理类</div><div class="line">public class Calculator &#123;</div><div class="line"></div><div class="line">  protected Stack&lt;ArithmeticExpression&gt; mArithmeticExpressionStack = new Stack&lt;&gt;();</div><div class="line"></div><div class="line">  public Calculator(String expression) &#123;</div><div class="line">    ArithmeticExpression arithmeticExpression1, arithmeticExpression2;</div><div class="line">    String[] elements = expression.split(&quot; &quot;);</div><div class="line">    for (int i = 0; i &lt; elements.length; ++i) &#123;</div><div class="line">      switch (elements[i].charAt(0)) &#123;</div><div class="line">        case &apos;+&apos;:</div><div class="line">          arithmeticExpression1 = mArithmeticExpressionStack.pop();</div><div class="line">          arithmeticExpression2 = new NumExpression(Integer.valueOf(elements[++i]));</div><div class="line">          mArithmeticExpressionStack.push(</div><div class="line">              new AdditionExpression(arithmeticExpression1, arithmeticExpression2));</div><div class="line">          break;</div><div class="line">        default:</div><div class="line">          mArithmeticExpressionStack.push(new NumExpression(Integer.valueOf(elements[i])));</div><div class="line">          break;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public int calculate() &#123;</div><div class="line">    return mArithmeticExpressionStack.pop().interptet();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">客户端调用</div><div class="line"></div><div class="line">// 解释计算123+124+125+126的运算结果</div><div class="line">Calculator calculator = new Calculator(&quot;123+124+125+126&quot;);</div><div class="line">   Log.d(TAG, &quot;setBtnClick: --&gt;&quot; + calculator.calculate());</div></pre></td></tr></table></figure>
+</li>
+<li><p>优缺点</p>
+<ul>
+<li>优点<ul>
+<li>灵活性强,如上边的例子,当我们想对文法规则进行扩展延伸时,只需要增加相应的非终结符解释器,并在构建语法树的时候使用新增的解释器对象进行具体的解释即可.</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>因为每一条文法都可以对应至少一个解释器,会生成大量的类,导致后期维护困难,而且对应复杂的文法,构建语法树会显得异常繁琐.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>实例代码</p>
+<h2 id="23-桥梁模式"><a href="#23-桥梁模式" class="headerlink" title="23.桥梁模式"></a>23.桥梁模式</h2><ul>
+<li><p>应用场景</p>
+<ul>
+<li>举个例子，铅笔和钢笔，都可以用来写字和画画。邮局可以邮寄信件和包裹，两者都有平邮和挂号邮寄两种功能。明白使用场景后，我们可以提取主要元素：事物和功能。</li>
+<li>可以这样定义：有一类事务的集合，{A1，A2，A3…}，每个事物都具有功能F1，F2，F3。当然会有个功能的集合{F1，F2，F3…}。在计算机的世界里我们如何表示呢，代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class 信件&#123;</div><div class="line">    public void 平邮()&#123;&#125;</div><div class="line">    public void 挂号()&#123;&#125;</div><div class="line">&#125;   </div><div class="line"></div><div class="line">public class 包裹&#123;</div><div class="line">    public void 平邮()&#123;&#125;</div><div class="line">    public void 挂号()&#123;&#125;</div><div class="line">&#125;   </div><div class="line">每个事物是一个类，有m个事物，就有m个类，每个类有n个功能，一共下来有m*n个功能。显然，这种方法是不可取的。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>桥接模式概念</p>
+<ul>
+<li>桥接模式是关于怎么将抽象部分和它的实现部分分离，使它们都可以独立变化。像之前那种写法，会有大量的重复的代码。</li>
+</ul>
+</li>
+<li><p>解决办法</p>
+<pre><code>- 利用语义，对于平邮和挂号，它们是邮局发送的两种方式，所以一句话：邮局有发送功能，我们就可以先得到一个接口，代码如下：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package qj_1;</div><div class="line"></div><div class="line"></div><div class="line">public interface iPost &#123;//邮局</div><div class="line">        public void send();//发送功能</div><div class="line">&#125;</div><div class="line"></div><div class="line">有了这个接口后，我们当然想着的是它的实现类了。</div><div class="line"></div><div class="line">//平邮实现类</div><div class="line">public class Pmail implements iPost&#123;</div><div class="line">	@Override</div><div class="line">	public void send() &#123;</div><div class="line">		System.out.println(&quot;平邮发送。。&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//挂号实现类</div><div class="line">public class Gmail implements iPost&#123;</div><div class="line">	@Override</div><div class="line">	public void send() &#123;</div><div class="line">		System.out.println(&quot;挂号发送。。&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>以上我们解决了问题的一半：邮局有平邮和挂号两种功能。信件和包裹，是两种不同的事物，它们有相同的功能，当然也有不同的。对于它们共同的部分我们可以将其封装到一个类中，但是该类又不能代替一个具体的事物，所以我们可以将其定义为抽象类。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public abstract class AbstractThing &#123;// 抽象类</div><div class="line">	private iPost post;// 多态成员</div><div class="line">	public AbstractThing(iPost obj) &#123;</div><div class="line">		post = obj;</div><div class="line">	&#125;</div><div class="line">	public void post() &#123;// 平邮和挂号两种功能</div><div class="line">		post.send();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>该抽象类是桥接模式的核心。重点是在该类中定义了多态成员，发送的两种方式是信件和包裹共享的功能。接下的就很明确了，信件和包裹两个具体的事物去继承抽象类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//信件实现类</div><div class="line">public class Letter extends AbstractThing&#123;</div><div class="line">	public Letter(iPost obj) &#123;</div><div class="line">		super(obj);</div><div class="line">	&#125;</div><div class="line">	//其他独有的变量和方法</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">//包裹实现类</div><div class="line">public class Parcel extends AbstractThing&#123;</div><div class="line">	public Parcel(iPost obj) &#123;</div><div class="line">		super(obj);</div><div class="line">	&#125;</div><div class="line">    //其他独有的变量和方法</div><div class="line">&#125;</div><div class="line"></div><div class="line">测试类代码如下：</div><div class="line">public class Test &#123;</div><div class="line">	public static void main(String[] str) &#123;</div><div class="line">		iPost post = new Gmail();</div><div class="line">		Letter letter = new Letter(post);</div><div class="line">		letter.post();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>分析总结</p>
+<ul>
+<li>从测试类中我们可以看出，先功能类中选择一种发送方式，然后再在事物类中选择一种具体的事物类，然后完成发送任务。所以可以总结，桥接模式完成的是一个多条件选择问题，假设有二维条件，分别有N1，N2个选择，桥接模式就是要求在一维的条件中选一个条件，再在二维的条件中选一个，完成有效的组合。这种情景在生活中很常见，比如，10件上衣10件裤子，你想搭配出一套衣服，你肯定会上衣摆出一排，在其中选一件，裤子摆出一排，在其中选一件。而不是衣服裤子混在一起挑。你从家里到长春，必须经过中转站北京，从家到北京好多路线和方式，从北京到长春同样很多路线，你肯定从家到北京的路线先选择一条，从北京到长春的路线选一条，完成从家到北京这个事。</li>
+</ul>
+</li>
+<li><p>当需求发生变化时，桥接模式是如何满足的呢？</p>
+<pre><code>- 当添加了新的事物，从抽象类中派生一个类即可。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class NewThing extends AbstractThing&#123;</div><div class="line">	public NewThing(iPost obj) &#123;</div><div class="line">	super(obj);</div><div class="line">	&#125;</div><div class="line">	//其他独有的变量和方法</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>当添加了新的发送方式，从接口派生出一个类即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class NewMail implements iPost&#123;</div><div class="line">	@Override</div><div class="line">	public void send() &#123;</div><div class="line">		System.out.println(&quot;新增的一种发送方式&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
 <h1 id="彩蛋：女孩儿与设计模式"><a href="#彩蛋：女孩儿与设计模式" class="headerlink" title="彩蛋：女孩儿与设计模式"></a>彩蛋：女孩儿与设计模式</h1><blockquote>
 <p>形象的总结一下设计模式。</p>
 </blockquote>
@@ -1595,7 +1499,7 @@ A ::= cd
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述："><span class="nav-number">1.</span> <span class="nav-text">概述：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式各个击破"><span class="nav-number">2.</span> <span class="nav-text">设计模式各个击破</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-单例设计模式"><span class="nav-number">2.1.</span> <span class="nav-text">1.单例设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-装饰设计模式"><span class="nav-number">2.2.</span> <span class="nav-text">2.装饰设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-简单工厂设计模式"><span class="nav-number">2.3.</span> <span class="nav-text">3.简单工厂设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-工厂方法设计模式"><span class="nav-number">2.4.</span> <span class="nav-text">3.工厂方法设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-抽象工厂设计模式"><span class="nav-number">2.5.</span> <span class="nav-text">4.抽象工厂设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-享元设计模式"><span class="nav-number">2.6.</span> <span class="nav-text">5.享元设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-适配器设计模式"><span class="nav-number">2.7.</span> <span class="nav-text">6.适配器设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-模板方法设计模式"><span class="nav-number">2.8.</span> <span class="nav-text">7.模板方法设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-观察者设计模式（有时又被称为发布（publish-）-订阅（Subscribe）模式、模型-视图（View）模式、源-收听者-Listener-模式或从属者模式）"><span class="nav-number">2.9.</span> <span class="nav-text">8.观察者设计模式（有时又被称为发布（publish ）-订阅（Subscribe）模式、模型-视图（View）模式、源-收听者(Listener)模式或从属者模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-代理设计模式"><span class="nav-number">2.10.</span> <span class="nav-text">9.代理设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-策略设计模式"><span class="nav-number">2.11.</span> <span class="nav-text">10.策略设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-建造者设计模式"><span class="nav-number">2.12.</span> <span class="nav-text">11.建造者设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-原型模式"><span class="nav-number">2.13.</span> <span class="nav-text">12.原型模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-中介者模式"><span class="nav-number">2.14.</span> <span class="nav-text">13.中介者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-命令模式"><span class="nav-number">2.15.</span> <span class="nav-text">14.命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-责任链模式"><span class="nav-number">2.16.</span> <span class="nav-text">15.责任链模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-迭代器模式"><span class="nav-number">2.17.</span> <span class="nav-text">16.迭代器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-组合模式"><span class="nav-number">2.18.</span> <span class="nav-text">17.组合模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-门面模式（外观模式）"><span class="nav-number">2.19.</span> <span class="nav-text">18.门面模式（外观模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-备忘录模式"><span class="nav-number">2.20.</span> <span class="nav-text">19.备忘录模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#彩蛋：女孩儿与设计模式"><span class="nav-number">3.</span> <span class="nav-text">彩蛋：女孩儿与设计模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述："><span class="nav-number">1.</span> <span class="nav-text">概述：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式各个击破"><span class="nav-number">2.</span> <span class="nav-text">设计模式各个击破</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-单例设计模式"><span class="nav-number">2.1.</span> <span class="nav-text">1.单例设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-装饰设计模式"><span class="nav-number">2.2.</span> <span class="nav-text">2.装饰设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-简单工厂设计模式"><span class="nav-number">2.3.</span> <span class="nav-text">3.简单工厂设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-工厂方法设计模式"><span class="nav-number">2.4.</span> <span class="nav-text">3.工厂方法设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-抽象工厂设计模式"><span class="nav-number">2.5.</span> <span class="nav-text">4.抽象工厂设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-享元设计模式"><span class="nav-number">2.6.</span> <span class="nav-text">5.享元设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-适配器设计模式"><span class="nav-number">2.7.</span> <span class="nav-text">6.适配器设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-模板方法设计模式"><span class="nav-number">2.8.</span> <span class="nav-text">7.模板方法设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-观察者设计模式（有时又被称为发布（publish-）-订阅（Subscribe）模式、模型-视图（View）模式、源-收听者-Listener-模式或从属者模式）"><span class="nav-number">2.9.</span> <span class="nav-text">8.观察者设计模式（有时又被称为发布（publish ）-订阅（Subscribe）模式、模型-视图（View）模式、源-收听者(Listener)模式或从属者模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-代理设计模式"><span class="nav-number">2.10.</span> <span class="nav-text">9.代理设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-策略设计模式"><span class="nav-number">2.11.</span> <span class="nav-text">10.策略设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-建造者设计模式"><span class="nav-number">2.12.</span> <span class="nav-text">11.建造者设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-原型模式"><span class="nav-number">2.13.</span> <span class="nav-text">12.原型模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-中介者模式"><span class="nav-number">2.14.</span> <span class="nav-text">13.中介者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-命令模式"><span class="nav-number">2.15.</span> <span class="nav-text">14.命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-责任链模式"><span class="nav-number">2.16.</span> <span class="nav-text">15.责任链模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-迭代器模式"><span class="nav-number">2.17.</span> <span class="nav-text">16.迭代器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-组合模式"><span class="nav-number">2.18.</span> <span class="nav-text">17.组合模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-门面模式（外观模式）"><span class="nav-number">2.19.</span> <span class="nav-text">18.门面模式（外观模式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-备忘录模式"><span class="nav-number">2.20.</span> <span class="nav-text">19.备忘录模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-访问者模式"><span class="nav-number">2.21.</span> <span class="nav-text">20.访问者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-状态模式"><span class="nav-number">2.22.</span> <span class="nav-text">21.状态模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-解释器模式"><span class="nav-number">2.23.</span> <span class="nav-text">22.解释器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-桥梁模式"><span class="nav-number">2.24.</span> <span class="nav-text">23.桥梁模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#彩蛋：女孩儿与设计模式"><span class="nav-number">3.</span> <span class="nav-text">彩蛋：女孩儿与设计模式</span></a></li></ol></div>
             
           </div>
         </section>
