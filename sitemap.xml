@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A8%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2017-06-08T11:23:54.771Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/05/25/Android%E4%B8%8BwebView%E7%9A%84CookieManager%E5%85%A8%E8%A7%A3%E6%9E%90/</loc>
     
     <lastmod>2017-06-03T12:03:47.572Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://yoursite.com/2016/09/07/Android%E4%B8%8B%E7%9A%84handler%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E5%85%A8%E8%A7%A3%E6%9E%90/</loc>
     
     <lastmod>2017-05-07T12:28:34.432Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A8%E8%A7%A3%E6%9E%90/</loc>
-    
-    <lastmod>2017-05-07T11:32:32.653Z</lastmod>
     
   </url>
   
