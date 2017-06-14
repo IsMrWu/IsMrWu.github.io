@@ -92,14 +92,14 @@
 <meta property="og:url" content="http://yoursite.com/2016/05/09/Java JVM内存模型详解/index.html">
 <meta property="og:site_name" content="Mr.Wu's Blog">
 <meta property="og:description" content="这是一篇很好的阐述java JVM内存模型的文章">
-<meta property="og:image" content="http://yoursite.com/img/jvm/jvm_memory_1.png">
-<meta property="og:image" content="http://yoursite.com/img/jvm/stack_heap_info.png">
-<meta property="og:image" content="http://yoursite.com/img/jvm/java_object.png">
-<meta property="og:updated_time" content="2017-06-14T12:59:00.029Z">
+<meta property="og:image" content="http://yoursite.com/images/jvm/jvm_memory_1.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm/stack_heap_info.png">
+<meta property="og:image" content="http://yoursite.com/images/jvm/java_object.png">
+<meta property="og:updated_time" content="2017-06-14T13:36:49.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java的JVM详解">
 <meta name="twitter:description" content="这是一篇很好的阐述java JVM内存模型的文章">
-<meta name="twitter:image" content="http://yoursite.com/img/jvm/jvm_memory_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/jvm/jvm_memory_1.png">
 
 
 
@@ -327,7 +327,7 @@
 </blockquote>
 <h2 id="一、内存模型"><a href="#一、内存模型" class="headerlink" title="一、内存模型"></a>一、内存模型</h2><p>Java内存模型，往往是指Java程序在运行时内存的模型，而Java代码是运行在Java虚拟机之上的，由Java虚拟机通过解释执行(解释器)或编译执行(即时编译器)来完成，故Java内存模型，也就是指Java虚拟机的运行时内存模型。</p>
 <p>作为Java开发人员来说，并不需要像C/C++开发人员，需要时刻注意内存的释放，而是全权交给虚拟机去管理，那么有就必要了解虚拟机的运行时内存是如何构成的。运行时内存模型，分为线程私有和共享数据区两大类，其中线程私有的数据区包含程序计数器、虚拟机栈、本地方法区，所有线程共享的数据区包含Java堆、方法区，在方法区内有一个常量池。</p>
-<p><img src="/img/jvm/jvm_memory_1.png" alt="jvm_memory_1"></p>
+<p><img src="images/jvm/jvm_memory_1.png" alt="jvm_memory_1"></p>
 <p>（1）线程私有区：</p>
 <ul>
 <li>程序计数器，记录正在执行的虚拟机字节码的地址；</li>
@@ -344,7 +344,7 @@
 </ul>
 <p>对于大多数的程序员来说，Java内存比较流行的说法便是堆和栈，这其实是非常粗略的一种划分，这种划分的”堆”对应内存模型的Java堆，”栈”是指虚拟机栈，然而Java内存模型远比这更复杂，想深入了解Java的内存，还是有必要明白整个内存模型。</p>
 <h2 id="二、-详细模型"><a href="#二、-详细模型" class="headerlink" title="二、 详细模型"></a>二、 详细模型</h2><p>运行时内存分为五大块区域（常量池属于方法区，算作一块区域），前面简要介绍了每个区域的功能，那接下来再详细说明每个区域的内容，Java内存总体结构图如下：</p>
-<p><img src="/img/jvm/stack_heap_info.png" alt="stack_heap_info"></p>
+<p><img src="/images/jvm/stack_heap_info.png" alt="stack_heap_info"></p>
 <h3 id="2-1-程序计数器PC"><a href="#2-1-程序计数器PC" class="headerlink" title="2.1 程序计数器PC"></a>2.1 程序计数器PC</h3><p>程序计数器PC，当前线程所执行的字节码行号指示器。每个线程都有自己计数器，是私有内存空间，该区域是整个内存中较小的一块。</p>
 <p>当线程正在执行一个Java方法时，PC计数器记录的是正在执行的虚拟机字节码的地址；当线程正在执行的一个Native方法时，PC计数器则为空（Undefined）。</p>
 <h3 id="2-2-虚拟机栈"><a href="#2-2-虚拟机栈" class="headerlink" title="2.2 虚拟机栈"></a>2.2 虚拟机栈</h3><p>虚拟机栈，生命周期与线程相同，是Java方法执行的内存模型。每个方法(不包含native方法)执行的同时都会创建一个栈帧结构，方法执行过程，对应着虚拟机栈的入栈到出栈的过程。</p>
@@ -380,7 +380,7 @@
 <li>从内存分配角度，Java堆可以划分出线程私有的分配缓冲区(Thread Local Allocation Buffer,TLAB)；这样划分的好处是为了更快的分配内存；</li>
 </ul>
 <p>对象创建的过程是在堆上分配着实例对象，那么对象实例的具体结构如下：</p>
-<p><img src="/img/jvm/java_object.png" alt="java_object"></p>
+<p><img src="/images/jvm/java_object.png" alt="java_object"></p>
 <p>对于填充数据不是一定存在的，仅仅是为了字节对齐。HotSpot VM的自动内存管理要求对象起始地址必须是8字节的整数倍。对象头本身是8的倍数，当对象的实例数据不是8的倍数，便需要填充数据来保证8字节的对齐。该功能类似于高速缓存行的对齐。</p>
 <p>另外，关于在堆上内存分配是并发进行的，虚拟机采用CAS加失败重试保证原子操作，或者是采用每个线程预先分配TLAB内存.</p>
 <p><strong>异常(Exception)</strong>：Java虚拟机规范规定该区域可抛出OutOfMemoryError。</p>

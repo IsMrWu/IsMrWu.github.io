@@ -92,15 +92,15 @@
 <meta property="og:url" content="http://yoursite.com/2016/04/19/linux内存管理详解/index.html">
 <meta property="og:site_name" content="Mr.Wu's Blog">
 <meta property="og:description" content="这是一篇很好的阐述Linux内存管理的文章">
-<meta property="og:image" content="http://yoursite.com/img/kernel_memory/page_admin.jpg">
-<meta property="og:image" content="http://yoursite.com/img/kernel_memory/user_space.jpg">
-<meta property="og:image" content="http://yoursite.com/img/kernel_memory/kernel_memory.jpg">
-<meta property="og:image" content="http://yoursite.com/img/kernel_memory/memory_map.jpg">
-<meta property="og:updated_time" content="2017-06-14T12:59:48.715Z">
+<meta property="og:image" content="http://yoursite.com/images/kernel_memory/page_admin.jpg">
+<meta property="og:image" content="http://yoursite.com/images/kernel_memory/user_space.jpg">
+<meta property="og:image" content="http://yoursite.com/images/kernel_memory/kernel_memory.jpg">
+<meta property="og:image" content="http://yoursite.com/images/kernel_memory/memory_map.jpg">
+<meta property="og:updated_time" content="2017-06-14T13:36:37.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux的内存详解">
 <meta name="twitter:description" content="这是一篇很好的阐述Linux内存管理的文章">
-<meta name="twitter:image" content="http://yoursite.com/img/kernel_memory/page_admin.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/kernel_memory/page_admin.jpg">
 
 
 
@@ -607,7 +607,7 @@
 </ul>
 <h3 id="2-5-页表"><a href="#2-5-页表" class="headerlink" title="2.5 页表"></a>2.5 页表</h3><p>应用程序操作的对象时映射到物理内存之上的虚拟内存，而处理器直接操作的是物理内存。故应用程序访问一个虚拟地址时，需要将虚拟地址转换为物理地址，然后处理器才能解析地址访问请求，这个转换工作通过查询页表完成。</p>
 <p>Linux使用三级页表完成地址转换。</p>
-<p><img src="/img/kernel_memory/page_admin.jpg" alt="page_admin"></p>
+<p><img src="/images/kernel_memory/page_admin.jpg" alt="page_admin"></p>
 <ol>
 <li>顶级页表：页全局目录(PGD)，指向二级页目录；</li>
 <li>二级页表：中间页目录(PMD)，指向PTE中的表项；</li>
@@ -623,7 +623,7 @@
 <li>堆：动态分配的内存段，大小不固定，可动态扩张(malloc等函数分配内存)，或动态缩减(free等函数释放)；</li>
 <li>栈：存放临时创建的局部变量；</li>
 </ul>
-<p><img src="/img/kernel_memory/user_space.jpg" alt="process memory"></p>
+<p><img src="/images/kernel_memory/user_space.jpg" alt="process memory"></p>
 <h3 id="3-1-进程内存空间"><a href="#3-1-进程内存空间" class="headerlink" title="3.1 进程内存空间"></a>3.1 进程内存空间</h3><p>Linux采用虚拟内存管理技术，每个进程都有各自独立的进程地址空间(即4G的线性虚拟空间)，无法直接访问物理内存。这样起到保护操作系统，并且让用户程序可使用比实际物理内存更大的地址空间。</p>
 <ul>
 <li>4G进程地址空间被划分两部分，内核空间和用户空间。用户空间从0到3G，内核空间从3G到4G；</li>
@@ -631,7 +631,7 @@
 <li>用户空间对应进程，所以当进程切换，用户空间也会跟着变化；</li>
 <li>内核空间是由内核负责映射，不会跟着进程变化；内核空间地址有自己对应的页表，用户进程各自有不同额页表。</li>
 </ul>
-<p><img src="/img/kernel_memory/kernel_memory.jpg" alt="kernel memory"></p>
+<p><img src="/images/kernel_memory/kernel_memory.jpg" alt="kernel memory"></p>
 <h3 id="3-2-内存分配"><a href="#3-2-内存分配" class="headerlink" title="3.2 内存分配"></a>3.2 内存分配</h3><p>进程分配内存，陷入内核态分别由brk和mmap完成，但这两种分配还没有分配真正的物理内存，真正分配在后面会讲。</p>
 <ul>
 <li>brk： 数据段的最高地址指针_edata往高地址推<ul>
@@ -659,7 +659,7 @@
 <li>物理内存映射区：物理内存映射区与实际物理去偏移量仅PAGE_OFFSET，通过通过virt_to_phys()转化；</li>
 </ul>
 <p>虚拟内存与真实物理内存映射关系：</p>
-<p><img src="/img/kernel_memory/memory_map.jpg" alt="memory"></p>
+<p><img src="/images/kernel_memory/memory_map.jpg" alt="memory"></p>
 <p>其中物理地址空间中除了896M(ZONE_DMA + ZONE_NORMAL)的区域是绝对的物理连续，其他内存都不是物理内存连续。在虚拟内核地址空间中的安全保护区域的指针都是非法的，用于保证指针非法越界类的操作，vm_struct是连续的虚拟内核空间，对应的物理页面可以不连续，地址范围(3G + 896M + 8M) ~ 4G；另外在虚拟用户空间中 vm_area_struct同样也是一块连续的虚拟进程空间，地址空间范围0~3G。</p>
 <h3 id="3-4-碎片问题"><a href="#3-4-碎片问题" class="headerlink" title="3.4 碎片问题"></a>3.4 碎片问题</h3><ul>
 <li>外部碎片：未被分配的内存，由于太多零碎的不连续小内存，无法满足当前较大内存的申请要求；<ul>

@@ -1279,7 +1279,7 @@
     <link href="http://yoursite.com/2016/09/07/Android%E4%B8%8B%E7%9A%84handler%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E5%85%A8%E8%A7%A3%E6%9E%90/"/>
     <id>http://yoursite.com/2016/09/07/Android下的handler线程间通信全解析/</id>
     <published>2016-09-06T16:00:00.000Z</published>
-    <updated>2017-05-07T12:28:34.432Z</updated>
+    <updated>2017-06-14T13:35:02.901Z</updated>
     
     <content type="html"><![CDATA[<h1 id="android里handler线程间的通信详解"><a href="#android里handler线程间的通信详解" class="headerlink" title="android里handler线程间的通信详解"></a>android里handler线程间的通信详解</h1><p>本文基于Android 的源代码，来分析Java层的handler消息处理机制</p>
 <ul>
@@ -1300,7 +1300,7 @@ libcore/luni/src/main/java/java/lang/ThreadLocal.java
 <li>Looper:不断循环执行（Looper.loop）,按照分发机制将消息分发给目标处理者</li>
 </ul>
 <p>##1.2 构架图</p>
-<p><img src="/img/Main.jpg" alt=""> </p>
+<p><img src="/images/handler/Main.jpg" alt=""> </p>
 <ul>
 <li>Looper有一个MessageQueue消息队列；</li>
 <li>MessageQueue有一组待处理的Message；</li>
@@ -1557,7 +1557,7 @@ public Handler(Looper looper, Callback callback, boolean async) {
 调用Handler自身的回调方法handleMessage()，该方法默认为空，Handler子类通过覆写该方法来完成具体的逻辑。
 </code></pre><p>对于很多情况下，消息分发后的处理方法是第3种情况，即Handler.handleMessage()，一般地往往通过覆写该方法从而实现自己的业务逻辑。</p>
 <p>##3.3 消息发送</p>
-<p>发送消息调用链：<br><img src="/img/java_sendmessage.png" alt=""></p>
+<p>发送消息调用链：<br><img src="/images/handler/java_sendmessage.png" alt=""></p>
 <p>从上图，可以发现所有的发消息方式，最终都是调用MessageQueue.enqueueMessage();</p>
 <ul>
 <li><p>3.3.1 sendEmptyMessage</p>
@@ -1901,7 +1901,7 @@ private native static void nativeSetFileDescriptorEvents(long ptr, int fd, int e
 </code></pre><p>recycle()，将Message加入到消息池的过程，都是把Message加到链表的表头；</p>
 <p>#六、总结</p>
 <p>最后用一张图，来表示整个消息机制</p>
-<p>图解：<br><img src="/img/handler_java.jpg" alt=""> </p>
+<p>图解：<br><img src="/images/handler/handler_java.jpg" alt=""> </p>
 <pre><code>Handler通过sendMessage()发送Message到MessageQueue队列；
 Looper通过loop()，不断提取出达到触发条件的Message，并将Message交给target来处理；
 经过dispatchMessage()后，交回给Handler的handleMessage()来进行相应地处理。
@@ -2050,7 +2050,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
     <link href="http://yoursite.com/2016/05/09/Java%20JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/"/>
     <id>http://yoursite.com/2016/05/09/Java JVM内存模型详解/</id>
     <published>2016-05-09T01:21:12.000Z</published>
-    <updated>2017-06-14T12:59:00.029Z</updated>
+    <updated>2017-06-14T13:36:49.020Z</updated>
     
     <content type="html"><![CDATA[<p>#java JVM内存模型详解</p>
 <blockquote>
@@ -2058,7 +2058,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 </blockquote>
 <h2 id="一、内存模型"><a href="#一、内存模型" class="headerlink" title="一、内存模型"></a>一、内存模型</h2><p>Java内存模型，往往是指Java程序在运行时内存的模型，而Java代码是运行在Java虚拟机之上的，由Java虚拟机通过解释执行(解释器)或编译执行(即时编译器)来完成，故Java内存模型，也就是指Java虚拟机的运行时内存模型。</p>
 <p>作为Java开发人员来说，并不需要像C/C++开发人员，需要时刻注意内存的释放，而是全权交给虚拟机去管理，那么有就必要了解虚拟机的运行时内存是如何构成的。运行时内存模型，分为线程私有和共享数据区两大类，其中线程私有的数据区包含程序计数器、虚拟机栈、本地方法区，所有线程共享的数据区包含Java堆、方法区，在方法区内有一个常量池。</p>
-<p><img src="/img/jvm/jvm_memory_1.png" alt="jvm_memory_1"></p>
+<p><img src="images/jvm/jvm_memory_1.png" alt="jvm_memory_1"></p>
 <p>（1）线程私有区：</p>
 <ul>
 <li>程序计数器，记录正在执行的虚拟机字节码的地址；</li>
@@ -2075,7 +2075,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 </ul>
 <p>对于大多数的程序员来说，Java内存比较流行的说法便是堆和栈，这其实是非常粗略的一种划分，这种划分的”堆”对应内存模型的Java堆，”栈”是指虚拟机栈，然而Java内存模型远比这更复杂，想深入了解Java的内存，还是有必要明白整个内存模型。</p>
 <h2 id="二、-详细模型"><a href="#二、-详细模型" class="headerlink" title="二、 详细模型"></a>二、 详细模型</h2><p>运行时内存分为五大块区域（常量池属于方法区，算作一块区域），前面简要介绍了每个区域的功能，那接下来再详细说明每个区域的内容，Java内存总体结构图如下：</p>
-<p><img src="/img/jvm/stack_heap_info.png" alt="stack_heap_info"></p>
+<p><img src="/images/jvm/stack_heap_info.png" alt="stack_heap_info"></p>
 <h3 id="2-1-程序计数器PC"><a href="#2-1-程序计数器PC" class="headerlink" title="2.1 程序计数器PC"></a>2.1 程序计数器PC</h3><p>程序计数器PC，当前线程所执行的字节码行号指示器。每个线程都有自己计数器，是私有内存空间，该区域是整个内存中较小的一块。</p>
 <p>当线程正在执行一个Java方法时，PC计数器记录的是正在执行的虚拟机字节码的地址；当线程正在执行的一个Native方法时，PC计数器则为空（Undefined）。</p>
 <h3 id="2-2-虚拟机栈"><a href="#2-2-虚拟机栈" class="headerlink" title="2.2 虚拟机栈"></a>2.2 虚拟机栈</h3><p>虚拟机栈，生命周期与线程相同，是Java方法执行的内存模型。每个方法(不包含native方法)执行的同时都会创建一个栈帧结构，方法执行过程，对应着虚拟机栈的入栈到出栈的过程。</p>
@@ -2111,7 +2111,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <li>从内存分配角度，Java堆可以划分出线程私有的分配缓冲区(Thread Local Allocation Buffer,TLAB)；这样划分的好处是为了更快的分配内存；</li>
 </ul>
 <p>对象创建的过程是在堆上分配着实例对象，那么对象实例的具体结构如下：</p>
-<p><img src="/img/jvm/java_object.png" alt="java_object"></p>
+<p><img src="/images/jvm/java_object.png" alt="java_object"></p>
 <p>对于填充数据不是一定存在的，仅仅是为了字节对齐。HotSpot VM的自动内存管理要求对象起始地址必须是8字节的整数倍。对象头本身是8的倍数，当对象的实例数据不是8的倍数，便需要填充数据来保证8字节的对齐。该功能类似于高速缓存行的对齐。</p>
 <p>另外，关于在堆上内存分配是并发进行的，虚拟机采用CAS加失败重试保证原子操作，或者是采用每个线程预先分配TLAB内存.</p>
 <p><strong>异常(Exception)</strong>：Java虚拟机规范规定该区域可抛出OutOfMemoryError。</p>
@@ -2148,7 +2148,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
     <link href="http://yoursite.com/2016/04/19/linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"/>
     <id>http://yoursite.com/2016/04/19/linux内存管理详解/</id>
     <published>2016-04-19T01:21:12.000Z</published>
-    <updated>2017-06-14T12:59:48.715Z</updated>
+    <updated>2017-06-14T13:36:37.890Z</updated>
     
     <content type="html"><![CDATA[<p>关于Linux的内存管理，本文分别从内核空间和用户空间两个视角来阐述</p>
 <h2 id="一、内核空间"><a href="#一、内核空间" class="headerlink" title="一、内核空间"></a>一、内核空间</h2><h3 id="1-1-页"><a href="#1-1-页" class="headerlink" title="1.1 页"></a>1.1 页</h3><p>页(page)是内核的内存管理基本单位。</p>
@@ -2435,7 +2435,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 </ul>
 <h3 id="2-5-页表"><a href="#2-5-页表" class="headerlink" title="2.5 页表"></a>2.5 页表</h3><p>应用程序操作的对象时映射到物理内存之上的虚拟内存，而处理器直接操作的是物理内存。故应用程序访问一个虚拟地址时，需要将虚拟地址转换为物理地址，然后处理器才能解析地址访问请求，这个转换工作通过查询页表完成。</p>
 <p>Linux使用三级页表完成地址转换。</p>
-<p><img src="/img/kernel_memory/page_admin.jpg" alt="page_admin"></p>
+<p><img src="/images/kernel_memory/page_admin.jpg" alt="page_admin"></p>
 <ol>
 <li>顶级页表：页全局目录(PGD)，指向二级页目录；</li>
 <li>二级页表：中间页目录(PMD)，指向PTE中的表项；</li>
@@ -2451,7 +2451,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <li>堆：动态分配的内存段，大小不固定，可动态扩张(malloc等函数分配内存)，或动态缩减(free等函数释放)；</li>
 <li>栈：存放临时创建的局部变量；</li>
 </ul>
-<p><img src="/img/kernel_memory/user_space.jpg" alt="process memory"></p>
+<p><img src="/images/kernel_memory/user_space.jpg" alt="process memory"></p>
 <h3 id="3-1-进程内存空间"><a href="#3-1-进程内存空间" class="headerlink" title="3.1 进程内存空间"></a>3.1 进程内存空间</h3><p>Linux采用虚拟内存管理技术，每个进程都有各自独立的进程地址空间(即4G的线性虚拟空间)，无法直接访问物理内存。这样起到保护操作系统，并且让用户程序可使用比实际物理内存更大的地址空间。</p>
 <ul>
 <li>4G进程地址空间被划分两部分，内核空间和用户空间。用户空间从0到3G，内核空间从3G到4G；</li>
@@ -2459,7 +2459,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <li>用户空间对应进程，所以当进程切换，用户空间也会跟着变化；</li>
 <li>内核空间是由内核负责映射，不会跟着进程变化；内核空间地址有自己对应的页表，用户进程各自有不同额页表。</li>
 </ul>
-<p><img src="/img/kernel_memory/kernel_memory.jpg" alt="kernel memory"></p>
+<p><img src="/images/kernel_memory/kernel_memory.jpg" alt="kernel memory"></p>
 <h3 id="3-2-内存分配"><a href="#3-2-内存分配" class="headerlink" title="3.2 内存分配"></a>3.2 内存分配</h3><p>进程分配内存，陷入内核态分别由brk和mmap完成，但这两种分配还没有分配真正的物理内存，真正分配在后面会讲。</p>
 <ul>
 <li>brk： 数据段的最高地址指针_edata往高地址推<ul>
@@ -2487,7 +2487,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <li>物理内存映射区：物理内存映射区与实际物理去偏移量仅PAGE_OFFSET，通过通过virt_to_phys()转化；</li>
 </ul>
 <p>虚拟内存与真实物理内存映射关系：</p>
-<p><img src="/img/kernel_memory/memory_map.jpg" alt="memory"></p>
+<p><img src="/images/kernel_memory/memory_map.jpg" alt="memory"></p>
 <p>其中物理地址空间中除了896M(ZONE_DMA + ZONE_NORMAL)的区域是绝对的物理连续，其他内存都不是物理内存连续。在虚拟内核地址空间中的安全保护区域的指针都是非法的，用于保证指针非法越界类的操作，vm_struct是连续的虚拟内核空间，对应的物理页面可以不连续，地址范围(3G + 896M + 8M) ~ 4G；另外在虚拟用户空间中 vm_area_struct同样也是一块连续的虚拟进程空间，地址空间范围0~3G。</p>
 <h3 id="3-4-碎片问题"><a href="#3-4-碎片问题" class="headerlink" title="3.4 碎片问题"></a>3.4 碎片问题</h3><ul>
 <li>外部碎片：未被分配的内存，由于太多零碎的不连续小内存，无法满足当前较大内存的申请要求；<ul>
@@ -2529,7 +2529,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
     <link href="http://yoursite.com/2016/04/19/%E9%AB%98%E6%80%A7%E8%83%BDIO%E6%A8%A1%E5%9E%8B%E6%B5%85%E6%9E%90/"/>
     <id>http://yoursite.com/2016/04/19/高性能IO模型浅析/</id>
     <published>2016-04-19T01:21:12.000Z</published>
-    <updated>2017-06-14T13:00:26.770Z</updated>
+    <updated>2017-06-14T13:36:15.789Z</updated>
     
     <content type="html"><![CDATA[<ul>
 <li>服务器端编程经常需要构造高性能的IO模型，常见的IO模型有四种：<ul>
@@ -2542,7 +2542,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <li>同步和异步的概念描述的是用户线程与内核的交互方式：同步是指用户线程发起IO请求后需要等待或者轮询内核IO操作完成后才能继续执行；而异步是指用户线程发起IO请求后仍继续执行，当内核IO操作完成后会通知用户线程，或者调用用户线程注册的回调函数。</li>
 <li>阻塞和非阻塞的概念描述的是用户线程调用内核IO操作的方式：阻塞是指IO操作需要彻底完成后才返回到用户空间；而非阻塞是指IO操作被调用后立即返回给用户一个状态值，无需等到IO操作彻底完成。</li>
 <li>另外，Richard Stevens 在《Unix 网络编程》卷1中提到的基于信号驱动的IO（Signal Driven IO）模型，由于该模型并不常用，本文不作涉及。接下来，我们详细分析四种常见的IO模型的实现原理。为了方便描述，我们统一使用IO的读操作作为示例。<h2 id="一、同步阻塞IO"><a href="#一、同步阻塞IO" class="headerlink" title="一、同步阻塞IO"></a>一、同步阻塞IO</h2></li>
-<li><p>同步阻塞IO模型是最简单的IO模型，用户线程在内核进行IO操作时被阻塞。<br><img src="/img/IO_desc/pic_同步阻塞io.png" alt="pic_同步阻塞io"><br>图1 同步阻塞IO</p>
+<li><p>同步阻塞IO模型是最简单的IO模型，用户线程在内核进行IO操作时被阻塞。<br><img src="/images/IO_desc/pic_同步阻塞io.png" alt="pic_同步阻塞io"><br>图1 同步阻塞IO</p>
 <ul>
 <li>如图1所示，用户线程通过系统调用read发起IO读操作，由用户空间转到内核空间。内核等到数据包到达后，然后将接收的数据拷贝到用户空间，完成read操作。</li>
 <li><p>用户线程使用同步阻塞IO模型的伪代码描述为：</p>
@@ -2552,7 +2552,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <h2 id="二、同步非阻塞IO"><a href="#二、同步非阻塞IO" class="headerlink" title="二、同步非阻塞IO"></a>二、同步非阻塞IO</h2></li>
 </ul>
 </li>
-<li><p>同步非阻塞IO是在同步阻塞IO的基础上，将socket设置为NONBLOCK。这样做用户线程可以在发起IO请求后可以立即返回。<br><img src="/img/IO_desc/pic2_同步非阻塞io.png" alt="pic2_同步非阻塞io"><br>图2 同步非阻塞IO</p>
+<li><p>同步非阻塞IO是在同步阻塞IO的基础上，将socket设置为NONBLOCK。这样做用户线程可以在发起IO请求后可以立即返回。<br><img src="/images/IO_desc/pic2_同步非阻塞io.png" alt="pic2_同步非阻塞io"><br>图2 同步非阻塞IO</p>
 <ul>
 <li>如图2所示，由于socket是非阻塞的方式，因此用户线程发起IO请求时立即返回。但并未读取到任何数据，用户线程需要不断地发起IO请求，直到数据到达后，才真正读取到数据，继续执行。</li>
 <li><p>用户线程使用同步非阻塞IO模型的伪代码描述为：</p>
@@ -2562,7 +2562,7 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <h2 id="三、IO多路复用"><a href="#三、IO多路复用" class="headerlink" title="三、IO多路复用"></a>三、IO多路复用</h2></li>
 </ul>
 </li>
-<li><p>IO多路复用模型是建立在内核提供的多路分离函数select基础之上的，使用select函数可以避免同步非阻塞IO模型中轮询等待的问题。<br><img src="/img/IO_desc/pic3_多路分离函数select.png" alt="pic3_多路分离函数select"><br>图3 多路分离函数select</p>
+<li><p>IO多路复用模型是建立在内核提供的多路分离函数select基础之上的，使用select函数可以避免同步非阻塞IO模型中轮询等待的问题。<br><img src="/images/IO_desc/pic3_多路分离函数select.png" alt="pic3_多路分离函数select"><br>图3 多路分离函数select</p>
 <ul>
 <li>如图3所示，用户首先将需要进行IO操作的socket添加到select中，然后阻塞等待select系统调用返回。当数据到达时，socket被激活，select函数返回。用户线程正式发起read请求，读取数据并继续执行。</li>
 <li>从流程上来看，使用select函数进行IO请求和同步阻塞模型没有太大的区别，甚至还多了添加监视socket，以及调用select函数的额外操作，效率更差。但是，使用select以后最大的优势是用户可以在一个线程内同时处理多个socket的IO请求。用户可以注册多个socket，然后不断地调用select读取被激活的socket，即可达到在同一个线程内同时处理多个IO请求的目的。而在同步阻塞模型中，必须通过多线程的方式才能达到这个目的。</li>
@@ -2572,8 +2572,8 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 <li><p>其中while循环前将socket添加到select监视中，然后在while内一直调用select获取被激活的socket，一旦socket可读，便调用read函数将socket中的数据读取出来。</p>
 </li>
 <li>然而，使用select函数的优点并不仅限于此。虽然上述方式允许单线程内处理多个IO请求，但是每个IO请求的过程还是阻塞的（在select函数上阻塞），平均时间甚至比同步阻塞IO模型还要长。如果用户线程只注册自己感兴趣的socket或者IO请求，然后去做自己的事情，等到数据到来时再进行处理，则可以提高CPU的利用率。</li>
-<li>IO多路复用模型使用了Reactor设计模式(反应器设计模式)实现了这一机制。<br><img src="/img/IO_desc/pic4_Reactor设计模式.png" alt="pic4_Reactor设计模式.png"><br>图4 Reactor设计模式</li>
-<li>如图4所示，EventHandler抽象类表示IO事件处理器，它拥有IO文件句柄Handle（通过get_handle获取），以及对Handle的操作handle_event（读/写等）。继承于EventHandler的子类可以对事件处理器的行为进行定制。Reactor类用于管理EventHandler（注册、删除等），并使用handle_events实现事件循环，不断调用同步事件多路分离器（一般是内核）的多路分离函数select，只要某个文件句柄被激活（可读/写等），select就返回（阻塞），handle_events就会调用与文件句柄关联的事件处理器的handle_event进行相关操作。<br><img src="/img/IO_desc/pic5_IO多路复用.png" alt="pic5_IO多路复用.png"><br>图5 IO多路复用</li>
+<li>IO多路复用模型使用了Reactor设计模式(反应器设计模式)实现了这一机制。<br><img src="/images/IO_desc/pic4_Reactor设计模式.png" alt="pic4_Reactor设计模式.png"><br>图4 Reactor设计模式</li>
+<li>如图4所示，EventHandler抽象类表示IO事件处理器，它拥有IO文件句柄Handle（通过get_handle获取），以及对Handle的操作handle_event（读/写等）。继承于EventHandler的子类可以对事件处理器的行为进行定制。Reactor类用于管理EventHandler（注册、删除等），并使用handle_events实现事件循环，不断调用同步事件多路分离器（一般是内核）的多路分离函数select，只要某个文件句柄被激活（可读/写等），select就返回（阻塞），handle_events就会调用与文件句柄关联的事件处理器的handle_event进行相关操作。<br><img src="/images/IO_desc/pic5_IO多路复用.png" alt="pic5_IO多路复用.png"><br>图5 IO多路复用</li>
 <li>如图5所示，通过Reactor的方式，可以将用户线程轮询IO操作状态的工作统一交给handle_events事件循环进行处理。用户线程注册事件处理器之后可以继续执行做其他的工作（异步），而Reactor线程负责调用内核的select函数检查socket状态。当有socket被激活时，则通知相应的用户线程（或执行用户线程的回调函数），执行handle_event进行数据读取、处理的工作。由于select函数是阻塞的，因此多路IO复用模型也被称为异步阻塞IO模型。注意，这里的所说的阻塞是指select函数执行时线程被阻塞，而不是指socket。一般在使用IO多路复用模型时，socket都是设置为NONBLOCK的，不过这并不会产生影响，因为用户发起IO请求时，数据已经到达了，用户线程一定不会被阻塞。</li>
 <li><p>用户线程使用IO多路复用模型的伪代码描述为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">void UserEventHandler::handle_event() &#123;</div><div class="line">	if(can_read(socket)) &#123;</div><div class="line">		read(socket, buffer);</div><div class="line">		process(buffer);</div><div class="line">	&#125;</div><div class="line">		&#125;</div><div class="line">&#123;</div><div class="line">	Reactor.register(new UserEventHandler(socket));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -2587,9 +2587,9 @@ Handler的默认方法：Handler.handleMessage(msg)，优先级最低。
 </ul>
 </li>
 <li>“真正”的异步IO需要操作系统更强的支持。在IO多路复用模型中，事件循环将文件句柄的状态事件通知给用户线程，由用户线程自行读取数据、处理数据。而在异步IO模型中，当用户线程收到通知时，数据已经被内核读取完毕，并放在了用户线程指定的缓冲区内，内核在IO完成后通知用户线程直接使用即可。</li>
-<li><p>异步IO模型使用了Proactor设计模式(前摄器设计模式)实现了这一机制。<br><img src="/img/IO_desc/pic6_Proactor设计模式.jpg" alt="pic6_Proactor设计模式.jpg"><br>图6 Proactor设计模式</p>
+<li><p>异步IO模型使用了Proactor设计模式(前摄器设计模式)实现了这一机制。<br><img src="/images/IO_desc/pic6_Proactor设计模式.jpg" alt="pic6_Proactor设计模式.jpg"><br>图6 Proactor设计模式</p>
 <ul>
-<li>如图6，Proactor模式和Reactor模式在结构上比较相似，不过在用户（Client）使用方式上差别较大。Reactor模式中，用户线程通过向Reactor对象注册感兴趣的事件监听，然后事件触发时调用事件处理函数。而Proactor模式中，用户线程将AsynchronousOperation（读/写等）、Proactor以及操作完成时的CompletionHandler注册到AsynchronousOperationProcessor。AsynchronousOperationProcessor使用Facade模式提供了一组异步操作API（读/写等）供用户使用，当用户线程调用异步API后，便继续执行自己的任务。AsynchronousOperationProcessor 会开启独立的内核线程执行异步操作，实现真正的异步。当异步IO操作完成时，AsynchronousOperationProcessor将用户线程与AsynchronousOperation一起注册的Proactor和CompletionHandler取出，然后将CompletionHandler与IO操作的结果数据一起转发给Proactor，Proactor负责回调每一个异步操作的事件完成处理函数handle<em>event。虽然Proactor模式中每个异步操作都可以绑定一个Proactor对象，但是一般在操作系统中，Proactor被实现为Singleton模式，以便于集中化分发操作完成事件。<br>![pic7</em>异步io.png](/img/IO<em>desc/pic7</em>异步io.png)<br>图7 异步IO</li>
+<li>如图6，Proactor模式和Reactor模式在结构上比较相似，不过在用户（Client）使用方式上差别较大。Reactor模式中，用户线程通过向Reactor对象注册感兴趣的事件监听，然后事件触发时调用事件处理函数。而Proactor模式中，用户线程将AsynchronousOperation（读/写等）、Proactor以及操作完成时的CompletionHandler注册到AsynchronousOperationProcessor。AsynchronousOperationProcessor使用Facade模式提供了一组异步操作API（读/写等）供用户使用，当用户线程调用异步API后，便继续执行自己的任务。AsynchronousOperationProcessor 会开启独立的内核线程执行异步操作，实现真正的异步。当异步IO操作完成时，AsynchronousOperationProcessor将用户线程与AsynchronousOperation一起注册的Proactor和CompletionHandler取出，然后将CompletionHandler与IO操作的结果数据一起转发给Proactor，Proactor负责回调每一个异步操作的事件完成处理函数handle<em>event。虽然Proactor模式中每个异步操作都可以绑定一个Proactor对象，但是一般在操作系统中，Proactor被实现为Singleton模式，以便于集中化分发操作完成事件。<br>![pic7</em>异步io.png](/images/IO<em>desc/pic7</em>异步io.png)<br>图7 异步IO</li>
 <li>如图7所示，异步IO模型中，用户线程直接使用内核提供的异步IO API发起read请求，且发起后立即返回，继续执行用户线程代码。不过此时用户线程已经将调用的AsynchronousOperation和CompletionHandler注册到内核，然后操作系统开启独立的内核线程去处理IO操作。当read请求的数据到达时，由内核负责读取socket中的数据，并写入用户指定的缓冲区中。最后内核将read的数据和用户线程注册的CompletionHandler分发给内部Proactor，Proactor将IO完成的信息通知给用户线程（一般通过调用用户线程注册的完成事件处理函数），完成异步IO。</li>
 <li><p>用户线程使用异步IO模型的伪代码描述为：、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void UserCompletionHandler::handle_event(buffer) &#123;</div><div class="line">	process(buffer);</div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line">	aio_read(socket, new UserCompletionHandler);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
